@@ -1,0 +1,119 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>CadenzaBoard - Public Template</title>
+    <style>
+        body {
+            background-color: #111;
+            color: #eee;
+            font-family: 'Inter', sans-serif;
+            display: flex;
+            padding: 20px;
+        }
+        .form {
+            width: 40%%;
+            margin-right: 30px;
+        }
+        .profile {
+            width: 60%%;
+            background: #222;
+            padding: 20px;
+            border-radius: 8px;
+        }
+        label {
+            display: block;
+            margin-top: 10px;
+        }
+        input, textarea {
+            width: 100%%;
+            margin-top: 4px;
+            padding: 6px;
+            border-radius: 4px;
+            border: none;
+        }
+        textarea {
+            resize: vertical;
+        }
+        h1, h2 {
+            color: #facc15;
+        }
+        .media img {
+            width: 100px;
+            margin-right: 10px;
+            margin-bottom: 10px;
+            border-radius: 4px;
+        }
+        ul {
+            padding-left: 20px;
+        }
+        @media print {
+            body * {
+                visibility: hidden;
+            }
+            .profile, .profile * {
+                visibility: visible;
+            }
+            .profile {
+                position: absolute;
+                left: 0;
+                top: 0;
+                width: 100%%;
+                padding: 20px;
+                background: #fff;
+                color: #000;
+            }
+            .media img {
+                width: 80px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="form">
+    <h2>Customize Your Profile</h2>
+    <label>Name/Title:</label>
+    <input id="nameInput" placeholder="Your Name / Instrument" oninput="updateProfile()">
+    <label>Short Bio:</label>
+    <textarea id="bioInput" rows="4" placeholder="Tell us about yourself..." oninput="updateProfile()"></textarea>
+    <label>Repertoire (comma separated):</label>
+    <input id="repInput" placeholder="e.g., Bach Suite No. 1, Walton Concerto" oninput="updateProfile()">
+    <label>Media URLs (comma separated image links):</label>
+    <input id="mediaInput" placeholder="https://image1.jpg, https://image2.jpg" oninput="updateProfile()">
+    <button onclick="window.print()" style="margin-top: 20px; padding: 10px; font-weight: bold;">Download PDF</button>
+</div>
+
+<div class="profile">
+    <h1 id="nameDisplay">Your Name</h1>
+    <p id="bioDisplay">This is where your bio will appear. Fill out the form to customize your profile.</p>
+
+    <h2>Repertoire</h2>
+    <ul id="repDisplay">
+        <li>Your repertoire will show here.</li>
+    </ul>
+
+    <h2>Media</h2>
+    <div class="media" id="mediaDisplay">
+        <img src="https://via.placeholder.com/100x70.png?text=Media+1" alt="Media Preview">
+    </div>
+</div>
+
+<script>
+function updateProfile() {
+    document.getElementById("nameDisplay").innerText = document.getElementById("nameInput").value || "Your Name";
+    document.getElementById("bioDisplay").innerText = document.getElementById("bioInput").value || "This is where your bio will appear.";
+    
+    const repText = document.getElementById("repInput").value;
+    const repItems = repText.split(",").map(item => item.trim()).filter(Boolean);
+    document.getElementById("repDisplay").innerHTML = repItems.map(r => `<li>${r}</li>`).join("") || "<li>Your repertoire will show here.</li>";
+
+    const mediaText = document.getElementById("mediaInput").value;
+    const mediaItems = mediaText.split(",").map(item => item.trim()).filter(Boolean);
+    document.getElementById("mediaDisplay").innerHTML = mediaItems.map(m => `<img src="${m}" alt="Media Thumbnail">`).join("") || `<img src="https://via.placeholder.com/100x70.png?text=Media+1" alt="Media Preview">`;
+}
+</script>
+
+</body>
+</html>
