@@ -2,31 +2,69 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>CadenzaBoard Resume Generator</title>
+  <title>CadenzaBoard Final Export Fix</title>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
   <style>
-    body { font-family: 'Helvetica Neue', sans-serif; background: #111; color: #fff; padding: 2rem; margin: 0; }
-    .container { max-width: 900px; margin: auto; }
-    label { display: block; margin-top: 1rem; }
+    body {
+      font-family: 'Helvetica Neue', sans-serif;
+      background: #111;
+      color: #fff;
+      padding: 2rem;
+      margin: 0;
+    }
+    .container {
+      max-width: 900px;
+      margin: auto;
+    }
+    label {
+      display: block;
+      margin-top: 1rem;
+    }
     input, textarea {
-      width: 100%; padding: 0.5rem; font-size: 1rem;
-      background: #222; color: white; border: 1px solid #333; border-radius: 5px;
+      width: 100%;
+      padding: 0.5rem;
+      font-size: 1rem;
+      background: #222;
+      color: white;
+      border: 1px solid #333;
+      border-radius: 5px;
     }
-    button { margin-top: 1.5rem; padding: 0.75rem 1.5rem; font-size: 1rem; cursor: pointer; }
-    .preview {
-      margin-top: 3rem; background: white; color: black; padding: 2rem; border-radius: 10px;
+    button {
+      margin-top: 1.5rem;
+      padding: 0.75rem 1.5rem;
+      font-size: 1rem;
+      cursor: pointer;
     }
+    .preview, #pdf-export {
+      background: white;
+      color: black;
+      padding: 2rem;
+      border-radius: 10px;
+    }
+    .preview { margin-top: 3rem; }
     .section {
+      margin-top: 1.5rem;
       page-break-inside: avoid;
       break-inside: avoid;
- margin-top: 1.5rem; }
-    .section h2 { border-bottom: 1px solid #ccc; padding-bottom: 0.25rem; margin-bottom: 0.5rem; font-size: 1.1rem; }
-    .footer { text-align: center; font-size: 0.8rem; margin-top: 2rem; color: #888; }
+    }
+    .section h2 {
+      border-bottom: 1px solid #ccc;
+      padding-bottom: 0.25rem;
+      margin-bottom: 0.5rem;
+      font-size: 1.1rem;
+    }
+    .footer {
+      text-align: center;
+      font-size: 0.8rem;
+      margin-top: 2rem;
+      color: #888;
+    }
+    #pdf-export { display: none; }
   </style>
 </head>
 <body>
   <div class="container">
-    <h1>CadenzaBoard: Carrd-Style Resume</h1>
+    <h1>CadenzaBoard Resume Builder</h1>
 
     <label>Name</label>
     <input id="name" oninput="updatePreview()">
@@ -60,71 +98,64 @@
 
     <button onclick="downloadPDF()">Download PDF</button>
 
+    <!-- Live preview visible -->
     <div class="preview" id="preview">
-      <h1 id="preview-name">Name</h1>
-      <p id="preview-title">Title</p>
-      <p id="preview-website">Website</p>
-      <p id="preview-bio">Bio</p>
+      <h1 id="p-name">Name</h1>
+      <p id="p-title">Title</p>
+      <p id="p-website">Website</p>
+      <p id="p-bio">Bio</p>
 
-      <div class="section">
-        <h2>🎓 Education</h2>
-        <p id="preview-education"></p>
-      </div>
+      <div class="section"><h2>🎓 Education</h2><p id="p-education"></p></div>
+      <div class="section"><h2>🎻 Performance Experience</h2><p id="p-performance"></p></div>
+      <div class="section"><h2>🧑‍🏫 Teaching Experience</h2><p id="p-teaching"></p></div>
+      <div class="section"><h2>🏆 Awards & Recognition</h2><p id="p-awards"></p></div>
+      <div class="section"><h2>🎼 Repertoire Highlights</h2><p id="p-repertoire"></p></div>
+      <div class="section"><h2>💬 Testimonials</h2><p id="p-testimonials"></p></div>
+      <div class="footer">Powered by Arcpoint Creative</div>
+    </div>
 
-      <div class="section">
-        <h2>🎻 Performance Experience</h2>
-        <p id="preview-performance"></p>
-      </div>
+    <!-- Hidden version used ONLY for clean export -->
+    <div id="pdf-export">
+      <h1 id="x-name">Name</h1>
+      <p id="x-title">Title</p>
+      <p id="x-website">Website</p>
+      <p id="x-bio">Bio</p>
 
-      <div class="section">
-        <h2>🧑‍🏫 Teaching Experience</h2>
-        <p id="preview-teaching"></p>
-      </div>
-
-      <div class="section">
-        <h2>🏆 Awards & Recognition</h2>
-        <p id="preview-awards"></p>
-      </div>
-
-      <div class="section">
-        <h2>🎼 Repertoire Highlights</h2>
-        <p id="preview-repertoire"></p>
-      </div>
-
-      <div class="section">
-        <h2>💬 Testimonials</h2>
-        <p id="preview-testimonials"></p>
-      </div>
-
+      <div class="section"><h2>🎓 Education</h2><p id="x-education"></p></div>
+      <div class="section"><h2>🎻 Performance Experience</h2><p id="x-performance"></p></div>
+      <div class="section"><h2>🧑‍🏫 Teaching Experience</h2><p id="x-teaching"></p></div>
+      <div class="section"><h2>🏆 Awards & Recognition</h2><p id="x-awards"></p></div>
+      <div class="section"><h2>🎼 Repertoire Highlights</h2><p id="x-repertoire"></p></div>
+      <div class="section"><h2>💬 Testimonials</h2><p id="x-testimonials"></p></div>
       <div class="footer">Powered by Arcpoint Creative</div>
     </div>
   </div>
 
   <script>
     function updatePreview() {
-      document.getElementById("preview-name").innerText = document.getElementById("name").value;
-      document.getElementById("preview-title").innerText = document.getElementById("title").value;
-      document.getElementById("preview-website").innerText = document.getElementById("website").value;
-      document.getElementById("preview-bio").innerText = document.getElementById("bio").value;
-      document.getElementById("preview-education").innerText = document.getElementById("education").value;
-      document.getElementById("preview-performance").innerText = document.getElementById("performance").value;
-      document.getElementById("preview-teaching").innerText = document.getElementById("teaching").value;
-      document.getElementById("preview-awards").innerText = document.getElementById("awards").value;
-      document.getElementById("preview-repertoire").innerText = document.getElementById("repertoire").value;
-      document.getElementById("preview-testimonials").innerText = document.getElementById("testimonials").value;
+      const fields = ['name', 'title', 'website', 'bio', 'education', 'performance', 'teaching', 'awards', 'repertoire', 'testimonials'];
+      fields.forEach(field => {
+        document.getElementById('p-' + field).textContent = document.getElementById(field).value;
+        document.getElementById('x-' + field).textContent = document.getElementById(field).value;
+      });
     }
 
     function downloadPDF() {
-      const element = document.getElementById("preview");
+      const element = document.getElementById("pdf-export");
+      element.style.display = 'block';
       html2pdf().set({
-        pagebreak: { mode: ['avoid-all', 'css', 'legacy'] },
         margin: 0.5,
         filename: 'CadenzaBoard_Resume.pdf',
         image: { type: 'jpeg', quality: 0.98 },
-        html2canvas: { scale: 2 },
-        jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' }
-      }).from(element).save();
+        html2canvas: { scale: 2, scrollY: 0 },
+        jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' },
+        pagebreak: { mode: ['avoid-all', 'css', 'legacy'] }
+      }).from(element).save().then(() => {
+        element.style.display = 'none';
+      });
     }
+
+    updatePreview();
   </script>
 </body>
 </html>
