@@ -126,7 +126,10 @@
     <div class="pdf-section"><h2>Testimonials</h2><p id="pdf-testimonials"></p></div>
   </div>
 
-  <div class="footer">Powered by Arcpoint Creative</div>
+  <div class="footer">
+  <img src="Untitled design.png" alt="Arcpoint Creative Logo" style="height:30px; vertical-align:middle; margin-right:10px;" />
+  Powered by Arcpoint Creative
+</div>
 
   <script>
     function updatePreview() {
@@ -156,13 +159,16 @@
     function downloadPDF() {
       updatePreview();
       const element = document.getElementById('pdf-export');
+      element.style.display = 'block';
       html2pdf().set({
         margin: 0.5,
         filename: 'CadenzaBoard_Profile.pdf',
         image: { type: 'jpeg', quality: 0.98 },
         html2canvas: { scale: 2 },
         jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' }
-      }).from(element).save();
+      }).from(element).save().then(() => {
+        element.style.display = 'none';
+      });
     }
   </script>
 </body>
