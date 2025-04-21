@@ -2,135 +2,126 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <title>CadenzaBoard Multi-Style Export</title>
+  <meta charset="UTF-8">
+  <title>CadenzaBoard Resume Generator</title>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
   <style>
-    body {
-      font-family: 'Helvetica Neue', sans-serif;
-      background: #121212;
-      color: white;
-      padding: 2rem;
-    }
+    body { font-family: 'Helvetica Neue', sans-serif; background: #111; color: #fff; padding: 2rem; margin: 0; }
+    .container { max-width: 900px; margin: auto; }
     label { display: block; margin-top: 1rem; }
-    input, textarea, select {
-      width: 100%; padding: 0.5rem; margin-top: 0.25rem;
-      font-size: 1rem; border-radius: 5px;
+    input, textarea {
+      width: 100%; padding: 0.5rem; font-size: 1rem;
+      background: #222; color: white; border: 1px solid #333; border-radius: 5px;
     }
-    .export-style {
-      display: none;
-      width: 8.5in;
-      padding: 1in;
-      background: white;
-      color: black;
-      margin-top: 2rem;
+    button { margin-top: 1.5rem; padding: 0.75rem 1.5rem; font-size: 1rem; cursor: pointer; }
+    .preview {
+      margin-top: 3rem; background: white; color: black; padding: 2rem; border-radius: 10px;
     }
-    .footer {
-      text-align: center;
-      font-size: 0.75rem;
-      color: #999;
-      margin-top: 2rem;
-    }
+    .section { margin-top: 1.5rem; }
+    .section h2 { border-bottom: 1px solid #ccc; padding-bottom: 0.25rem; margin-bottom: 0.5rem; font-size: 1.1rem; }
+    .footer { text-align: center; font-size: 0.8rem; margin-top: 2rem; color: #888; }
   </style>
 </head>
 <body>
-  <h1>CadenzaBoard Export Tool</h1>
+  <div class="container">
+    <h1>CadenzaBoard: Carrd-Style Resume</h1>
 
-  <label for="name">Full Name</label>
-  <input id="name" oninput="syncText()" />
+    <label>Name</label>
+    <input id="name" oninput="updatePreview()">
 
-  <label for="title">Title</label>
-  <input id="title" oninput="syncText()" />
+    <label>Title</label>
+    <input id="title" oninput="updatePreview()">
 
-  <label for="website">Website</label>
-  <input id="website" oninput="syncText()" />
+    <label>Website</label>
+    <input id="website" oninput="updatePreview()">
 
-  <label for="bio">Bio</label>
-  <textarea id="bio" rows="3" oninput="syncText()"></textarea>
+    <label>Bio</label>
+    <textarea id="bio" rows="3" oninput="updatePreview()"></textarea>
 
-  <label for="styleSelect">Choose Export Style</label>
-  <select id="styleSelect" onchange="switchStyle()">
-    <option value="classic">Classic CV</option>
-    <option value="modern">Modern Showcase</option>
-    <option value="festival">Festival Ready</option>
-  </select>
+    <label>Education</label>
+    <textarea id="education" rows="2" oninput="updatePreview()"></textarea>
 
-  <button onclick="downloadPDF()">Download PDF</button>
+    <label>Performance Experience</label>
+    <textarea id="performance" rows="2" oninput="updatePreview()"></textarea>
 
-  <!-- Classic CV -->
-  <div id="classic" class="export-style">
-    <h1 id="cv-name">Name</h1>
-    <h2 id="cv-title">Title</h2>
-    <p id="cv-website">Website</p>
-    <p id="cv-bio">Bio</p>
-    <div class="footer">Powered by Arcpoint Creative</div>
-  </div>
+    <label>Teaching Experience</label>
+    <textarea id="teaching" rows="2" oninput="updatePreview()"></textarea>
 
-  <!-- Modern Showcase -->
-  <div id="modern" class="export-style">
-    <div style="background:#000; color:#fff; padding:1rem;">
-      <h1 id="modern-name">Name</h1>
-      <p id="modern-title" style="font-style:italic;">Title</p>
+    <label>Awards & Recognition</label>
+    <textarea id="awards" rows="2" oninput="updatePreview()"></textarea>
+
+    <label>Repertoire Highlights</label>
+    <textarea id="repertoire" rows="2" oninput="updatePreview()"></textarea>
+
+    <label>Testimonials</label>
+    <textarea id="testimonials" rows="2" oninput="updatePreview()"></textarea>
+
+    <button onclick="downloadPDF()">Download PDF</button>
+
+    <div class="preview" id="preview">
+      <h1 id="preview-name">Name</h1>
+      <p id="preview-title">Title</p>
+      <p id="preview-website">Website</p>
+      <p id="preview-bio">Bio</p>
+
+      <div class="section">
+        <h2>🎓 Education</h2>
+        <p id="preview-education"></p>
+      </div>
+
+      <div class="section">
+        <h2>🎻 Performance Experience</h2>
+        <p id="preview-performance"></p>
+      </div>
+
+      <div class="section">
+        <h2>🧑‍🏫 Teaching Experience</h2>
+        <p id="preview-teaching"></p>
+      </div>
+
+      <div class="section">
+        <h2>🏆 Awards & Recognition</h2>
+        <p id="preview-awards"></p>
+      </div>
+
+      <div class="section">
+        <h2>🎼 Repertoire Highlights</h2>
+        <p id="preview-repertoire"></p>
+      </div>
+
+      <div class="section">
+        <h2>💬 Testimonials</h2>
+        <p id="preview-testimonials"></p>
+      </div>
+
+      <div class="footer">Powered by Arcpoint Creative</div>
     </div>
-    <p id="modern-website" style="margin-top:1rem;">Website</p>
-    <blockquote id="modern-bio" style="border-left:4px solid #ccc; padding-left:1rem;"></blockquote>
-    <div class="footer">Powered by Arcpoint Creative</div>
-  </div>
-
-  <!-- Festival Ready -->
-  <div id="festival" class="export-style">
-    <h1 style="text-align:center;">🎻 <span id="festival-name">Name</span></h1>
-    <p style="text-align:center;">🧑‍🏫 <span id="festival-title">Title</span></p>
-    <p style="text-align:center;">🌐 <span id="festival-website">Website</span></p>
-    <p id="festival-bio">Bio</p>
-    <div class="footer">Powered by Arcpoint Creative</div>
   </div>
 
   <script>
-    function switchStyle() {
-      const val = document.getElementById('styleSelect').value;
-      document.querySelectorAll('.export-style').forEach(div => div.style.display = 'none');
-      document.getElementById(val).style.display = 'block';
-    }
-
-    function syncText() {
-      const name = document.getElementById('name').value;
-      const title = document.getElementById('title').value;
-      const website = document.getElementById('website').value;
-      const bio = document.getElementById('bio').value;
-
-      document.getElementById('cv-name').textContent = name;
-      document.getElementById('cv-title').textContent = title;
-      document.getElementById('cv-website').textContent = website;
-      document.getElementById('cv-bio').textContent = bio;
-
-      document.getElementById('modern-name').textContent = name;
-      document.getElementById('modern-title').textContent = title;
-      document.getElementById('modern-website').textContent = website;
-      document.getElementById('modern-bio').textContent = bio;
-
-      document.getElementById('festival-name').textContent = name;
-      document.getElementById('festival-title').textContent = title;
-      document.getElementById('festival-website').textContent = website;
-      document.getElementById('festival-bio').textContent = bio;
+    function updatePreview() {
+      document.getElementById("preview-name").innerText = document.getElementById("name").value;
+      document.getElementById("preview-title").innerText = document.getElementById("title").value;
+      document.getElementById("preview-website").innerText = document.getElementById("website").value;
+      document.getElementById("preview-bio").innerText = document.getElementById("bio").value;
+      document.getElementById("preview-education").innerText = document.getElementById("education").value;
+      document.getElementById("preview-performance").innerText = document.getElementById("performance").value;
+      document.getElementById("preview-teaching").innerText = document.getElementById("teaching").value;
+      document.getElementById("preview-awards").innerText = document.getElementById("awards").value;
+      document.getElementById("preview-repertoire").innerText = document.getElementById("repertoire").value;
+      document.getElementById("preview-testimonials").innerText = document.getElementById("testimonials").value;
     }
 
     function downloadPDF() {
-      const style = document.getElementById('styleSelect').value;
-      const element = document.getElementById(style);
-      element.style.display = 'block';
+      const element = document.getElementById("preview");
       html2pdf().set({
         margin: 0.5,
-        filename: `CadenzaBoard_${style}.pdf`,
+        filename: 'CadenzaBoard_Resume.pdf',
         image: { type: 'jpeg', quality: 0.98 },
         html2canvas: { scale: 2 },
         jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' }
-      }).from(element).save().then(() => {
-        element.style.display = 'none';
-      });
+      }).from(element).save();
     }
-
-    switchStyle();
   </script>
 </body>
 </html>
