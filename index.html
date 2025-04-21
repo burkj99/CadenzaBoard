@@ -1,1 +1,169 @@
-Placeholder - regenerate actual HTML content here.
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CadenzaBoard Export</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Helvetica Neue', sans-serif;
+      background-color: #121212;
+      color: #f4f4f4;
+    }
+    .container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      padding: 2rem;
+      gap: 2rem;
+    }
+    .form-section {
+      flex: 1 1 100%;
+      background-color: #1e1e1e;
+      padding: 1.5rem;
+      border-radius: 10px;
+    }
+    label {
+      display: block;
+      margin-top: 1rem;
+      font-weight: bold;
+      color: #ccc;
+    }
+    input, textarea {
+      width: 100%;
+      padding: 0.5rem;
+      margin-top: 0.25rem;
+      border: 1px solid #444;
+      border-radius: 4px;
+      background-color: #2a2a2a;
+      color: #fff;
+    }
+    button {
+      margin-top: 1.5rem;
+      padding: 0.75rem 1.25rem;
+      background-color: #00d1b2;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 1rem;
+    }
+    .footer {
+      text-align: center;
+      padding: 1rem;
+      border-top: 1px solid #333;
+      font-size: 0.85rem;
+      color: #888;
+    }
+    .pdf-layout {
+      display: none;
+      width: 8.5in;
+      padding: 1in;
+      background: white;
+      color: #000;
+      font-family: 'Georgia', serif;
+    }
+    .pdf-layout h1, .pdf-layout h2 {
+      color: #000;
+      margin-bottom: 0.25rem;
+    }
+    .pdf-layout p {
+      margin: 0.25rem 0;
+      font-size: 0.95rem;
+    }
+    .pdf-section {
+      margin-top: 1rem;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="form-section">
+      <h2 style="text-align:center;">CadenzaBoard Resume Editor</h2>
+
+      <label><input type="checkbox" id="showPhoto" checked onchange="updatePreview()" /> Show Profile Image</label>
+      <label for="photo">Profile Photo URL</label>
+      <input type="text" id="photo" oninput="updatePreview()" />
+
+      <label for="name">Name</label>
+      <input type="text" id="name" oninput="updatePreview()" />
+      <label for="title">Title</label>
+      <input type="text" id="title" oninput="updatePreview()" />
+      <label for="website">Website</label>
+      <input type="text" id="website" oninput="updatePreview()" />
+      <label for="bio">Bio</label>
+      <textarea id="bio" oninput="updatePreview()" rows="3"></textarea>
+      <label for="performance">Performance Experience</label>
+      <textarea id="performance" oninput="updatePreview()" rows="3"></textarea>
+      <label for="teaching">Teaching Experience</label>
+      <textarea id="teaching" oninput="updatePreview()" rows="3"></textarea>
+      <label for="education">Education</label>
+      <textarea id="education" oninput="updatePreview()" rows="2"></textarea>
+      <label for="awards">Awards & Recognition</label>
+      <textarea id="awards" oninput="updatePreview()" rows="2"></textarea>
+      <label for="repertoire">Repertoire Highlights</label>
+      <textarea id="repertoire" oninput="updatePreview()" rows="2"></textarea>
+      <label for="testimonials">Testimonials</label>
+      <textarea id="testimonials" oninput="updatePreview()" rows="2"></textarea>
+
+      <button onclick="downloadPDF()">Download PDF</button>
+    </div>
+  </div>
+
+  <div class="pdf-layout" id="pdf-export">
+    <h1 id="pdf-name">Firstname Lastname</h1>
+    <p id="pdf-title">Title</p>
+    <p id="pdf-website">Website</p>
+    <p id="pdf-bio">Short bio appears here.</p>
+
+    <div class="pdf-section"><h2>Performance Experience</h2><p id="pdf-performance"></p></div>
+    <div class="pdf-section"><h2>Teaching Experience</h2><p id="pdf-teaching"></p></div>
+    <div class="pdf-section"><h2>Education</h2><p id="pdf-education"></p></div>
+    <div class="pdf-section"><h2>Awards & Recognition</h2><p id="pdf-awards"></p></div>
+    <div class="pdf-section"><h2>Repertoire Highlights</h2><p id="pdf-repertoire"></p></div>
+    <div class="pdf-section"><h2>Testimonials</h2><p id="pdf-testimonials"></p></div>
+  </div>
+
+  <div class="footer">Powered by Arcpoint Creative</div>
+
+  <script>
+    function updatePreview() {
+      const name = document.getElementById('name').value;
+      const title = document.getElementById('title').value;
+      const website = document.getElementById('website').value;
+      const bio = document.getElementById('bio').value;
+      const performance = document.getElementById('performance').value;
+      const teaching = document.getElementById('teaching').value;
+      const education = document.getElementById('education').value;
+      const awards = document.getElementById('awards').value;
+      const repertoire = document.getElementById('repertoire').value;
+      const testimonials = document.getElementById('testimonials').value;
+
+      document.getElementById('pdf-name').textContent = name;
+      document.getElementById('pdf-title').textContent = title;
+      document.getElementById('pdf-website').textContent = website;
+      document.getElementById('pdf-bio').textContent = bio;
+      document.getElementById('pdf-performance').textContent = performance;
+      document.getElementById('pdf-teaching').textContent = teaching;
+      document.getElementById('pdf-education').textContent = education;
+      document.getElementById('pdf-awards').textContent = awards;
+      document.getElementById('pdf-repertoire').textContent = repertoire;
+      document.getElementById('pdf-testimonials').textContent = testimonials;
+    }
+
+    function downloadPDF() {
+      updatePreview();
+      const element = document.getElementById('pdf-export');
+      html2pdf().set({
+        margin: 0.5,
+        filename: 'CadenzaBoard_Profile.pdf',
+        image: { type: 'jpeg', quality: 0.98 },
+        html2canvas: { scale: 2 },
+        jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' }
+      }).from(element).save();
+    }
+  </script>
+</body>
+</html>
