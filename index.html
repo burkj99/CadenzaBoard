@@ -3,117 +3,105 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>CadenzaBoard Resume Generator</title>
+  <title>CadenzaBoard • Professional Musician Resume</title>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
   <style>
     body {
-      font-family: 'Helvetica Neue', sans-serif;
-      background: #121212;
-      color: #f4f4f4;
-      padding: 2rem;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", sans-serif;
+      background: #f8f8f8;
+      color: #1a1a1a;
       margin: 0;
+      padding: 2rem;
     }
     .container {
-      max-width: 900px;
+      max-width: 800px;
       margin: auto;
+      padding-bottom: 3rem;
     }
-    input, textarea, select {
+    h1, h2 {
+      font-weight: 600;
+      margin-top: 2rem;
+    }
+    label {
+      margin-top: 1.5rem;
+      display: block;
+      font-size: 0.9rem;
+      font-weight: 500;
+    }
+    input, textarea {
       width: 100%;
-      padding: 0.75rem;
       margin-top: 0.5rem;
-      background: #1e1e1e;
-      border: 1px solid #333;
-      border-radius: 8px;
-      color: #f4f4f4;
+      margin-bottom: 1.5rem;
+      padding: 0.75rem;
+      border: 1px solid #ddd;
+      border-radius: 6px;
+      background: white;
       font-size: 1rem;
     }
     button {
-      margin-top: 1.5rem;
       padding: 0.75rem 1.5rem;
-      background-color: #00d1b2;
-      color: white;
-      border: none;
-      border-radius: 6px;
       font-size: 1rem;
+      border-radius: 6px;
+      border: none;
+      background-color: #1a1a1a;
+      color: white;
       cursor: pointer;
     }
-    .toggle-group {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 1rem;
-      margin-top: 1rem;
-    }
-    .toggle-group label {
-      display: flex;
-      align-items: center;
-      background: #1e1e1e;
-      border: 1px solid #444;
-      padding: 0.5rem 1rem;
-      border-radius: 6px;
-      font-size: 0.95rem;
-    }
     .preview, #pdf-export {
-      margin-top: 3rem;
-      background: #fff;
+      background: white;
       color: #000;
       padding: 2rem;
       border-radius: 10px;
+      margin-top: 2rem;
+      border: 1px solid #eee;
     }
     .section {
       margin-top: 1.5rem;
       page-break-inside: avoid;
-      break-inside: avoid;
     }
     .section h2 {
       border-bottom: 1px solid #ccc;
-      margin-bottom: 0.5rem;
+      padding-bottom: 0.25rem;
       font-size: 1.2rem;
+      margin-bottom: 0.5rem;
     }
     .footer {
       text-align: center;
+      font-size: 0.75rem;
       margin-top: 2rem;
-      font-size: 0.8rem;
       color: #888;
     }
-    #pdf-export {
-      display: none;
+    #pdf-export { display: none; }
+    .header-logo {
+      font-size: 1.5rem;
+      font-weight: 600;
+      letter-spacing: -0.5px;
+      margin-bottom: 1rem;
     }
   </style>
 </head>
 <body>
   <div class="container">
-    <h1>CadenzaBoard</h1>
-    <p style="opacity: 0.7;">Customize your professional resume. Select only the sections you need, then export a polished PDF.</p>
+    <div class="header-logo">CadenzaBoard</div>
+    <p style="margin-top: -0.5rem; font-size: 0.95rem; color: #444;">A modern resume builder for professional musicians. Powered by Arcpoint Creative.</p>
 
-    <label for="preset">Resume Preset</label>
-    <select id="preset" onchange="applyPreset()">
-      <option value="custom">Custom</option>
-      <option value="festival">Festival Ready</option>
-      <option value="studio">Studio CV</option>
-      <option value="full">Full Portfolio</option>
-      <option value="minimal">Minimal</option>
-    </select>
+    <label>Name</label>
+    <input id="name" oninput="updateAll()">
+    <label>Title</label>
+    <input id="title" oninput="updateAll()">
+    <label>Website</label>
+    <input id="website" oninput="updateAll()">
+    <label>Bio</label>
+    <textarea id="bio" rows="4" oninput="updateAll()"></textarea>
 
-    <div class="toggle-group">
-      <label><input type="checkbox" id="education" checked onchange="toggleSection('education')">&nbsp;Education</label>
-      <label><input type="checkbox" id="performance" checked onchange="toggleSection('performance')">&nbsp;Performance</label>
-      <label><input type="checkbox" id="teaching" checked onchange="toggleSection('teaching')">&nbsp;Teaching</label>
-      <label><input type="checkbox" id="awards" checked onchange="toggleSection('awards')">&nbsp;Awards</label>
-      <label><input type="checkbox" id="repertoire" checked onchange="toggleSection('repertoire')">&nbsp;Repertoire</label>
-      <label><input type="checkbox" id="testimonials" checked onchange="toggleSection('testimonials')">&nbsp;Testimonials</label>
-    </div>
-
-    <label>Name</label><input id="name" oninput="updatePreview()">
-    <label>Title</label><input id="title" oninput="updatePreview()">
-    <label>Website</label><input id="website" oninput="updatePreview()">
-    <label>Bio</label><textarea id="bio" rows="3" oninput="updatePreview()"></textarea>
-
-    <label>Education</label><textarea id="education-text" rows="2" oninput="updatePreview()"></textarea>
-    <label>Performance</label><textarea id="performance-text" rows="2" oninput="updatePreview()"></textarea>
-    <label>Teaching</label><textarea id="teaching-text" rows="2" oninput="updatePreview()"></textarea>
-    <label>Awards</label><textarea id="awards-text" rows="2" oninput="updatePreview()"></textarea>
-    <label>Repertoire</label><textarea id="repertoire-text" rows="2" oninput="updatePreview()"></textarea>
-    <label>Testimonials</label><textarea id="testimonials-text" rows="2" oninput="updatePreview()"></textarea>
+    <label>Education</label>
+    <textarea id="education" rows="2" oninput="updateAll()"></textarea>
+    <label>Performance</label>
+    <textarea id="performance" rows="2" oninput="updateAll()"></textarea>
+    <label>Teaching</label>
+    <textarea id="teaching" rows="2" oninput="updateAll()"></textarea>
+    <label>Awards</label>
+    <textarea id="awards" rows="2" oninput="updateAll()"></textarea>
 
     <button onclick="downloadPDF()">Download PDF</button>
 
@@ -122,13 +110,11 @@
       <p id="p-title">Title</p>
       <p id="p-website">Website</p>
       <p id="p-bio">Bio</p>
-      <div class="section" id="section-education"><h2>Education</h2><p id="p-education"></p></div>
-      <div class="section" id="section-performance"><h2>Performance</h2><p id="p-performance"></p></div>
-      <div class="section" id="section-teaching"><h2>Teaching</h2><p id="p-teaching"></p></div>
-      <div class="section" id="section-awards"><h2>Awards</h2><p id="p-awards"></p></div>
-      <div class="section" id="section-repertoire"><h2>Repertoire</h2><p id="p-repertoire"></p></div>
-      <div class="section" id="section-testimonials"><h2>Testimonials</h2><p id="p-testimonials"></p></div>
-      <div class="footer">Powered by Arcpoint Creative</div>
+      <div class="section"><h2>Education</h2><p id="p-education"></p></div>
+      <div class="section"><h2>Performance</h2><p id="p-performance"></p></div>
+      <div class="section"><h2>Teaching</h2><p id="p-teaching"></p></div>
+      <div class="section"><h2>Awards</h2><p id="p-awards"></p></div>
+      <div class="footer">© Powered by Arcpoint Creative</div>
     </div>
 
     <div id="pdf-export">
@@ -136,47 +122,20 @@
       <p id="x-title">Title</p>
       <p id="x-website">Website</p>
       <p id="x-bio">Bio</p>
-      <div class="section" id="section-pdf-education"><h2>Education</h2><p id="x-education"></p></div>
-      <div class="section" id="section-pdf-performance"><h2>Performance</h2><p id="x-performance"></p></div>
-      <div class="section" id="section-pdf-teaching"><h2>Teaching</h2><p id="x-teaching"></p></div>
-      <div class="section" id="section-pdf-awards"><h2>Awards</h2><p id="x-awards"></p></div>
-      <div class="section" id="section-pdf-repertoire"><h2>Repertoire</h2><p id="x-repertoire"></p></div>
-      <div class="section" id="section-pdf-testimonials"><h2>Testimonials</h2><p id="x-testimonials"></p></div>
-      <div class="footer">Powered by Arcpoint Creative</div>
+      <div class="section"><h2>Education</h2><p id="x-education"></p></div>
+      <div class="section"><h2>Performance</h2><p id="x-performance"></p></div>
+      <div class="section"><h2>Teaching</h2><p id="x-teaching"></p></div>
+      <div class="section"><h2>Awards</h2><p id="x-awards"></p></div>
+      <div class="footer">© Powered by Arcpoint Creative</div>
     </div>
   </div>
 
   <script>
-    function updatePreview() {
-      const fields = ['name', 'title', 'website', 'bio', 'education', 'performance', 'teaching', 'awards', 'repertoire', 'testimonials'];
+    function updateAll() {
+      const fields = ['name', 'title', 'website', 'bio', 'education', 'performance', 'teaching', 'awards'];
       fields.forEach(f => {
-        document.getElementById('p-' + f).textContent = document.getElementById(f + '-text').value;
-        document.getElementById('x-' + f).textContent = document.getElementById(f + '-text').value;
-        document.getElementById('x-name').textContent = document.getElementById('name').value;
-        document.getElementById('x-title').textContent = document.getElementById('title').value;
-        document.getElementById('x-website').textContent = document.getElementById('website').value;
-        document.getElementById('x-bio').textContent = document.getElementById('bio').value;
-      });
-    }
-
-    function toggleSection(section) {
-      const show = document.getElementById(section).checked;
-      document.getElementById(`section-${section}`).style.display = show ? 'block' : 'none';
-      document.getElementById(`section-pdf-${section}`).style.display = show ? 'block' : 'none';
-    }
-
-    function applyPreset() {
-      const preset = document.getElementById("preset").value;
-      const map = {
-        festival: ['performance', 'repertoire', 'awards'],
-        studio: ['education', 'teaching', 'testimonials'],
-        full: ['education', 'performance', 'teaching', 'awards', 'repertoire', 'testimonials'],
-        minimal: []
-      };
-      ['education','performance','teaching','awards','repertoire','testimonials'].forEach(section => {
-        const show = map[preset]?.includes(section);
-        document.getElementById(section).checked = show;
-        toggleSection(section);
+        document.getElementById('p-' + f).textContent = document.getElementById(f).value;
+        document.getElementById('x-' + f).textContent = document.getElementById(f).value;
       });
     }
 
@@ -195,7 +154,7 @@
       });
     }
 
-    updatePreview();
+    updateAll();
   </script>
 </body>
 </html>
