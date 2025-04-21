@@ -3,147 +3,164 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>CadenzaBoard – Musician Portfolio Builder</title>
+  <title>CadenzaBoard – Build Your Music Profile</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Create a modern, printable portfolio page for musicians. Free tool with fillable bio, repertoire, and media.">
-  <meta name="keywords" content="musician website, printable PDF portfolio, bio builder, music marketing, cadenza, repertoire">
+  <meta name="description" content="Design a modern, fillable one-page portfolio for musicians. Clean PDF export, editable form, and branding tools included.">
+  <meta name="keywords" content="musician website, one-page music profile, printable music resume, repertoire, portfolio, PDF, Arcpoint">
   <meta name="author" content="Arcpoint Creative">
-  <meta property="og:title" content="CadenzaBoard – Musician Portfolio Builder">
-  <meta property="og:description" content="Carrd-style portfolio builder for musicians. Bio, rep, media, PDF export. Powered by Arcpoint Creative.">
+  <meta property="og:title" content="CadenzaBoard – Musician Portfolio Generator">
+  <meta property="og:description" content="Create and print a modern, professional portfolio for musicians. Bio, repertoire, and media all-in-one.">
   <meta property="og:image" content="https://arcpointcreative.com/og-cadenzaboard.jpg">
   <meta property="og:url" content="https://cadenzaboard.arcpointcreative.com">
   <style>
+    * { box-sizing: border-box; }
     body {
       font-family: 'Inter', sans-serif;
-      background: #f3f4f6;
-      color: #1f2937;
+      background: #f9fafb;
+      color: #111827;
       margin: 0;
       padding: 40px 20px;
-      display: flex;
-      justify-content: center;
     }
-    .card {
+    .page {
+      max-width: 850px;
       background: white;
-      max-width: 800px;
-      width: 100%;
       padding: 40px;
-      border-radius: 16px;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+      margin: auto;
+      border-radius: 12px;
+      box-shadow: 0 20px 50px rgba(0,0,0,0.05);
+      position: relative;
+    }
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 30px;
+    }
+    header img {
+      height: 30px;
+    }
+    h1 {
+      font-size: 2rem;
+      color: #1f2937;
+      margin-bottom: 10px;
+    }
+    h2 {
+      font-size: 1.25rem;
+      color: #374151;
+      margin-top: 2rem;
+      margin-bottom: 0.5rem;
+      border-bottom: 1px solid #e5e7eb;
+      padding-bottom: 5px;
     }
     input, textarea {
       width: 100%;
       font-size: 1rem;
-      padding: 10px;
-      margin-top: 10px;
+      padding: 12px;
       margin-bottom: 20px;
-      border: 1px solid #ccc;
+      border: 1px solid #d1d5db;
       border-radius: 8px;
       font-family: inherit;
     }
-    h1 {
-      margin-top: 0;
-      font-size: 2rem;
-      color: #111827;
-    }
-    h2 {
-      font-size: 1.25rem;
-      margin-top: 2rem;
-      color: #374151;
-    }
     ul {
       padding-left: 20px;
+      line-height: 1.6;
     }
     .media img {
       width: 120px;
-      margin: 10px;
-      border-radius: 10px;
+      margin: 8px 12px 12px 0;
+      border-radius: 8px;
     }
     button {
       background-color: #111827;
       color: white;
-      border: none;
       padding: 12px 24px;
       border-radius: 8px;
       font-size: 1rem;
+      border: none;
+      margin-top: 30px;
       cursor: pointer;
     }
     footer {
-      margin-top: 40px;
       text-align: center;
-      font-size: 0.85rem;
+      font-size: 0.9rem;
       color: #6b7280;
+      margin-top: 40px;
+      border-top: 1px solid #e5e7eb;
+      padding-top: 20px;
     }
     footer img {
       height: 16px;
       vertical-align: middle;
       margin-left: 6px;
     }
-
     @media print {
       body * {
         visibility: hidden;
       }
-      .card, .card * {
+      .page, .page * {
         visibility: visible;
       }
-      .card {
+      .page {
         position: absolute;
         left: 0;
         top: 0;
-        background: white;
-        color: black;
+        width: 100%;
+        margin: 0;
+        border-radius: 0;
         box-shadow: none;
       }
-      button, input, textarea {
-        display: none !important;
+      input, textarea, button {
+        display: none;
       }
     }
   </style>
 </head>
 <body>
+  <div class="page">
+    <header>
+      <div><strong>CadenzaBoard</strong></div>
+      <img src="arcpoint-logo.png" alt="Arcpoint Creative Logo">
+    </header>
 
-<div class="card">
-  <h1><input id="name" placeholder="Your Full Name / Instrument" oninput="updateOutput('nameDisplay', this.value)"></h1>
-  <p><input id="subtitle" placeholder="City | Ensemble | Website" oninput="updateOutput('subtitleDisplay', this.value)"></p>
+    <h1><input id="name" placeholder="Your Full Name / Instrument" oninput="update('nameOut', this.value)"></h1>
+    <p><input id="info" placeholder="City | Ensemble | Contact Info" oninput="update('infoOut', this.value)"></p>
 
-  <h2>Bio</h2>
-  <textarea id="bio" rows="5" placeholder="Tell us about yourself..." oninput="updateOutput('bioDisplay', this.value)"></textarea>
+    <h2>Bio</h2>
+    <textarea id="bio" rows="5" placeholder="Your professional bio here..." oninput="update('bioOut', this.value)"></textarea>
+    <p id="bioOut">Your bio will appear here.</p>
 
-  <h2>Repertoire</h2>
-  <textarea id="rep" rows="3" placeholder="Bach Suite No. 3, Walton Concerto..." oninput="updateRepertoire()"></textarea>
-  <ul id="repDisplay"><li>Repertoire will appear here.</li></ul>
+    <h2>Repertoire</h2>
+    <textarea id="rep" rows="3" placeholder="Comma-separated works..." oninput="updateRepertoire()"></textarea>
+    <ul id="repOut"><li>Your repertoire will appear here.</li></ul>
 
-  <h2>Media</h2>
-  <textarea id="media" rows="2" placeholder="Image URLs (comma separated)" oninput="updateMedia()"></textarea>
-  <div class="media" id="mediaDisplay">
-    <img src="https://via.placeholder.com/120x90.png?text=Preview">
+    <h2>Media</h2>
+    <textarea id="media" rows="2" placeholder="Image URLs (comma separated)" oninput="updateMedia()"></textarea>
+    <div class="media" id="mediaOut">
+      <img src="https://via.placeholder.com/120x90.png?text=Media">
+    </div>
+
+    <button onclick="window.print()">Download PDF</button>
+
+    <footer>
+      Powered by Arcpoint Creative
+      <img src="arcpoint-logo.png" alt="Arcpoint Logo">
+    </footer>
   </div>
 
-  <button onclick="window.print()">Download PDF</button>
-
-  <footer>
-    Powered by Arcpoint Creative
-    <img src="https://arcpointcreative.com/logo.svg" alt="Arcpoint Logo">
-  </footer>
-</div>
-
-<script>
-  function updateOutput(id, value) {
-    document.getElementById(id).textContent = value;
-  }
-
-  function updateRepertoire() {
-    const val = document.getElementById("rep").value;
-    const list = val.split(',').map(x => x.trim()).filter(Boolean);
-    document.getElementById("repDisplay").innerHTML = list.map(x => `<li>${x}</li>`).join("") || "<li>Repertoire will appear here.</li>";
-  }
-
-  function updateMedia() {
-    const val = document.getElementById("media").value;
-    const links = val.split(',').map(x => x.trim()).filter(Boolean);
-    document.getElementById("mediaDisplay").innerHTML = links.map(link => `<img src="${link}">`).join("") || '<img src="https://via.placeholder.com/120x90.png?text=Preview">';
-  }
-</script>
-
+  <script>
+    function update(id, val) {
+      document.getElementById(id).innerText = val;
+    }
+    function updateRepertoire() {
+      const rep = document.getElementById("rep").value.split(',').map(function(x) { return x.trim(); }).filter(Boolean);
+      document.getElementById("repOut").innerHTML = rep.map(function(item) { return '<li>' + item + '</li>'; }).join('') || "<li>Your repertoire will appear here.</li>";
+    }
+    function updateMedia() {
+      const media = document.getElementById("media").value.split(',').map(function(x) { return x.trim(); }).filter(Boolean);
+      document.getElementById("mediaOut").innerHTML = media.map(function(url) {
+        return '<img src="' + url + '" alt="Media">';
+      }).join('') || '<img src="https://via.placeholder.com/120x90.png?text=Media">';
+    }
+  </script>
 </body>
 </html>
