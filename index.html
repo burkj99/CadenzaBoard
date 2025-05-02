@@ -1,160 +1,1697 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>CadenzaBoard • Professional Musician Resume</title>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
-  <style>
-    body {
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", sans-serif;
-      background: #f8f8f8;
-      color: #1a1a1a;
-      margin: 0;
-      padding: 2rem;
-    }
-    .container {
-      max-width: 800px;
-      margin: auto;
-      padding-bottom: 3rem;
-    }
-    h1, h2 {
-      font-weight: 600;
-      margin-top: 2rem;
-    }
-    label {
-      margin-top: 1.5rem;
-      display: block;
-      font-size: 0.9rem;
-      font-weight: 500;
-    }
-    input, textarea {
-      width: 100%;
-      margin-top: 0.5rem;
-      margin-bottom: 1.5rem;
-      padding: 0.75rem;
-      border: 1px solid #ddd;
-      border-radius: 6px;
-      background: white;
-      font-size: 1rem;
-    }
-    button {
-      padding: 0.75rem 1.5rem;
-      font-size: 1rem;
-      border-radius: 6px;
-      border: none;
-      background-color: #1a1a1a;
-      color: white;
-      cursor: pointer;
-    }
-    .preview, #pdf-export {
-      background: white;
-      color: #000;
-      padding: 2rem;
-      border-radius: 10px;
-      margin-top: 2rem;
-      border: 1px solid #eee;
-    }
-    .section {
-      margin-top: 1.5rem;
-      page-break-inside: avoid;
-    }
-    .section h2 {
-      border-bottom: 1px solid #ccc;
-      padding-bottom: 0.25rem;
-      font-size: 1.2rem;
-      margin-bottom: 0.5rem;
-    }
-    .footer {
-      text-align: center;
-      font-size: 0.75rem;
-      margin-top: 2rem;
-      color: #888;
-    }
-    #pdf-export { display: none; }
-    .header-logo {
-      font-size: 1.5rem;
-      font-weight: 600;
-      letter-spacing: -0.5px;
-      margin-bottom: 1rem;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CadenzaBoard by Arcpoint Creative - Professional Development for Performers</title>
+    <style>
+        :root {
+            --primary-color: #2d3047;
+            --secondary-color: #5c6ac4;
+            --accent-color: #ff7e5f;
+            --highlight-color: #17b890;
+            --light-bg: #f7f8fc;
+            --dark-bg: #272932;
+            --text-light: #f5f5f5;
+            --text-dark: #2d3047;
+            --gradient-bg: linear-gradient(135deg, #5c6ac4 0%, #2d3047 100%);
+            --card-shadow: 0 5px 15px rgba(0,0,0,0.08);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: var(--light-bg);
+            color: var(--text-dark);
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1300px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* Header Styles */
+        header {
+            background: var(--gradient-bg);
+            color: var(--text-light);
+            padding: 15px 0;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            position: fixed;
+            width: 100%;
+            z-index: 1000;
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+        }
+        
+        .by-arcpoint {
+            font-size: 14px;
+            opacity: 0.8;
+            margin-left: 10px;
+            font-weight: normal;
+        }
+        
+        .logo-icon {
+            margin-right: 10px;
+            font-size: 28px;
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+        
+        nav ul li {
+            margin-left: 20px;
+        }
+        
+        nav ul li a {
+            color: var(--text-light);
+            text-decoration: none;
+            padding: 8px 15px;
+            border-radius: 4px;
+            transition: all 0.3s;
+            font-weight: 500;
+        }
+        
+        nav ul li a:hover {
+            background-color: rgba(255,255,255,0.1);
+            transform: translateY(-2px);
+        }
+        
+        nav ul li a.active {
+            background-color: var(--accent-color);
+        }
+        
+        .user-actions {
+            display: flex;
+            align-items: center;
+        }
+        
+        .user-icon {
+            width: 36px;
+            height: 36px;
+            background-color: rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            margin-left: 15px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .user-icon:hover {
+            background-color: rgba(255, 255, 255, 0.3);
+            transform: scale(1.05);
+        }
+        
+        /* Main Content Styles */
+        main {
+            padding-top: 80px;
+            min-height: calc(100vh - 60px);
+        }
+        
+        .main-grid {
+            display: grid;
+            grid-template-columns: 250px 1fr;
+            gap: 30px;
+        }
+        
+        .sidebar {
+            background-color: white;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: var(--card-shadow);
+            position: sticky;
+            top: 100px;
+            height: calc(100vh - 120px);
+            overflow-y: auto;
+        }
+        
+        .sidebar-title {
+            font-size: 18px;
+            margin-bottom: 20px;
+            color: var(--primary-color);
+            border-bottom: 1px solid #eee;
+            padding-bottom: 15px;
+        }
+        
+        .menu-item {
+            display: flex;
+            align-items: center;
+            padding: 12px 15px;
+            border-radius: 8px;
+            color: var(--text-dark);
+            text-decoration: none;
+            margin-bottom: 8px;
+            transition: all 0.3s;
+            font-weight: 500;
+        }
+        
+        .menu-item:hover {
+            background-color: var(--light-bg);
+            transform: translateX(3px);
+        }
+        
+        .menu-item.active {
+            background-color: var(--accent-color);
+            color: white;
+        }
+        
+        .menu-icon {
+            margin-right: 12px;
+            width: 24px;
+            text-align: center;
+            font-size: 18px;
+        }
+        
+        /* Content Area */
+        .content-wrapper {
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+        }
+        
+        .welcome-banner {
+            background: url('/api/placeholder/1200/300') center/cover;
+            border-radius: 12px;
+            padding: 40px;
+            color: white;
+            position: relative;
+            overflow: hidden;
+            box-shadow: var(--card-shadow);
+        }
+        
+        .welcome-banner::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(45, 48, 71, 0.85) 0%, rgba(92, 106, 196, 0.85) 100%);
+            z-index: 1;
+        }
+        
+        .welcome-content {
+            position: relative;
+            z-index: 2;
+            max-width: 600px;
+        }
+        
+        .welcome-title {
+            font-size: 32px;
+            margin-bottom: 15px;
+            font-weight: 700;
+        }
+        
+        .welcome-text {
+            font-size: 18px;
+            margin-bottom: 25px;
+            opacity: 0.95;
+            line-height: 1.7;
+        }
+        
+        .btn {
+            padding: 12px 24px;
+            border-radius: 6px;
+            border: none;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+            font-size: 16px;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .btn-primary {
+            background-color: var(--accent-color);
+            color: white;
+        }
+        
+        .btn-secondary {
+            background-color: rgba(255, 255, 255, 0.2);
+            color: white;
+            backdrop-filter: blur(5px);
+        }
+        
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        /* Growth Focus Section */
+        .growth-focus {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+            margin-bottom: 30px;
+        }
+        
+        .focus-card {
+            background-color: white;
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: var(--card-shadow);
+            transition: all 0.3s;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+        
+        .focus-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 20px rgba(0,0,0,0.12);
+        }
+        
+        .focus-icon {
+            font-size: 40px;
+            margin-bottom: 20px;
+            color: var(--accent-color);
+        }
+        
+        .focus-title {
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 15px;
+            color: var(--primary-color);
+        }
+        
+        .focus-text {
+            color: #666;
+            margin-bottom: 20px;
+        }
+        
+        /* Progress Tracking */
+        .progress-section {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: var(--card-shadow);
+        }
+        
+        .progress-title {
+            padding: 25px;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .progress-title h2 {
+            font-size: 22px;
+            color: var(--primary-color);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .progress-icon {
+            width: 36px;
+            height: 36px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: var(--accent-color);
+            color: white;
+            border-radius: 8px;
+            font-size: 18px;
+        }
+        
+        .tab-navigation {
+            display: flex;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .tab-button {
+            padding: 15px 25px;
+            background: none;
+            border: none;
+            font-size: 16px;
+            font-weight: 600;
+            color: #666;
+            cursor: pointer;
+            border-bottom: 3px solid transparent;
+            transition: all 0.2s;
+        }
+        
+        .tab-button.active {
+            color: var(--accent-color);
+            border-bottom-color: var(--accent-color);
+        }
+        
+        .tab-button:hover:not(.active) {
+            color: var(--primary-color);
+            background-color: rgba(0,0,0,0.02);
+        }
+        
+        .tab-content {
+            padding: 25px;
+        }
+        
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 20px;
+        }
+        
+        .skill-item {
+            background-color: var(--light-bg);
+            border-radius: 10px;
+            padding: 20px;
+            transition: all 0.3s;
+        }
+        
+        .skill-item:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        }
+        
+        .skill-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        
+        .skill-name {
+            font-weight: 600;
+        }
+        
+        .skill-level {
+            color: var(--accent-color);
+            font-weight: 700;
+        }
+        
+        .skill-progress {
+            width: 100%;
+            height: 10px;
+            background-color: #e0e0e0;
+            border-radius: 5px;
+            overflow: hidden;
+            margin-bottom: 10px;
+        }
+        
+        .progress-bar {
+            height: 100%;
+            background-color: var(--accent-color);
+            border-radius: 5px;
+        }
+        
+        .milestone-marker {
+            width: 10px;
+            height: 10px;
+            background-color: var(--highlight-color);
+            border-radius: 50%;
+            position: absolute;
+            top: 0;
+            transform: translateX(-50%);
+        }
+        
+        .skill-meta {
+            display: flex;
+            justify-content: space-between;
+            font-size: 12px;
+            color: #666;
+        }
+        
+        /* Spotlight Section - Most important part */
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        
+        .section-title {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--primary-color);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .spotlight-section {
+            background-color: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: var(--card-shadow);
+            margin-top: 30px;
+        }
+        
+        .spotlight-header {
+            padding: 25px;
+            background: var(--gradient-bg);
+            color: white;
+        }
+        
+        .spotlight-header h2 {
+            font-size: 24px;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .spotlight-header p {
+            opacity: 0.9;
+        }
+        
+        .spotlight-filters {
+            display: flex;
+            padding: 15px 25px;
+            border-bottom: 1px solid #eee;
+            gap: 15px;
+            overflow-x: auto;
+            white-space: nowrap;
+        }
+        
+        .filter-chip {
+            padding: 8px 15px;
+            background-color: var(--light-bg);
+            border-radius: 20px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .filter-chip.active {
+            background-color: var(--accent-color);
+            color: white;
+        }
+        
+        .filter-chip:hover:not(.active) {
+            background-color: #e0e0e0;
+        }
+        
+        .spotlight-grid {
+            padding: 25px;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 20px;
+        }
+        
+        .work-card {
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: var(--card-shadow);
+            transition: all 0.3s;
+            position: relative;
+            background-color: white;
+        }
+        
+        .work-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 25px rgba(0,0,0,0.12);
+        }
+        
+        .work-image {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+        }
+        
+        .work-content {
+            padding: 20px;
+        }
+        
+        .work-title {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: var(--primary-color);
+        }
+        
+        .work-artist {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+        
+        .artist-avatar {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+        
+        .artist-name {
+            font-weight: 600;
+            font-size: 14px;
+        }
+        
+        .artist-level {
+            background-color: var(--accent-color);
+            color: white;
+            padding: 3px 8px;
+            border-radius: 10px;
+            font-size: 11px;
+            margin-left: auto;
+        }
+        
+        .work-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 15px;
+        }
+        
+        .work-tag {
+            padding: 5px 10px;
+            background-color: var(--light-bg);
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+        
+        .work-stats {
+            display: flex;
+            justify-content: space-between;
+            padding-top: 15px;
+            border-top: 1px solid #eee;
+            color: #666;
+            font-size: 14px;
+        }
+        
+        .stat {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .growth-badge {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            padding: 5px 12px;
+            background-color: var(--highlight-color);
+            color: white;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            box-shadow: 0 3px 5px rgba(0,0,0,0.1);
+        }
+        
+        /* Mentor Feedback */
+        .mentor-feedback {
+            background-color: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: var(--card-shadow);
+            margin-top: 30px;
+        }
+        
+        .feedback-header {
+            padding: 25px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .feedback-list {
+            padding: 25px;
+        }
+        
+        .feedback-item {
+            background-color: var(--light-bg);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+        
+        .feedback-item:last-child {
+            margin-bottom: 0;
+        }
+        
+        .feedback-top {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 15px;
+        }
+        
+        .mentor-info {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        
+        .mentor-avatar {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid var(--accent-color);
+        }
+        
+        .mentor-details h4 {
+            font-weight: 600;
+            color: var(--primary-color);
+        }
+        
+        .mentor-role {
+            color: #666;
+            font-size: 14px;
+        }
+        
+        .feedback-rating {
+            display: flex;
+            gap: 2px;
+            color: var(--accent-color);
+        }
+        
+        .feedback-text {
+            margin-bottom: 15px;
+            line-height: 1.7;
+        }
+        
+        .feedback-skills {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 15px;
+        }
+        
+        .skill-tag {
+            padding: 5px 12px;
+            background-color: rgba(92, 106, 196, 0.1);
+            color: var(--secondary-color);
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+        
+        .feedback-actions {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 15px;
+            border-top: 1px solid #e0e0e0;
+        }
+        
+        .feedback-date {
+            color: #666;
+            font-size: 14px;
+        }
+        
+        .action-buttons {
+            display: flex;
+            gap: 15px;
+        }
+        
+        .action-button {
+            color: var(--secondary-color);
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .action-button:hover {
+            color: var(--accent-color);
+            text-decoration: underline;
+        }
+        
+        /* Growth Roadmap */
+        .growth-roadmap {
+            background-color: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: var(--card-shadow);
+            margin-top: 30px;
+        }
+        
+        .roadmap-header {
+            padding: 25px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .roadmap-steps {
+            padding: 25px;
+            display: flex;
+            justify-content: space-between;
+            position: relative;
+        }
+        
+        .roadmap-steps::before {
+            content: '';
+            position: absolute;
+            top: 50px;
+            left: 25px;
+            right: 25px;
+            height: 4px;
+            background-color: #e0e0e0;
+            z-index: 1;
+        }
+        
+        .roadmap-step {
+            position: relative;
+            z-index: 2;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 20%;
+        }
+        
+        .step-circle {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background-color: white;
+            border: 4px solid #e0e0e0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 22px;
+            margin-bottom: 15px;
+            transition: all 0.3s;
+        }
+        
+        .roadmap-step.active .step-circle {
+            background-color: var(--accent-color);
+            border-color: var(--accent-color);
+            color: white;
+        }
+        
+        .roadmap-step.completed .step-circle {
+            background-color: var(--highlight-color);
+            border-color: var(--highlight-color);
+            color: white;
+        }
+        
+        .step-title {
+            font-weight: 600;
+            margin-bottom: 8px;
+            text-align: center;
+        }
+        
+        .step-description {
+            font-size: 13px;
+            color: #666;
+            text-align: center;
+            max-width: 150px;
+        }
+        
+        /* Growth AI Coach */
+        .growth-coach {
+            background-color: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: var(--card-shadow);
+            margin-top: 30px;
+        }
+        
+        .coach-header {
+            padding: 25px;
+            background: linear-gradient(135deg, #5c6ac4 0%, #3a3d5c 100%);
+            color: white;
+        }
+        
+        .coach-title {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 22px;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+        
+        .coach-description {
+            opacity: 0.9;
+        }
+        
+        .coach-content {
+            padding: 25px;
+        }
+        
+        .coach-chat {
+            margin-bottom: 20px;
+        }
+        
+        .coach-message {
+            background-color: #f0f2ff;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 20px;
+            position: relative;
+        }
+        
+        .coach-message::before {
+            content: '';
+            position: absolute;
+            top: 20px;
+            left: -10px;
+            width: 0;
+            height: 0;
+            border-style: solid;
+            border-width: 10px 10px 10px 0;
+            border-color: transparent #f0f2ff transparent transparent;
+        }
+        
+        .coach-suggestions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 20px;
+        }
+        
+        .suggestion-chip {
+            padding: 8px 15px;
+            background-color: var(--light-bg);
+            border-radius: 20px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .suggestion-chip:hover {
+            background-color: var(--secondary-color);
+            color: white;
+        }
+        
+        .coach-input {
+            display: flex;
+            gap: 15px;
+        }
+        
+        .coach-textarea {
+            flex: 1;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 12px;
+            outline: none;
+            min-height: 70px;
+            resize: none;
+            font-size: 16px;
+            font-family: inherit;
+            transition: all 0.2s;
+        }
+        
+        .coach-textarea:focus {
+            border-color: var(--secondary-color);
+            box-shadow: 0 0 0 3px rgba(92, 106, 196, 0.2);
+        }
+        
+        .send-button {
+            width: 50px;
+            background-color: var(--accent-color);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            transition: all 0.2s;
+        }
+        
+        .send-button:hover {
+            background-color: #ff6a4d;
+            transform: scale(1.05);
+        }
+        
+        /* Community Challenges */
+        .challenges-section {
+            background-color: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: var(--card-shadow);
+            margin-top: 30px;
+        }
+        
+        .challenges-header {
+            padding: 25px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .challenges-grid {
+            padding: 25px;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 20px;
+        }
+        
+        .challenge-card {
+            background-color: var(--light-bg);
+            border-radius: 12px;
+            overflow: hidden;
+            transition: all 0.3s;
+        }
+        
+        .challenge-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+        
+        .challenge-banner {
+            height: 120px;
+            background: linear-gradient(135deg, var(--accent-color) 0%, var(--secondary-color) 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 36px;
+        }
+        
+        .challenge-content {
+            padding: 20px;
+        }
+        
+        .challenge-title {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: var(--primary-color);
+        }
+        
+        .challenge-info {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 15px;
+            font-size: 14px;
+            color: #666;
+        }
+        
+        .challenge-deadline {
+            font-weight: 500;
+            color: var(--accent-color);
+        }
+        
+        .challenge-participants {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .challenge-description {
+            margin-bottom: 15px;
+            color: #444;
+        }
+        
+        .challenge-join {
+            width: 100%;
+            padding: 12px;
+            background-color: var(--accent-color);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .challenge-join:hover {
+            background-color: #ff6a4d;
+            transform: translateY(-2px);
+        }
+        
+        /* Footer */
+        footer {
+            background-color: var(--dark-bg);
+            color: var(--text-light);
+            padding: 40px 0 20px;
+            margin-top: 50px;
+        }
+        
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+        
+        .footer-logo {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .footer-description {
+            margin-bottom: 20px;
+            opacity: 0.8;
+            line-height: 1.7;
+        }
+        
+        .footer-social {
+            display: flex;
+            gap: 15px;
+        }
+        
+        .social-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+        }
+        
+        .social-icon:hover {
+            background-color: var(--accent-color);
+            transform: translateY(-3px);
+        }
+        
+        .footer-links h4 {
+            margin-bottom: 20px;
+            font-size: 18px;
+        }
+        
+        .footer-links ul {
+            list-style: none;
+        }
+        
+        .footer-links li {
+            margin-bottom: 12px;
+        }
+        
+        .footer-links a {
+            color: var(--text-light);
+            opacity: 0.8;
+            text-decoration: none;
+            transition: all 0.2s;
+        }
+        
+        .footer-links a:hover {
+            opacity: 1;
+            color: var(--accent-color);
+        }
+        
+        .footer-bottom {
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .footer-copyright {
+            opacity: 0.7;
+            font-size: 14px;
+        }
+        
+        .footer-policy {
+            display: flex;
+            gap: 20px;
+        }
+        
+        .footer-policy a {
+            color: var(--text-light);
+            opacity: 0.7;
+            text-decoration: none;
+            font-size: 14px;
+            transition: all 0.2s;
+        }
+        
+        .footer-policy a:hover {
+            opacity: 1;
+            color: var(--accent-color);
+        }
+        
+        /* Responsive adjustments */
+        @media (max-width: 1024px) {
+            .main-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .sidebar {
+                display: none;
+            }
+            
+            .footer-grid {
+                grid-template-columns: 1fr 1fr;
+                gap: 40px;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .dashboard-grid, 
+            .spotlight-grid,
+            .challenges-grid,
+            .skills-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .roadmap-steps {
+                flex-direction: column;
+                gap: 30px;
+                align-items: flex-start;
+            }
+            
+            .roadmap-steps::before {
+                width: 4px;
+                height: auto;
+                top: 25px;
+                left: 50px;
+                right: auto;
+                bottom: 25px;
+            }
+            
+            .roadmap-step {
+                width: 100%;
+                flex-direction: row;
+                align-items: flex-start;
+                gap: 20px;
+            }
+            
+            .footer-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .footer-bottom {
+                flex-direction: column;
+                gap: 20px;
+                text-align: center;
+            }
+            
+            .growth-focus {
+                grid-template-columns: 1fr;
+            }
+            
+            nav ul {
+                display: none;
+            }
+        }
+    </style>
 </head>
 <body>
-  <div class="container">
-    <div class="header-logo">CadenzaBoard</div>
-    <p style="margin-top: -0.5rem; font-size: 0.95rem; color: #444;">A modern resume builder for professional musicians. Powered by Arcpoint Creative.</p>
-
-    <label>Name</label>
-    <input id="name" oninput="updateAll()">
-    <label>Title</label>
-    <input id="title" oninput="updateAll()">
-    <label>Website</label>
-    <input id="website" oninput="updateAll()">
-    <label>Bio</label>
-    <textarea id="bio" rows="4" oninput="updateAll()"></textarea>
-
-    <label>Education</label>
-    <textarea id="education" rows="2" oninput="updateAll()"></textarea>
-    <label>Performance</label>
-    <textarea id="performance" rows="2" oninput="updateAll()"></textarea>
-    <label>Teaching</label>
-    <textarea id="teaching" rows="2" oninput="updateAll()"></textarea>
-    <label>Awards</label>
-    <textarea id="awards" rows="2" oninput="updateAll()"></textarea>
-
-    <button onclick="downloadPDF()">Download PDF</button>
-
-    <div class="preview" id="preview">
-      <h1 id="p-name">Name</h1>
-      <p id="p-title">Title</p>
-      <p id="p-website">Website</p>
-      <p id="p-bio">Bio</p>
-      <div class="section"><h2>Education</h2><p id="p-education"></p></div>
-      <div class="section"><h2>Performance</h2><p id="p-performance"></p></div>
-      <div class="section"><h2>Teaching</h2><p id="p-teaching"></p></div>
-      <div class="section"><h2>Awards</h2><p id="p-awards"></p></div>
-      <div class="footer">© Powered by Arcpoint Creative</div>
-    </div>
-
-    <div id="pdf-export">
-      <h1 id="x-name">Name</h1>
-      <p id="x-title">Title</p>
-      <p id="x-website">Website</p>
-      <p id="x-bio">Bio</p>
-      <div class="section"><h2>Education</h2><p id="x-education"></p></div>
-      <div class="section"><h2>Performance</h2><p id="x-performance"></p></div>
-      <div class="section"><h2>Teaching</h2><p id="x-teaching"></p></div>
-      <div class="section"><h2>Awards</h2><p id="x-awards"></p></div>
-      <div class="footer">© Powered by Arcpoint Creative</div>
-    </div>
-  </div>
-
-  <script>
-    function updateAll() {
-      const fields = ['name', 'title', 'website', 'bio', 'education', 'performance', 'teaching', 'awards'];
-      fields.forEach(f => {
-        document.getElementById('p-' + f).textContent = document.getElementById(f).value;
-        document.getElementById('x-' + f).textContent = document.getElementById(f).value;
-      });
-    }
-
-    function downloadPDF() {
-      const element = document.getElementById("pdf-export");
-      element.style.display = 'block';
-      html2pdf().set({
-        margin: 0.5,
-        filename: 'CadenzaBoard_Resume.pdf',
-        image: { type: 'jpeg', quality: 0.98 },
-        html2canvas: { scale: 2, scrollY: 0 },
-        jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' },
-        pagebreak: { mode: ['avoid-all', 'css', 'legacy'] }
-      }).from(element).save().then(() => {
-        element.style.display = 'none';
-      });
-    }
-
-    updateAll();
-  </script>
+    <header>
+        <div class="container header-content">
+            <div class="logo">
+                <span class="logo-icon">🎵</span>
+                CadenzaBoard: The Digital Stage
+                <span class="by-arcpoint">by Arcpoint Creative</span>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="#" class="active">Home</a></li>
+                    <li><a href="#">Portfolio</a></li>
+                    <li><a href="#">Growth Path</a></li>
+                    <li><a href="#">Community</a></li>
+                    <li><a href="#">Resources</a></li>
+                </ul>
+            </nav>
+            <div class="user-actions">
+                <div class="user-icon">🔔</div>
+                <div class="user-icon">👤</div>
+            </div>
+        </div>
+    </header>
+    
+    <main>
+        <div class="container main-grid">
+            <div class="sidebar">
+                <h3 class="sidebar-title">Your Professional Journey</h3>
+                <a href="#" class="menu-item active">
+                    <span class="menu-icon">🏠</span>
+                    Dashboard
+                </a>
+                <a href="#" class="menu-item">
+                    <span class="menu-icon">🔍</span>
+                    Explore Spotlights
+                </a>
+                <a href="#" class="menu-item">
+                    <span class="menu-icon">📊</span>
+                    My Progress
+                </a>
+                <a href="#" class="menu-item">
+                    <span class="menu-icon">📁</span>
+                    My Portfolio
+                </a>
+                <a href="#" class="menu-item">
+                    <span class="menu-icon">👥</span>
+                    Find Mentors
+                </a>
+                <a href="#" class="menu-item">
+                    <span class="menu-icon">💬</span>
+                    Feedback Hub
+                </a>
+                <a href="#" class="menu-item">
+                    <span class="menu-icon">🏆</span>
+                    Challenges
+                </a>
+                <a href="#" class="menu-item">
+                    <span class="menu-icon">🧠</span>
+                    Growth Coach AI
+                </a>
+                <a href="#" class="menu-item">
+                    <span class="menu-icon">👤</span>
+                    Profile
+                </a>
+                <a href="#" class="menu-item">
+                    <span class="menu-icon">⚙️</span>
+                    Settings
+                </a>
+            </div>
+            
+            <div class="content-wrapper">
+                <div class="welcome-banner">
+                    <div class="welcome-content">
+                        <h1 class="welcome-title">CadenzaBoard: Your Path to Professional Excellence</h1>
+                        <p class="welcome-text">A curated spotlight platform where growth meets professional development. Share your work, receive targeted feedback from industry mentors, and evolve your craft with AI-powered insights in a community of emerging professionals.</p>
+                        <div>
+                            <button class="btn btn-primary">Submit Your Work</button>
+                            <button class="btn btn-secondary">Find Your Mentor</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Growth Focus Section -->
+                <div class="growth-focus">
+                    <div class="focus-card">
+                        <div class="focus-icon">🎯</div>
+                        <h3 class="focus-title">Industry Spotlights</h3>
+                        <p class="focus-text">Your portfolio showcased to industry executives, casting directors, and talent scouts, with professional feedback and potential opportunities.</p>
+                        <button class="btn btn-primary">Submit Portfolio</button>
+                    </div>
+                    
+                    <div class="focus-card">
+                        <div class="focus-icon">🧠</div>
+                        <h3 class="focus-title">AI-Powered Growth</h3>
+                        <p class="focus-text">CadenzaAI analyzes your work, industry trends, and mentor feedback to create personalized development plans and career opportunities.</p>
+                        <button class="btn btn-primary">Get AI Insights</button>
+                    </div>
+                    
+                    <div class="focus-card">
+                        <div class="focus-icon">👥</div>
+                        <h3 class="focus-title">Professional Network</h3>
+                        <p class="focus-text">Connect with industry mentors, peers, and potential employers who can provide guidance and open doors to professional opportunities.</p>
+                        <button class="btn btn-primary">Expand Network</button>
+                    </div>
+                </div>
+                
+                <div class="mentorship-options">
+                    <div class="options-header">
+                        <h2 class="section-title"><span class="menu-icon">👥</span> Flexible Mentorship Options</h2>
+                    </div>
+                    
+                    <div class="options-grid">
+                        <div class="option-card">
+                            <div class="option-icon">👤</div>
+                            <h3 class="option-title">Your Expertise (Violin & Viola)</h3>
+                            <p class="option-description">Share your violin and viola knowledge through personalized feedback sessions. Set your own availability and rates.</p>
+                            <ul class="option-benefits">
+                                <li>Monetize your professional experience</li>
+                                <li>Flexible scheduling that works for you</li>
+                                <li>Help emerging musicians develop their craft</li>
+                            </ul>
+                            <button class="btn btn-primary">Set Up Your Mentoring</button>
+                        </div>
+                        
+                        <div class="option-card">
+                            <div class="option-icon">👥</div>
+                            <h3 class="option-title">Community Peer Feedback</h3>
+                            <p class="option-description">Give and receive feedback from fellow musicians at your level. Free exchange of perspectives focused on growth.</p>
+                            <ul class="option-benefits">
+                                <li>No cost involved - reciprocal system</li>
+                                <li>Build relationships with peers</li>
+                                <li>Diverse perspectives on your work</li>
+                            </ul>
+                            <button class="btn btn-primary">Join Peer Groups</button>
+                        </div>
+                        
+                        <div class="option-card active">
+                            <div class="option-icon">🤖</div>
+                            <h3 class="option-title">CadenzaAI Coach</h3>
+                            <p class="option-description">Get AI-powered feedback and growth suggestions based on your submissions and development path.</p>
+                            <ul class="option-benefits">
+                                <li>Available 24/7 with no booking needed</li>
+                                <li>Personalized growth recommendations</li>
+                                <li>Included with your subscription</li>
+                            </ul>
+                            <button class="btn btn-accent">Access AI Coach</button>
+                        </div>
+                        
+                        <div class="option-card premium">
+                            <div class="premium-badge">Premium</div>
+                            <div class="option-icon">🌟</div>
+                            <h3 class="option-title">Pro Network (Optional)</h3>
+                            <p class="option-description">Access to industry professionals for specialized feedback. Available as needed for specific career milestones.</p>
+                            <ul class="option-benefits">
+                                <li>Pay-per-session with no subscription</li>
+                                <li>Access only when you need it</li>
+                                <li>Verified industry professionals</li>
+                            </ul>
+                            <button class="btn btn-outline">Explore Pro Network</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Progress Tracking -->
+                <div class="progress-section">
+                    <div class="progress-title">
+                        <h2><span class="progress-icon">📈</span> Your Professional Development</h2>
+                        <button class="btn btn-outline">View Career Analytics</button>
+                    </div>
+                    
+                    <div class="tab-navigation">
+                        <button class="tab-button active">Skills</button>
+                        <button class="tab-button">Submissions</button>
+                        <button class="tab-button">Feedback</button>
+                        <button class="tab-button">Achievements</button>
+                    </div>
+                    
+                    <div class="tab-content">
+                        <div class="skills-grid">
+                            <div class="skill-item">
+                                <div class="skill-header">
+                                    <div class="skill-name">Stage Presence</div>
+                                    <div class="skill-level">Level 4</div>
+                                </div>
+                                <div class="skill-progress">
+                                    <div class="progress-bar" style="width: 75%"></div>
+                                </div>
+                                <div class="skill-meta">
+                                    <div>75% to Level 5</div>
+                                    <div>+15% this month</div>
+                                </div>
+                            </div>
+                            
+                            <div class="skill-item">
+                                <div class="skill-header">
+                                    <div class="skill-name">Vocal Technique</div>
+                                    <div class="skill-level">Level 3</div>
+                                </div>
+                                <div class="skill-progress">
+                                    <div class="progress-bar" style="width: 40%"></div>
+                                </div>
+                                <div class="skill-meta">
+                                    <div>40% to Level 4</div>
+                                    <div>+8% this month</div>
+                                </div>
+                            </div>
+                            
+                            <div class="skill-item">
+                                <div class="skill-header">
+                                    <div class="skill-name">Emotional Expression</div>
+                                    <div class="skill-level">Level 5</div>
+                                </div>
+                                <div class="skill-progress">
+                                    <div class="progress-bar" style="width: 20%"></div>
+                                </div>
+                                <div class="skill-meta">
+                                    <div>20% to Level 6</div>
+                                    <div>+5% this month</div>
+                                </div>
+                            </div>
+                            
+                            <div class="skill-item">
+                                <div class="skill-header">
+                                    <div class="skill-name">Composition</div>
+                                    <div class="skill-level">Level 2</div>
+                                </div>
+                                <div class="skill-progress">
+                                    <div class="progress-bar" style="width: 60%"></div>
+                                </div>
+                                <div class="skill-meta">
+                                    <div>60% to Level 3</div>
+                                    <div>+25% this month</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Mentor Feedback -->
+                <div class="mentor-feedback">
+                    <div class="feedback-header">
+                        <h2 class="section-title"><span class="menu-icon">💬</span> Recent Mentor Feedback</h2>
+                        <button class="btn btn-outline">View All</button>
+                    </div>
+                    
+                    <div class="feedback-list">
+                        <div class="feedback-item">
+                            <div class="feedback-top">
+                                <div class="mentor-info">
+                                    <img src="/api/placeholder/60/60" alt="Mentor avatar" class="mentor-avatar">
+                                    <div class="mentor-details">
+                                        <h4>Victoria James</h4>
+                                        <div class="mentor-role">Vocal Coach, Broadway</div>
+                                    </div>
+                                </div>
+                                <div class="feedback-rating">★★★★★</div>
+                            </div>
+                            <p class="feedback-text">Your breath control has improved significantly since your last submission. The sustained notes in the bridge showed remarkable stability. Focus next on connecting your head voice transitions - they're still slightly disconnected from your chest voice. Try the exercises we discussed to smooth this out.</p>
+                            <div class="feedback-skills">
+                                <span class="skill-tag">Breath Control +4</span>
+                                <span class="skill-tag">Pitch Accuracy +3</span>
+                                <span class="skill-tag">Vocal Range +2</span>
+                            </div>
+                            <div class="feedback-actions">
+                                <div class="feedback-date">2 days ago • on "Beyond The Horizon"</div>
+                                <div class="action-buttons">
+                                    <div class="action-button">Thank</div>
+                                    <div class="action-button">Respond</div>
+                                    <div class="action-button">Save to Journal</div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="feedback-item">
+                            <div class="feedback-top">
+                                <div class="mentor-info">
+                                    <img src="/api/placeholder/60/60" alt="Mentor avatar" class="mentor-avatar">
+                                    <div class="mentor-details">
+                                        <h4>Daniel Rodriguez</h4>
+                                        <div class="mentor-role">Composer, Film & TV</div>
+                                    </div>
+                                </div>
+                                <div class="feedback-rating">★★★★☆</div>
+                            </div>
+                            <p class="feedback-text">Your composition shows strong melodic instincts and I appreciate your experimentation with chord progressions. The bridge needs development - it feels disconnected from the verse and chorus. Consider motif repetition with variation to create more cohesion while still providing contrast.</p>
+                            <div class="feedback-skills">
+                                <span class="skill-tag">Composition +3</span>
+                                <span class="skill-tag">Arrangement +2</span>
+                                <span class="skill-tag">Musical Structure +3</span>
+                            </div>
+                            <div class="feedback-actions">
+                                <div class="feedback-date">1 week ago • on "Midnight Dreams"</div>
+                                <div class="action-buttons">
+                                    <div class="action-button">Thank</div>
+                                    <div class="action-button">Respond</div>
+                                    <div class="action-button">Save to Journal</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Growth Roadmap -->
+                <div class="growth-roadmap">
+                    <div class="roadmap-header">
+                        <h2 class="section-title"><span class="menu-icon">🗺️</span> Your Professional Development Path</h2>
+                    </div>
+                    
+                    <div class="roadmap-steps">
+                        <div class="roadmap-step completed">
+                            <div class="step-circle">1</div>
+                            <div class="step-title">Foundation</div>
+                            <div class="step-description">Master basic techniques and find your voice</div>
+                        </div>
+                        
+                        <div class="roadmap-step completed">
+                            <div class="step-circle">2</div>
+                            <div class="step-title">Development</div>
+                            <div class="step-description">Expand skills and build technical proficiency</div>
+                        </div>
+                        
+                        <div class="roadmap-step active">
+                            <div class="step-circle">3</div>
+                            <div class="step-title">Refinement</div>
+                            <div class="step-description">Polish your craft and develop artistic style</div>
+                        </div>
+                        
+                        <div class="roadmap-step">
+                            <div class="step-circle">4</div>
+                            <div class="step-title">Professional</div>
+                            <div class="step-description">Build industry connections and showcase portfolio</div>
+                        </div>
+                        
+                        <div class="roadmap-step">
+                            <div class="step-circle">5</div>
+                            <div class="step-title">Industry Launch</div>
+                            <div class="step-description">Secure professional opportunities and build industry presence</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Growth AI Coach -->
+                <div class="growth-coach">
+                    <div class="coach-header">
+                        <div class="coach-title">
+                            <span>🤖</span> CadenzaAI Professional Coach
+                        </div>
+                        <p class="coach-description">AI-powered career guidance based on your portfolio, industry trends, and mentor feedback</p>
+                    </div>
+                    
+                    <div class="coach-content">
+                        <div class="coach-chat">
+                            <div class="coach-message">
+                                <p>Based on your portfolio development and industry feedback, I've identified opportunities to enhance both your artistic growth and professional readiness.</p>
+                                <p>Here are three strategic recommendations to advance your career trajectory:</p>
+                                <ol>
+                                    <li>Your vocal techniques show professional potential - consider adding 2-3 contrasting pieces to showcase your versatility for industry applications</li>
+                                    <li>Your mentor feedback indicates strong stage presence - let's create a professional performance reel highlighting this strength</li>
+                                    <li>Based on industry trends, performers with your skill profile are in demand for commercial work - I've identified three potential networking opportunities this month</li>
+                                </ol>
+                            </div>
+                            
+                            <div class="coach-suggestions">
+                                <div class="suggestion-chip">Help me create my professional reel</div>
+                                <div class="suggestion-chip">Show me upcoming industry networking events</div>
+                                <div class="suggestion-chip">Connect me with a career development mentor</div>
+                                <div class="suggestion-chip">Analyze my portfolio for industry opportunities</div>
+                            </div>
+                        </div>
+                        
+                        <div class="coach-input">
+                            <textarea class="coach-textarea" placeholder="Ask your Growth Coach anything..."></textarea>
+                            <button class="send-button">➡️</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Community Challenges -->
+                <div class="challenges-section">
+                    <div class="challenges-header">
+                        <h2 class="section-title"><span class="menu-icon">🏆</span> Industry-Focused Challenges</h2>
+                    </div>
+                    
+                    <div class="challenges-grid">
+                        <div class="challenge-card">
+                            <div class="challenge-banner">🎭</div>
+                            <div class="challenge-content">
+                                <h3 class="challenge-title">Commercial Audition Prep</h3>
+                                <div class="challenge-info">
+                                    <div class="challenge-participants">👥 47 participants</div>
+                                    <div class="challenge-deadline">3 days left</div>
+                                </div>
+                                <p class="challenge-description">Create a 60-second commercial audition piece meeting professional industry standards. Receive feedback from casting directors and industry mentors.</p>
+                                <button class="challenge-join">Join Challenge</button>
+                            </div>
+                        </div>
+                        
+                        <div class="challenge-card">
+                            <div class="challenge-banner">🎵</div>
+                            <div class="challenge-content">
+                                <h3 class="challenge-title">Genre Fusion</h3>
+                                <div class="challenge-info">
+                                    <div class="challenge-participants">👥 32 participants</div>
+                                    <div class="challenge-deadline">5 days left</div>
+                                </div>
+                                <p class="challenge-description">Create a 2-minute composition that meaningfully blends elements from two contrasting genres. Focus on authentic integration rather than juxtaposition.</p>
+                                <button class="challenge-join">Join Challenge</button>
+                            </div>
+                        </div>
+                        
+                        <div class="challenge-card">
+                            <div class="challenge-banner">🎨</div>
+                            <div class="challenge-content">
+                                <h3 class="challenge-title">Visual Interpretation</h3>
+                                <div class="challenge-info">
+                                    <div class="challenge-participants">👥 28 participants</div>
+                                    <div class="challenge-deadline">1 week left</div>
+                                </div>
+                                <p class="challenge-description">Create a performance inspired by this week's featured artwork. Demonstrate how visual art can inspire and transform your creative expression.</p>
+                                <button class="challenge-join">Join Challenge</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div>
+                    <div class="footer-logo">
+                        <span class="logo-icon">🎵</span>
+                        CadenzaBoard: The Digital Stage
+                        <span class="by-arcpoint">by Arcpoint Creative</span>
+                    </div>
+                    <p class="footer-description">The proving ground for emerging voices — a curated spotlight platform built for growth and professional development, with expert mentorship and AI-powered guidance.</p>
+                    <div class="footer-social">
+                        <div class="social-icon">📱</div>
+                        <div class="social-icon">💻</div>
+                        <div class="social-icon">📷</div>
+                        <div class="social-icon">🎥</div>
+                    </div>
+                </div>
+                
+                <div class="footer-links">
+                    <h4>Platform</h4>
+                    <ul>
+                        <li><a href="#">How It Works</a></li>
+                        <li><a href="#">Growth Methodology</a></li>
+                        <li><a href="#">Mentor Network</a></li>
+                        <li><a href="#">Success Stories</a></li>
+                        <li><a href="#">Pricing</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-links">
+                    <h4>Community</h4>
+                    <ul>
+                        <li><a href="#">Spotlight Submissions</a></li>
+                        <li><a href="#">Weekly Challenges</a></li>
+                        <li><a href="#">Feedback Guidelines</a></li>
+                        <li><a href="#">Community Standards</a></li>
+                        <li><a href="#">Events & Workshops</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-links">
+                    <h4>Resources</h4>
+                    <ul>
+                        <li><a href="#">Growth Journal</a></li>
+                        <li><a href="#">Skill Development</a></li>
+                        <li><a href="#">Industry Insights</a></li>
+                        <li><a href="#">Support</a></li>
+                        <li><a href="#">FAQ</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <div class="footer-copyright">© 2025 The Digital Stage. All rights reserved.</div>
+                <div class="footer-policy">
+                    <a href="#">Privacy Policy</a>
+                    <a href="#">Terms of Service</a>
+                    <a href="#">Cookie Policy</a>
+                </div>
+            </div>
+        </div>
+    </footer>
 </body>
 </html>
