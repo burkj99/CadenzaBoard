@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CadenzaBoard: The Digital Stage</title>
+    <title>Submit Your Work - CadenzaBoard</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -16,7 +16,7 @@
             </div>
             <nav>
                 <ul>
-                    <li><a href="index.html" class="active">Home</a></li>
+                    <li><a href="index.html">Home</a></li>
                     <li><a href="portfolio.html">Portfolio</a></li>
                     <li><a href="growth.html">Growth Path</a></li>
                     <li><a href="community.html">Community</a></li>
@@ -35,7 +35,7 @@
         <div class="container main-grid">
             <div class="sidebar">
                 <h3 class="sidebar-title">Your Professional Journey</h3>
-                <a href="index.html" class="menu-item active">
+                <a href="index.html" class="menu-item">
                     <span class="menu-icon">🏠</span>
                     Dashboard
                 </a>
@@ -78,63 +78,84 @@
             </div>
             
             <div class="content-wrapper">
-                <!-- HOME PAGE -->
                 <div class="welcome-banner">
                     <div class="welcome-content">
-                        <h1 class="welcome-title">Welcome to Your Dashboard</h1>
-                        <p class="welcome-text">Track your growth, manage your submissions, and connect with mentors all in one place. Your musical journey starts here.</p>
+                        <h1 class="welcome-title">Submit Your Work</h1>
+                        <p class="welcome-text">Share your performances, compositions, or creative projects to receive feedback from mentors and peers. Quality submissions are featured in the Spotlight section, increasing your visibility in the community.</p>
                     </div>
                 </div>
                 
-                <div class="stats-container">
-                    <div class="stat-card">
-                        <div class="stat-value">8</div>
-                        <div class="stat-label">Portfolio Items</div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-value">3</div>
-                        <div class="stat-label">Featured Works</div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-value">47</div>
-                        <div class="stat-label">Feedback Received</div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-value">78%</div>
-                        <div class="stat-label">Growth Score</div>
-                    </div>
+                <div class="submission-guidelines">
+                    <h3 class="guidelines-title">Submission Guidelines</h3>
+                    <ul class="guidelines-list">
+                        <li>File formats accepted: MP3, WAV, MP4, MOV (max 500MB)</li>
+                        <li>Provide detailed information about your submission to receive more targeted feedback</li>
+                        <li>Tag your submission with relevant skills and categories to reach the right audience</li>
+                        <li>Consider what specific areas you'd like feedback on (technique, creativity, etc.)</li>
+                        <li>Higher quality submissions have a better chance of being featured in Spotlights</li>
+                    </ul>
+                    <p class="guidelines-note">Note: All submissions are reviewed within 48 hours before becoming visible to the community.</p>
                 </div>
                 
                 <div class="form-container">
-                    <h2 class="form-title">Quick Actions</h2>
-                    <div class="options-grid">
-                        <div class="option-card">
-                            <div class="option-icon">📤</div>
-                            <h3 class="option-title">Submit New Work</h3>
-                            <p class="option-description">Share your latest performance or composition for feedback and visibility.</p>
-                            <a href="submit.html" class="btn btn-primary">Submit Work</a>
+                    <h2 class="form-title">New Submission Form</h2>
+                    
+                    <div class="form-section">
+                        <h3>Submission Details</h3>
+                        <div class="form-group">
+                            <label class="form-label">Tags</label>
+                            <input type="text" id="tags-input" class="form-input" placeholder="Add tags (press Enter after each tag)">
+                            <p class="form-help">Examples: violin, classical, bach, performance, allegro</p>
+                            <div class="tag-container" id="tags-container">
+                                <!-- Tags will be added here dynamically -->
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-section">
+                        <h3>Media Upload</h3>
+                        <div class="form-upload" id="upload-area">
+                            <div class="upload-icon">📤</div>
+                            <p>Drag and drop your files here, or click to browse</p>
+                            <p class="form-help">Max file size: 500MB. Supported formats: MP3, WAV, MP4, MOV</p>
+                            <input type="file" id="file-upload" style="display: none;">
                         </div>
                         
-                        <div class="option-card">
-                            <div class="option-icon">👥</div>
-                            <h3 class="option-title">Find a Mentor</h3>
-                            <p class="option-description">Connect with industry professionals who can guide your development.</p>
-                            <a href="mentors.html" class="btn btn-primary">Browse Mentors</a>
+                        <div class="file-preview" id="file-preview">
+                            <!-- File preview will appear here -->
                         </div>
-                        
-                        <div class="option-card">
-                            <div class="option-icon">🏆</div>
-                            <h3 class="option-title">Weekly Challenge</h3>
-                            <p class="option-description">Take on this week's challenge to sharpen your skills and win recognition.</p>
-                            <a href="challenges.html" class="btn btn-primary">View Challenge</a>
+                    </div>
+                    
+                    <div class="form-section">
+                        <h3>Feedback Focus</h3>
+                        <div class="form-group">
+                            <label class="form-label" for="feedback-focus">What aspects would you like feedback on?</label>
+                            <textarea id="feedback-focus" class="form-textarea" placeholder="E.g., 'Looking for feedback on my bowing technique in the allegro section' or 'Would appreciate thoughts on the harmonic progression in the bridge'..."></textarea>
                         </div>
-                        
-                        <div class="option-card">
-                            <div class="option-icon">🧠</div>
-                            <h3 class="option-title">Growth Coach AI</h3>
-                            <p class="option-description">Get personalized feedback and practice suggestions from our AI assistant.</p>
-                            <a href="coach.html" class="btn btn-primary">Talk to Coach</a>
+                    </div>
+                    
+                    <div class="form-section">
+                        <h3>Privacy Settings</h3>
+                        <div class="form-group">
+                            <label class="form-label">Who can see this submission?</label>
+                            <div>
+                                <input type="radio" id="privacy-public" name="privacy" value="public" checked>
+                                <label for="privacy-public">Public (visible to all CadenzaBoard users)</label>
+                            </div>
+                            <div>
+                                <input type="radio" id="privacy-mentors" name="privacy" value="mentors">
+                                <label for="privacy-mentors">Mentors Only (visible only to verified mentors)</label>
+                            </div>
+                            <div>
+                                <input type="radio" id="privacy-private" name="privacy" value="private">
+                                <label for="privacy-private">Private (visible only to mentors you select)</label>
+                            </div>
                         </div>
+                    </div>
+                    
+                    <div class="form-buttons">
+                        <button class="btn btn-secondary">Save Draft</button>
+                        <button class="btn btn-primary">Submit Work</button>
                     </div>
                 </div>
             </div>
@@ -206,4 +227,27 @@
     
     <script src="main.js"></script>
 </body>
-</html>
+</html>group">
+                            <label class="form-label" for="title">Title</label>
+                            <input type="text" id="title" class="form-input" placeholder="Give your submission a descriptive title">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label" for="category">Category</label>
+                            <select id="category" class="form-select">
+                                <option value="">Select a category</option>
+                                <option value="performance">Performance</option>
+                                <option value="composition">Composition</option>
+                                <option value="improvisation">Improvisation</option>
+                                <option value="arrangement">Arrangement</option>
+                                <option value="technique">Technique Demonstration</option>
+                                <option value="other">Other</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label" for="description">Description</label>
+                            <textarea id="description" class="form-textarea" placeholder="Describe your submission, what inspired you, and any relevant context..."></textarea>
+                        </div>
+                        
+                        <div class="form-
