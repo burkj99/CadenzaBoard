@@ -4,10 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CadenzaBoard by Arcpoint Creative</title>
-    <style>
-        /* CSS will be loaded from external file */
-        @import url('styles.css');
-    </style>
+    <!-- Load CSS first -->
+    <link rel="stylesheet" href="styles.css">
+    <!-- Preload JavaScript -->
+    <link rel="preload" href="script.js" as="script">
 </head>
 <body>
     <header>
@@ -184,6 +184,17 @@
             </div>
         </div>
     </footer>
+
+    <!-- Add this script for debugging -->
+    <script>
+        console.log('Inline script executed');
+        window.addEventListener('DOMContentLoaded', function() {
+            console.log('DOM content loaded in inline script');
+        });
+        window.addEventListener('load', function() {
+            console.log('Window loaded in inline script');
+        });
+    </script>
 
     <!-- Load JavaScript at the end for better performance -->
     <script src="script.js"></script>
