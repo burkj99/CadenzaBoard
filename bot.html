@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CadenzaBot Chat - CadenzaBoard</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <div class="container header-content">
+            <div class="logo">
+                <span class="logo-icon">🎵</span>
+                <a href="index.html" style="color: inherit; text-decoration: none;">CadenzaBoard: The Digital Stage</a>
+                <span class="by-arcpoint">by Arcpoint Creative</span>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="portfolio.html">Portfolio</a></li>
+                    <li><a href="growth.html">Growth Path</a></li>
+                    <li><a href="community.html">Community</a></li>
+                    <li><a href="resources.html">Resources</a></li>
+                    <li><a href="bot.html" class="active">CadenzaBot</a></li>
+                </ul>
+            </nav>
+            <div class="mobile-menu-toggle">☰</div>
+            <div class="user-actions">
+                <div class="user-icon">🔔</div>
+                <div class="user-icon">👤</div>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <div class="container chat-container">
+            <h1 class="form-title">Chat with CadenzaBot</h1>
+            <div id="chat-log" class="chat-log"></div>
+            <form id="chat-form" class="chat-form">
+                <input id="user-input" type="text" placeholder="Ask CadenzaBot..." required>
+                <button type="submit" class="btn btn-primary">Send</button>
+            </form>
+        </div>
+    </main>
+
+    <script src="bot.js"></script>
+</body>
+</html>
