@@ -1,162 +1,10 @@
-        </div>
-    </div>
-
-    <!-- PayPal Subscription Modal -->
-    <div class="paypal-modal" id="paypalModal">
-        <div class="paypal-content">
-            <button class="close-modal" onclick="closePayPalModal()">×</button>
-            <h2>🎵 Choose Your CadenzaBoard AI Plan</h2>
-            
-            <div class="pricing-tiers">
-                <!-- Starter Plan -->
-                <div class="pricing-plan">
-                    <div class="plan-title">Starter</div>
-                    <div class="price">$9.99<span style="font-size: 16px; color: #fff;">/month</span></div>
-                    <div class="price-subtitle">Great for emerging musicians</div>
-                    <ul class="feature-list">
-                        <li>✅ 25 AI requests per month</li>
-                        <li>✅ Professional bio writing</li>
-                        <li>✅ Basic grant guidance</li>
-                        <li>✅ Career planning tools</li>
-                        <li>✅ Festival application tips</li>
-                        <li>✅ Email support</li>
-                        <li>✅ Community forum access</li>
-                    </ul>
-                    <a href="https://paypal.me/jacobburk/9.99" class="paypal-btn" target="_blank">
-                        Start Starter Plan
-                    </a>
-                </div>
-
-                <!-- Professional Plan -->
-                <div class="pricing-plan featured">
-                    <div class="plan-badge">Most Popular</div>
-                    <div class="plan-title">Professional</div>
-                    <div class="price">$24.99<span style="font-size: 16px; color: #fff;">/month</span></div>
-                    <div class="price-subtitle">For serious career development</div>
-                    <ul class="feature-list">
-                        <li>✅ <strong>100</strong> AI requests per month</li>
-                        <li>✅ <strong>Advanced</strong> bio writing (800+ words)</li>
-                        <li>✅ <strong>Detailed</strong> grant strategies</li>
-                        <li>✅ <strong>Monthly</strong> career check-ins</li>
-                        <li>✅ <strong>Priority</strong> festival recommendations</li>
-                        <li>✅ <strong>24hr</strong> priority support</li>
-                        <li>✅ <strong>Networking</strong> guidance & templates</li>
-                        <li>✅ <strong>Performance</strong> analytics</li>
-                    </ul>
-                    <a href="https://paypal.me/jacobburk/24.99" class="paypal-btn" target="_blank">
-                        Start Professional Plan
-                    </a>
-                </div>
-            </div>
-
-            <!-- Elite Plan -->
-            <div class="pricing-plan" style="margin-top: 20px;">
-                <div class="plan-title">Elite Mentorship</div>
-                <div class="price">$79<span style="font-size: 16px; color: #fff;">/month</span></div>
-                <div class="price-subtitle">For career transformation & high-earners</div>
-                <ul class="feature-list" style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
-                    <li>✅ <strong>Unlimited</strong> AI requests</li>
-                    <li>✅ <strong>1-on-1</strong> monthly video calls</li>
-                    <li>✅ <strong>Custom</strong> career roadmaps</li>
-                    <li>✅ <strong>Industry</strong> contact introductions</li>
-                    <li>✅ <strong>Grant</strong> application review</li>
-                    <li>✅ <strong>Performance</strong> opportunity alerts</li>
-                    <li>✅ <strong>Personal</strong> branding package</li>
-                    <li>✅ <strong>Direct</strong> mentor access</li>
-                </ul>
-                <a href="https://paypal.me/jacobburk/79" class="paypal-btn enterprise">
-                    Start Elite Mentorship
-                </a>
-            </div>
-
-            <div class="value-props">
-                <div class="value-prop">
-                    <strong>💰 Success Stories:</strong> Our users secure 40% more performance opportunities and 60% higher fees within 6 months
-                </div>
-                <div class="value-prop">
-                    <strong>🎯 Proven Track Record:</strong> Over 1,000 successful applications and $8M+ in grants secured by our community
-                </div>
-                <div class="value-prop">
-                    <strong>⚡ Time Savings:</strong> Save 10+ hours per application with AI-powered guidance and proven templates
-                </div>
-            </div>
-            
-            <p style="font-size: 12px; color: rgba(255,255,255,0.6); margin-top: 20px;">
-                🔒 Secure payments • Cancel anytime • 7-day money-back guarantee • Free plan includes 5 monthly requests
-            </p>
-        </div>
-    </div>
-
-    <script>
-        let selectedRequestType = '';
-        let currentPlan = 'free'; // 'free', 'starter', 'professional', 'elite'
-        let monthlyUsage = 2; // Current usage count
-        let usageLimit = 5; // Free plan limit - reasonable for trial
-        
-        // Initialize the app
-        document.addEventListener('DOMContentLoaded', function() {
-            updateUsageDisplay();
-            updatePlanDisplay();
-            
-            // Set up upgrade button
-            const upgradeBtn = document.getElementById('upgradeBtn');
-            if (upgradeBtn) {
-                upgradeBtn.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    showPayPalModal();
-                });
-            }
-        });
-        function updateUsageDisplay() {
-            const usageText = document.getElementById('usageText');
-            const usageProgress = document.getElementById('usageProgress');
-            const usageTracker = document.getElementById('usageTracker');
-            
-            if (currentPlan === 'pro') {
-                usageTracker.style.display = 'none';
-            } else {
-                usageTracker.style.display = 'block';
-                usageText.textContent = `${monthlyUsage}/${usageLimit} requests used`;
-                const percentage = (monthlyUsage / usageLimit) * 100;
-                usageProgress.style.width = `${percentage}%`;
-                
-                if (percentage >= 100) {
-                    usageProgress.style.background = 'linear-gradient(135deg, #FF6B6B, #FF8E8E)';
-                }
-            }
-        }
-
-        // Update plan display
-        function updatePlanDisplay() {
-            const planBadge = document.getElementById('planBadge');
-            const upgradeBtn = document.getElementById('upgradeBtn');
-            
-            if (currentPlan === 'pro') {
-                planBadge.textContent = 'Pro Plan';
-                planBadge.style.background = 'linear-gradient(135deg, #1ABC9C, #16A085)';
-                upgradeBtn.style.display = 'none';
-            } else {
-                planBadge.textContent = 'Free Plan';
-                planBadge.style.background = 'linear-gradient(135deg, #FF6B6B, #FF8E8E)';
-                upgradeBtn.style.display = 'inline-block';
-            }
-        }
-
-        // Upgrade button click
-        document.getElementById('upgradeBtn').addEventListener('click', showPayPalModal);
-
-        // Close modal when clicking outside
-        document.getElementById('paypalModal').addEventListener('click', function(e) {
-            if (e.target === this) {
-                closePayPalModal();
-            }
-        });<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CadenzaBoard AI</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     
     <!-- Favicon -->
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPGNpcmNsZSBjeD0iMzAiIGN5PSIzMCIgcj0iMjgiIGZpbGw9IiMyMzI1MzEiIHN0cm9rZT0iI2ZmZmZmZiIgc3Ryb2tlLXdpZHRoPSI0Ii8+Cjx0ZXh0IHg9IjMwIiB5PSIzOCIgZm9udC1mYW1pbHk9IkludGVyLCBzYW5zLXNlcmlmIiBmb250LXNpemU9IjE4IiBmb250LXdlaWdodD0iNzAwIiBmaWxsPSIjZmZmZmZmIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIj5BSTwvdGV4dD4KPHN2Zz4K">
@@ -169,13 +17,12 @@
         }
 
         body {
-            font-family: 'Space Grotesk', 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            font-family: 'Space Grotesk', sans-serif;
             background: linear-gradient(135deg, #0D1117 0%, #161B22 25%, #21262D 50%, #30363D 75%, #424A53 100%);
             color: #ffffff;
             min-height: 100vh;
             display: flex;
             flex-direction: column;
-            overflow-x: hidden;
         }
 
         body::before {
@@ -186,8 +33,7 @@
             width: 100%;
             height: 100%;
             background: radial-gradient(circle at 20% 20%, rgba(88, 166, 255, 0.05) 0%, transparent 50%),
-                        radial-gradient(circle at 80% 80%, rgba(139, 92, 246, 0.05) 0%, transparent 50%),
-                        radial-gradient(circle at 40% 40%, rgba(34, 197, 94, 0.03) 0%, transparent 50%);
+                        radial-gradient(circle at 80% 80%, rgba(139, 92, 246, 0.05) 0%, transparent 50%);
             pointer-events: none;
             z-index: -1;
         }
@@ -200,18 +46,6 @@
             background: rgba(255, 255, 255, 0.02);
             backdrop-filter: blur(20px);
             border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-            position: relative;
-        }
-
-        .header::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: linear-gradient(90deg, transparent, rgba(88, 166, 255, 0.05), transparent);
-            z-index: -1;
         }
 
         .logo {
@@ -229,26 +63,21 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            font-family: 'Space Grotesk', sans-serif;
             font-weight: 700;
             color: #ffffff;
             font-size: 20px;
             animation: logoFloat 4s ease-in-out infinite;
             box-shadow: 0 8px 32px rgba(88, 166, 255, 0.2);
-            position: relative;
         }
 
         @keyframes logoFloat {
-            0%, 100% { transform: translateY(0px) rotate(0deg); }
-            25% { transform: translateY(-3px) rotate(0.5deg); }
-            50% { transform: translateY(-6px) rotate(0deg); }
-            75% { transform: translateY(-3px) rotate(-0.5deg); }
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-6px); }
         }
 
         .logo-text {
             font-size: 36px;
             font-weight: 400;
-            letter-spacing: -1px;
             color: #ffffff;
         }
 
@@ -269,7 +98,7 @@
         }
 
         .plan-badge {
-            background: linear-gradient(135deg, #8B5CF6, #A855F7);
+            background: linear-gradient(135deg, #6B7280, #4B5563);
             color: white;
             padding: 8px 16px;
             border-radius: 20px;
@@ -277,8 +106,6 @@
             font-weight: 600;
             text-transform: uppercase;
             letter-spacing: 0.5px;
-            box-shadow: 0 4px 15px rgba(139, 92, 246, 0.3);
-            border: 1px solid rgba(255, 255, 255, 0.1);
         }
 
         .upgrade-btn {
@@ -291,10 +118,6 @@
             font-weight: 600;
             cursor: pointer;
             transition: all 0.3s ease;
-            text-decoration: none;
-            display: inline-block;
-            box-shadow: 0 6px 20px rgba(88, 166, 255, 0.3);
-            border: 1px solid rgba(255, 255, 255, 0.1);
         }
 
         .upgrade-btn:hover {
@@ -312,13 +135,34 @@
             gap: 30px;
         }
 
+        .usage-tracker {
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 20px;
+            padding: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(20px);
+        }
+
+        .usage-bar {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            height: 8px;
+            margin-top: 10px;
+        }
+
+        .usage-progress {
+            background: linear-gradient(135deg, #58A6FF, #4F46E5);
+            height: 100%;
+            border-radius: 10px;
+            transition: width 0.3s ease;
+        }
+
         .request-type {
             background: rgba(255, 255, 255, 0.03);
             border-radius: 20px;
             padding: 30px;
             border: 1px solid rgba(255, 255, 255, 0.08);
             backdrop-filter: blur(20px);
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
         }
 
         .request-type h3 {
@@ -343,30 +187,12 @@
             transition: all 0.3s ease;
             text-align: center;
             font-weight: 500;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .request-option::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
-            transition: left 0.5s ease;
-        }
-
-        .request-option:hover::before {
-            left: 100%;
         }
 
         .request-option:hover {
             background: rgba(255, 255, 255, 0.08);
             transform: translateY(-3px);
             box-shadow: 0 10px 30px rgba(88, 166, 255, 0.2);
-            border-color: rgba(88, 166, 255, 0.3);
         }
 
         .request-option.selected {
@@ -381,7 +207,6 @@
             padding: 30px;
             border: 1px solid rgba(255, 255, 255, 0.08);
             backdrop-filter: blur(20px);
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
         }
 
         .input-group {
@@ -407,7 +232,6 @@
             font-size: 16px;
             font-family: 'Space Grotesk', sans-serif;
             transition: all 0.3s ease;
-            backdrop-filter: blur(10px);
         }
 
         .input-group input:focus,
@@ -415,7 +239,6 @@
             outline: none;
             border-color: #58A6FF;
             box-shadow: 0 0 0 3px rgba(88, 166, 255, 0.2);
-            background: rgba(255, 255, 255, 0.08);
         }
 
         .input-group textarea {
@@ -441,8 +264,6 @@
             width: 100%;
             text-transform: uppercase;
             letter-spacing: 0.5px;
-            box-shadow: 0 8px 30px rgba(88, 166, 255, 0.3);
-            border: 1px solid rgba(255, 255, 255, 0.1);
         }
 
         .submit-btn:hover {
@@ -462,7 +283,6 @@
             padding: 30px;
             border: 1px solid rgba(255, 255, 255, 0.08);
             backdrop-filter: blur(20px);
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
             display: none;
         }
 
@@ -518,7 +338,6 @@
             padding: 30px;
             border: 1px solid rgba(255, 255, 255, 0.08);
             backdrop-filter: blur(20px);
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
         }
 
         .tips-section h3 {
@@ -538,7 +357,6 @@
             padding: 20px;
             border-radius: 12px;
             border-left: 4px solid #58A6FF;
-            backdrop-filter: blur(10px);
             transition: transform 0.3s ease;
         }
 
@@ -551,32 +369,8 @@
             font-weight: 700;
         }
 
-        .usage-tracker {
-            background: rgba(255, 255, 255, 0.03);
-            border-radius: 20px;
-            padding: 20px;
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            backdrop-filter: blur(20px);
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
-            margin-bottom: 20px;
-        }
-
-        .usage-bar {
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 10px;
-            height: 8px;
-            margin-top: 10px;
-            overflow: hidden;
-        }
-
-        .usage-progress {
-            background: linear-gradient(135deg, #58A6FF, #4F46E5);
-            height: 100%;
-            transition: width 0.3s ease;
-            border-radius: 10px;
-        }
-
-        .paypal-modal {
+        /* Modal Styles */
+        .modal {
             display: none;
             position: fixed;
             top: 0;
@@ -590,7 +384,11 @@
             justify-content: center;
         }
 
-        .paypal-content {
+        .modal.show {
+            display: flex;
+        }
+
+        .modal-content {
             background: rgba(255, 255, 255, 0.05);
             border-radius: 20px;
             padding: 40px;
@@ -599,9 +397,22 @@
             border: 1px solid rgba(255, 255, 255, 0.1);
             backdrop-filter: blur(20px);
             text-align: center;
+            position: relative;
         }
 
-        .paypal-content h2 {
+        .close-modal {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            background: none;
+            border: none;
+            color: #fff;
+            font-size: 24px;
+            cursor: pointer;
+            padding: 5px;
+        }
+
+        .modal-content h2 {
             margin-bottom: 30px;
             color: #ffffff;
             font-weight: 700;
@@ -620,7 +431,6 @@
             border-radius: 15px;
             padding: 25px;
             border: 1px solid rgba(255, 255, 255, 0.1);
-            position: relative;
             transition: all 0.3s ease;
         }
 
@@ -692,7 +502,6 @@
             text-decoration: none;
             display: inline-block;
             margin: 10px 5px;
-            box-shadow: 0 6px 20px rgba(0, 112, 186, 0.3);
             width: 100%;
         }
 
@@ -703,257 +512,6 @@
 
         .paypal-btn.enterprise {
             background: linear-gradient(135deg, #8B5CF6, #A855F7);
-            box-shadow: 0 6px 20px rgba(139, 92, 246, 0.3);
-        }
-
-        .paypal-btn.enterprise:hover {
-            box-shadow: 0 8px 30px rgba(139, 92, 246, 0.4);
-        }
-
-        .value-props {
-            margin-top: 30px;
-            padding-top: 20px;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        .value-prop {
-            background: rgba(255, 255, 255, 0.03);
-            padding: 15px;
-            border-radius: 10px;
-            margin: 10px 0;
-            border-left: 4px solid #58A6FF;
-        }
-
-        @media (max-width: 768px) {
-            .pricing-tiers {
-                grid-template-columns: 1fr;
-            }
-            
-            .pricing-plan.featured {
-                transform: none;
-            }
-        }
-
-        .close-modal {
-            position: absolute;
-            top: 15px;
-            right: 20px;
-            background: none;
-            border: none;
-            color: #fff;
-            font-size: 24px;
-            cursor: pointer;
-            padding: 5px;
-        }
-            border-radius: 20px;
-            padding: 30px;
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(20px);
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
-            display: none;
-        }
-
-        .response-section.show {
-            display: block;
-            animation: fadeInUp 0.6s ease-out;
-        }
-
-        @keyframes fadeInUp {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .response-section h3 {
-            margin-bottom: 20px;
-            color: #ffffff;
-            font-size: 22px;
-            font-weight: 700;
-            background: linear-gradient(135deg, #FF6B6B, #FF8E8E);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .response-content {
-            line-height: 1.7;
-            white-space: pre-wrap;
-            font-size: 16px;
-        }
-
-        .loading {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 12px;
-            color: #1ABC9C;
-            font-weight: 500;
-        }
-
-        .loading-spinner {
-            width: 24px;
-            height: 24px;
-            border: 3px solid rgba(26, 188, 156, 0.3);
-            border-top: 3px solid #1ABC9C;
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-        }
-
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-
-        .tips-section {
-            background: rgba(255, 255, 255, 0.02);
-            border-radius: 20px;
-            padding: 30px;
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(20px);
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
-        }
-
-        .tips-section h3 {
-            margin-bottom: 20px;
-            font-size: 22px;
-            font-weight: 700;
-            background: linear-gradient(135deg, #1ABC9C, #16A085);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .tips-list {
-            display: grid;
-            gap: 16px;
-        }
-
-        .tip-item {
-            background: linear-gradient(135deg, rgba(26, 188, 156, 0.1), rgba(22, 160, 133, 0.05));
-            padding: 20px;
-            border-radius: 12px;
-            border-left: 4px solid #1ABC9C;
-            backdrop-filter: blur(10px);
-            transition: transform 0.3s ease;
-        }
-
-        .tip-item:hover {
-            transform: translateX(5px);
-        }
-
-        .tip-item strong {
-            color: #1ABC9C;
-            font-weight: 700;
-        }
-
-        .usage-tracker {
-            background: rgba(255, 255, 255, 0.02);
-            border-radius: 20px;
-            padding: 20px;
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(20px);
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
-            margin-bottom: 20px;
-        }
-
-        .usage-bar {
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 10px;
-            height: 8px;
-            margin-top: 10px;
-            overflow: hidden;
-        }
-
-        .usage-progress {
-            background: linear-gradient(135deg, #1ABC9C, #16A085);
-            height: 100%;
-            transition: width 0.3s ease;
-            border-radius: 10px;
-        }
-
-        .paypal-modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.8);
-            backdrop-filter: blur(10px);
-            z-index: 1000;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .paypal-modal.show {
-            display: flex;
-        }
-
-        .paypal-content {
-            background: linear-gradient(135deg, rgba(26, 188, 156, 0.1), rgba(22, 160, 133, 0.05));
-            border-radius: 20px;
-            padding: 40px;
-            max-width: 500px;
-            width: 90%;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(20px);
-            text-align: center;
-        }
-
-        .paypal-content h2 {
-            margin-bottom: 20px;
-            background: linear-gradient(135deg, #1ABC9C, #16A085);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            font-weight: 700;
-        }
-
-        .pricing-plan {
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 15px;
-            padding: 25px;
-            margin: 20px 0;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        .price {
-            font-size: 36px;
-            font-weight: 800;
-            color: #1ABC9C;
-            margin: 10px 0;
-        }
-
-        .paypal-btn {
-            background: linear-gradient(135deg, #0070ba, #003087);
-            color: white;
-            border: none;
-            padding: 15px 30px;
-            border-radius: 12px;
-            font-size: 16px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            text-decoration: none;
-            display: inline-block;
-            margin: 10px;
-            box-shadow: 0 6px 20px rgba(0, 112, 186, 0.3);
-        }
-
-        .paypal-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 30px rgba(0, 112, 186, 0.4);
-        }
-
-        .close-modal {
-            position: absolute;
-            top: 15px;
-            right: 20px;
-            background: none;
-            border: none;
-            color: #fff;
-            font-size: 24px;
-            cursor: pointer;
-            padding: 5px;
         }
 
         @media (max-width: 768px) {
@@ -972,6 +530,14 @@
             .request-options {
                 grid-template-columns: 1fr;
             }
+            
+            .pricing-tiers {
+                grid-template-columns: 1fr;
+            }
+            
+            .pricing-plan.featured {
+                transform: none;
+            }
         }
     </style>
 </head>
@@ -985,8 +551,8 @@
             </div>
         </div>
         <div class="subscription-info">
-            <div class="plan-badge" id="planBadge">Free Plan</div>
-            <button class="upgrade-btn" id="upgradeBtn">Upgrade to Pro</button>
+            <div class="plan-badge" id="planBadge">Free (5 monthly)</div>
+            <button class="upgrade-btn" id="upgradeBtn">Choose Your Plan</button>
         </div>
     </div>
 
@@ -994,12 +560,13 @@
         <div class="usage-tracker" id="usageTracker">
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 5px;">
                 <span style="font-weight: 600;">Monthly Usage</span>
-                <span id="usageText">2/3 requests used</span>
+                <span id="usageText">2/5 free requests used</span>
             </div>
             <div class="usage-bar">
-                <div class="usage-progress" id="usageProgress" style="width: 66%"></div>
+                <div class="usage-progress" id="usageProgress" style="width: 40%"></div>
             </div>
         </div>
+
         <div class="request-type">
             <h3>What type of help do you need?</h3>
             <div class="request-options">
@@ -1023,7 +590,7 @@
                 <textarea id="request" placeholder="What specific help do you need? Be as detailed as possible..."></textarea>
             </div>
             
-            <button class="submit-btn" id="submitBtn">Get AI Assistance</button>
+            <button class="submit-btn" id="submitBtn">Generate AI Response</button>
         </div>
 
         <div class="response-section" id="responseSection">
@@ -1050,42 +617,169 @@
         </div>
     </div>
 
-    <script>
-        let selectedRequestType = '';
-        // Request type selection
-        document.querySelectorAll('.request-option').forEach(option => {
-            option.addEventListener('click', function() {
-                document.querySelectorAll('.request-option').forEach(opt => opt.classList.remove('selected'));
-                this.classList.add('selected');
-                selectedRequestType = this.dataset.type;
-                updatePlaceholders();
-            });
-        });
+    <!-- Pricing Modal -->
+    <div class="modal" id="pricingModal">
+        <div class="modal-content">
+            <button class="close-modal" onclick="closeModal()">&times;</button>
+            <h2>🎵 Choose Your CadenzaBoard AI Plan</h2>
+            
+            <div class="pricing-tiers">
+                <div class="pricing-plan">
+                    <div class="plan-title">Starter</div>
+                    <div class="price">$9.99<span style="font-size: 16px; color: #fff;">/month</span></div>
+                    <div class="price-subtitle">Great for emerging musicians</div>
+                    <ul class="feature-list">
+                        <li>✅ 25 AI requests per month</li>
+                        <li>✅ Professional bio writing</li>
+                        <li>✅ Basic grant guidance</li>
+                        <li>✅ Career planning tools</li>
+                        <li>✅ Festival application tips</li>
+                        <li>✅ Email support</li>
+                    </ul>
+                    <a href="https://paypal.me/jacobburk/9.99" class="paypal-btn" target="_blank">
+                        Start Starter Plan
+                    </a>
+                </div>
 
+                <div class="pricing-plan featured">
+                    <div class="plan-badge">Most Popular</div>
+                    <div class="plan-title">Professional</div>
+                    <div class="price">$24.99<span style="font-size: 16px; color: #fff;">/month</span></div>
+                    <div class="price-subtitle">For serious career development</div>
+                    <ul class="feature-list">
+                        <li>✅ <strong>100</strong> AI requests per month</li>
+                        <li>✅ <strong>Advanced</strong> bio writing</li>
+                        <li>✅ <strong>Detailed</strong> grant strategies</li>
+                        <li>✅ <strong>Monthly</strong> career check-ins</li>
+                        <li>✅ <strong>Priority</strong> support</li>
+                        <li>✅ <strong>Performance</strong> analytics</li>
+                    </ul>
+                    <a href="https://paypal.me/jacobburk/24.99" class="paypal-btn" target="_blank">
+                        Start Professional Plan
+                    </a>
+                </div>
+            </div>
+
+            <div class="pricing-plan" style="margin-top: 20px;">
+                <div class="plan-title">Elite Mentorship</div>
+                <div class="price">$79<span style="font-size: 16px; color: #fff;">/month</span></div>
+                <div class="price-subtitle">For career transformation</div>
+                <ul class="feature-list" style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+                    <li>✅ <strong>Unlimited</strong> AI requests</li>
+                    <li>✅ <strong>1-on-1</strong> monthly calls</li>
+                    <li>✅ <strong>Custom</strong> career roadmaps</li>
+                    <li>✅ <strong>Industry</strong> contacts</li>
+                    <li>✅ <strong>Grant</strong> review</li>
+                    <li>✅ <strong>Performance</strong> alerts</li>
+                    <li>✅ <strong>Personal</strong> branding</li>
+                    <li>✅ <strong>Direct</strong> mentor access</li>
+                </ul>
+                <a href="https://paypal.me/jacobburk/79" class="paypal-btn enterprise">
+                    Start Elite Mentorship
+                </a>
+            </div>
+            
+            <p style="font-size: 12px; color: rgba(255,255,255,0.6); margin-top: 20px;">
+                🔒 Secure payments • Cancel anytime • 7-day money-back guarantee
+            </p>
+        </div>
+    </div>
+
+    <script>
+        // Configuration
+        const API_KEY = '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';
+        const API_ENDPOINT = 'https://api.groq.com/openai/v1/chat/completions';
+        
+        // App state
+        let selectedRequestType = '';
+        let currentPlan = 'free';
+        let monthlyUsage = 2;
+        let usageLimit = 5;
+
+        // Dev mode - you can activate Elite membership
+        function activateDevMode() {
+            currentPlan = 'elite';
+            monthlyUsage = 0;
+            updatePlanDisplay();
+            updateUsageDisplay();
+            console.log('🚀 Elite membership activated for development!');
+            alert('🎉 Elite membership activated! You now have unlimited AI requests.');
+        }
+
+        // Update plan display
+        function updatePlanDisplay() {
+            const planBadge = document.getElementById('planBadge');
+            const upgradeBtn = document.getElementById('upgradeBtn');
+            
+            if (currentPlan === 'starter') {
+                planBadge.textContent = 'Starter';
+                planBadge.style.background = 'linear-gradient(135deg, #58A6FF, #4F46E5)';
+                upgradeBtn.textContent = 'Upgrade to Professional';
+                upgradeBtn.style.display = 'inline-block';
+            } else if (currentPlan === 'professional') {
+                planBadge.textContent = 'Professional';
+                planBadge.style.background = 'linear-gradient(135deg, #8B5CF6, #A855F7)';
+                upgradeBtn.textContent = 'Upgrade to Elite';
+                upgradeBtn.style.display = 'inline-block';
+            } else if (currentPlan === 'elite') {
+                planBadge.textContent = 'Elite (Dev)';
+                planBadge.style.background = 'linear-gradient(135deg, #10B981, #059669)';
+                upgradeBtn.style.display = 'none';
+            } else {
+                planBadge.textContent = 'Free (5 monthly)';
+                planBadge.style.background = 'linear-gradient(135deg, #6B7280, #4B5563)';
+                upgradeBtn.textContent = 'Choose Your Plan';
+                upgradeBtn.style.display = 'inline-block';
+            }
+        }
+
+        // Modal functions
+        function showModal() {
+            document.getElementById('pricingModal').classList.add('show');
+        }
+
+        function closeModal() {
+            document.getElementById('pricingModal').classList.remove('show');
+        }
+
+        // Request type selection
+        function selectRequestType(type) {
+            // Remove selection from all options
+            document.querySelectorAll('.request-option').forEach(opt => {
+                opt.classList.remove('selected');
+            });
+            
+            // Add selection to clicked option
+            event.target.classList.add('selected');
+            selectedRequestType = type;
+            updatePlaceholders();
+        }
+
+        // Update placeholders based on request type
         function updatePlaceholders() {
             const contextInput = document.getElementById('context');
             const requestInput = document.getElementById('request');
             
             const placeholders = {
                 bio: {
-                    context: "e.g., I'm a classical pianist with 10 years of experience, trained at Juilliard, performed at Carnegie Hall, currently working on community outreach programs...",
-                    request: "I need a professional bio for festival applications. It should be 150-200 words and highlight my classical training and community outreach work..."
+                    context: "e.g., I'm a classical pianist with 10 years of experience, trained at Juilliard, performed at Carnegie Hall...",
+                    request: "I need a professional bio for festival applications. It should be 150-200 words and highlight my classical training..."
                 },
                 grant: {
-                    context: "e.g., I'm a composer working on a chamber music project, my background includes Yale School of Music, I've previously received NEA grants...",
-                    request: "I'm applying for a $25,000 arts council grant to fund my new composition project. I need help with the artistic statement and project description..."
+                    context: "e.g., I'm a composer working on a chamber music project, my background includes Yale School of Music...",
+                    request: "I'm applying for a $25,000 arts council grant to fund my new composition project..."
                 },
                 career: {
-                    context: "e.g., I'm a recent conservatory graduate, trained in violin performance, interested in both performing and teaching, facing challenges with networking...",
-                    request: "I need guidance on whether to focus on performance, teaching, or both. How do I build a sustainable music career in today's market?"
+                    context: "e.g., I'm a recent conservatory graduate, trained in violin performance, interested in both performing and teaching...",
+                    request: "I need guidance on whether to focus on performance, teaching, or both. How do I build a sustainable music career?"
                 },
                 festival: {
-                    context: "e.g., I'm a soprano with experience in opera and art song, my repertoire includes Baroque to Contemporary, I've performed at regional venues...",
-                    request: "I want to apply to major summer festivals like Tanglewood and Aspen. Help me craft a compelling application that highlights my versatility..."
+                    context: "e.g., I'm a soprano with experience in opera and art song, my repertoire includes Baroque to Contemporary...",
+                    request: "I want to apply to major summer festivals like Tanglewood and Aspen. Help me craft a compelling application..."
                 },
                 academic: {
-                    context: "e.g., I'm interested in pursuing a DMA in composition, my background includes MM from Eastman, I want to focus on electronic music and AI...",
-                    request: "I'm applying to doctoral programs in composition. Help me with my personal statement and explain why I'm interested in the intersection of AI and music..."
+                    context: "e.g., I'm interested in pursuing a DMA in composition, my background includes MM from Eastman...",
+                    request: "I'm applying to doctoral programs in composition. Help me with my personal statement..."
                 },
                 general: {
                     context: "Tell me about your musical background, current situation, and what you're working on...",
@@ -1098,11 +792,49 @@
             requestInput.placeholder = placeholderSet.request;
         }
 
-        // Submit button functionality
-        document.getElementById('submitBtn').addEventListener('click', async function() {
-            // Check usage limits for free users
+        // AI API call
+        async function callGroqAPI(prompt, maxTokens) {
+            try {
+                const response = await fetch(API_ENDPOINT, {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': `Bearer ${API_KEY}`,
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        messages: [
+                            {
+                                role: "system",
+                                content: "You are CadenzaBoard AI, a specialized music career assistant. You help musicians with bios, grant applications, career guidance, festival applications, academic programs, and general music advice. Provide detailed, actionable, and professional guidance tailored to classical and contemporary musicians."
+                            },
+                            {
+                                role: "user",
+                                content: prompt
+                            }
+                        ],
+                        model: "llama3-8b-8192",
+                        max_tokens: maxTokens,
+                        temperature: 0.7
+                    })
+                });
+
+                if (!response.ok) {
+                    throw new Error(`API request failed: ${response.status}`);
+                }
+
+                const data = await response.json();
+                return data.choices[0].message.content;
+            } catch (error) {
+                console.error('API Error:', error);
+                return "I apologize, but I'm having trouble connecting to the AI service right now. Please try again in a moment.";
+            }
+        }
+
+        // Submit function
+        async function submitRequest() {
+            // Check usage limits
             if (currentPlan === 'free' && monthlyUsage >= usageLimit) {
-                showPayPalModal();
+                showModal();
                 return;
             }
 
@@ -1115,446 +847,111 @@
             }
 
             const submitBtn = document.getElementById('submitBtn');
-            const responseSection = document.getElementById('responseSection');
             const responseContent = document.getElementById('responseContent');
             
             // Show loading state
             submitBtn.disabled = true;
             submitBtn.innerHTML = '<div class="loading"><div class="loading-spinner"></div> Generating AI Response...</div>';
             responseSection.classList.add('show');
-            responseContent.innerHTML = '<div class="loading"><div class="loading-spinner"></div> AI is analyzing your request and crafting a personalized response...</div>';
+            responseContent.innerHTML = '<div class="loading"><div class="loading-spinner"></div> AI is analyzing your request...</div>';
 
-            // Simulate AI response (in real implementation, this would call your AI service)
-            setTimeout(() => {
-                const response = generateAIResponse(selectedRequestType, context, request, currentPlan);
-                responseContent.textContent = response;
+            // Create AI prompt
+            const prompt = `Help with ${selectedRequestType || 'general music advice'}.
+
+CONTEXT: ${context}
+
+REQUEST: ${request}
+
+Please provide professional, actionable advice tailored to this musician's specific situation and goals.`;
+
+            try {
+                // Call AI API
+                const maxTokens = currentPlan === 'free' ? 400 : currentPlan === 'starter' ? 600 : 1000;
+                const aiResponse = await callGroqAPI(prompt, maxTokens);
                 
-                // Update usage for paid plan users
+                // Add upgrade prompts for free users
+                let enhancedResponse = aiResponse;
+                if (currentPlan === 'free') {
+                    enhancedResponse += '\n\n✨ UPGRADE FOR MORE: Get detailed strategies, templates, and unlimited access with our Starter plan at just $9.99/month.';
+                }
+                
+                responseContent.textContent = enhancedResponse;
+                
+                // Update usage
                 if (currentPlan !== 'elite') {
                     monthlyUsage++;
                     updateUsageDisplay();
                 }
-                
-                // Reset button
-                submitBtn.disabled = false;
-                submitBtn.innerHTML = 'Generate AI Response';
-            }, 3000);
-        });
-
-        function generateAIResponse(type, context, request, plan) {
-            const maxTokens = plan === 'pro' ? 1500 : 800;
-            
-            // Enhanced responses for different request types
-            const responses = {
-                bio: `Based on your impressive background, here's a compelling artist bio tailored for your festival applications:
-
-**Professional Artist Biography**
-
-[Your Name] stands as a distinguished ${extractInstrument(context)} whose artistry seamlessly bridges classical tradition with innovative contemporary expression. ${extractTraining(context)}, [Your Name] has cultivated a reputation for ${extractStrengths(context)}.
-
-Notable performance highlights include ${extractVenues(context)}, where [Your Name] demonstrated exceptional ${extractSkills(context)}. Their commitment to ${extractCommunityWork(context)} exemplifies the modern artist's role as both performer and cultural ambassador.
-
-Currently, [Your Name] is ${extractCurrentWork(context)}, continuing to expand their artistic vision while maintaining deep roots in classical excellence. This unique combination of technical mastery and community engagement positions [Your Name] as an artist poised for significant impact in today's evolving musical landscape.
-
-**Customization Notes:**
-- Adjust length to 150-200 words for most festival applications
-- Emphasize recent achievements and upcoming projects
-- Include specific repertoire if space allows
-- Consider adding a quote about your artistic philosophy
-
-${plan === 'pro' ? `**Pro Enhancement:** This bio emphasizes your community engagement, which is highly valued by festival selection committees. Consider adding specific metrics (number of students taught, community concerts performed) to strengthen impact.` : ''}`,
-
-                grant: `**Strategic Grant Application Framework**
-
-**Project Overview:**
-Position your ${extractProject(context)} as addressing critical gaps in ${extractField(context)}. Frame it as both artistically innovative and socially impactful.
-
-**Artistic Statement Structure:**
-1. **Personal Connection:** Begin with why this project matters to you personally
-2. **Artistic Innovation:** Explain what makes your approach unique
-3. **Community Impact:** Detail how this serves broader musical/cultural goals
-4. **Timeline & Deliverables:** Provide concrete, achievable milestones
-
-**Budget Strategy:**
-- Personnel costs: ${extractPersonnelNeeds(request)}
-- Equipment/Materials: ${extractMaterialNeeds(request)}
-- Performance/Presentation: ${extractPresentationNeeds(request)}
-- Administrative: Keep under 15% of total budget
-
-**Evaluation Criteria Focus:**
-Grant committees prioritize: artistic merit (40%), feasibility (30%), community impact (20%), sustainability (10%).
-
-${plan === 'pro' ? `**Pro Strategy:** Given your background with ${extractPreviousGrants(context)}, emphasize how this project builds on proven success. Include letters of support from community partners and provide detailed evaluation metrics.` : ''}`,
-
-                career: `**Personalized Career Guidance**
-
-**Current Position Analysis:**
-Based on your background in ${extractBackground(context)}, you're positioned at a pivotal career moment. Your ${extractStrengths(context)} provide multiple pathway options.
-
-**Recommended Focus Areas:**
-1. **Performance Track:** ${getPerformanceAdvice(context)}
-2. **Education Track:** ${getTeachingAdvice(context)}
-3. **Hybrid Approach:** ${getHybridAdvice(context)}
-
-**Immediate Action Steps:**
-- Network strategically: Focus on ${getNetworkingTargets(context)}
-- Skill development: Prioritize ${getSkillDevelopment(context)}
-- Portfolio building: Create ${getPortfolioNeeds(context)}
-
-**Long-term Strategy (2-5 years):**
-${getLongTermStrategy(context, request)}
-
-**Financial Sustainability:**
-Diversify income through: performance fees, teaching, masterclasses, recording projects, and arts administration opportunities.
-
-${plan === 'pro' ? `**Pro Coaching:** Consider specialized training in ${getSpecializedTraining(context)}. I recommend connecting with [specific professionals] in your area and exploring emerging opportunities in digital performance and music technology.` : ''}`,
-
-                festival: `**Festival Application Optimization Strategy**
-
-**Target Festival Analysis:**
-For ${extractFestivalGoals(request)}, focus on festivals that align with your strengths in ${extractRepertoire(context)}.
-
-**Application Components:**
-1. **Bio:** Emphasize ${getBioFocus(context, 'festival')}
-2. **Repertoire:** Lead with ${getRepertoireStrategy(context)}
-3. **Media:** Showcase ${getMediaStrategy(context)}
-
-**Competitive Positioning:**
-Your unique selling points: ${getUniqueSellingPoints(context)}
-
-**Application Timeline:**
-- Early applications (October-December): Target reach festivals
-- Regular deadlines (January-March): Focus on solid matches
-- Late/rolling (April-May): Apply to backup options
-
-**Selection Criteria Alignment:**
-Festivals prioritize: technical excellence (35%), musical maturity (25%), fit with program (20%), diversity/fresh perspective (20%).
-
-${plan === 'pro' ? `**Pro Enhancement:** Based on your background, I recommend targeting: [specific festivals]. Consider applying to 12-15 festivals across different tiers. Budget $2,000-3,000 for application fees, travel to auditions, and materials.` : ''}`,
-
-                academic: `**Academic Application Strategy**
-
-**Personal Statement Framework:**
-1. **Opening Hook:** Connect your passion to ${extractAcademicInterest(request)}
-2. **Academic Journey:** Show progression through ${extractEducationPath(context)}
-3. **Research Interests:** Detail your focus on ${extractResearchArea(request)}
-4. **Career Goals:** Articulate how this program advances ${extractCareerGoals(request)}
-
-**Research Proposal Elements:**
-- **Question:** What specific problem will you address?
-- **Methodology:** How will you approach investigation?
-- **Significance:** Why does this matter to the field?
-- **Timeline:** 3-5 year plan with milestones
-
-**Faculty Alignment:**
-Research professors working in ${extractResearchArea(request)}. Mention specific faculty whose work resonates with your interests.
-
-**Strengthening Your Profile:**
-- Academic writing: Publish in ${getPublicationTargets(context)}
-- Conference presentations: Target ${getConferenceTargets(context)}
-- Additional skills: Consider ${getAdditionalSkills(context)}
-
-${plan === 'pro' ? `**Pro Guidance:** Given your interest in ${extractResearchArea(request)}, I recommend reaching out to Professor [X] at [University] whose work on [topic] aligns with your goals. Consider auditing relevant courses or attending summer institutes to strengthen your preparation.` : ''}`,
-
-                general: `**Comprehensive Music Career Analysis**
-
-Based on your background in ${extractGeneralBackground(context)}, here's my assessment and recommendations:
-
-**Current Strengths:**
-${identifyStrengths(context)}
-
-**Growth Opportunities:**
-${identifyGrowthAreas(context, request)}
-
-**Actionable Next Steps:**
-1. **Immediate (next 30 days):** ${getImmediateSteps(request)}
-2. **Short-term (3-6 months):** ${getShortTermGoals(request)}
-3. **Long-term (1-2 years):** ${getLongTermGoals(request)}
-
-**Resource Recommendations:**
-- Professional development: ${getProfessionalResources(context)}
-- Networking opportunities: ${getNetworkingOpportunities(context)}
-- Skill building: ${getSkillBuilding(context, request)}
-
-${plan === 'pro' ? `**Pro Consultation:** I recommend scheduling monthly check-ins to track progress and adjust strategy. Consider joining professional organizations like [relevant associations] and exploring mentorship programs in your area.` : ''}`
-            };
-
-            // Helper functions for content extraction (simplified for demo)
-            function extractInstrument(context) {
-                if (context.toLowerCase().includes('piano')) return 'pianist';
-                if (context.toLowerCase().includes('violin')) return 'violinist';
-                if (context.toLowerCase().includes('voice') || context.toLowerCase().includes('soprano')) return 'vocalist';
-                return 'musician';
-            }
-
-            function extractTraining(context) {
-                if (context.toLowerCase().includes('juilliard')) return 'Trained at The Juilliard School';
-                if (context.toLowerCase().includes('yale')) return 'A Yale School of Music graduate';
-                if (context.toLowerCase().includes('eastman')) return 'An Eastman School of Music alumnus';
-                return 'Classically trained';
-            }
-
-            function extractStrengths(context) {
-                return 'technical precision, interpretive depth, and compelling stage presence';
-            }
-
-            function extractVenues(context) {
-                if (context.toLowerCase().includes('carnegie')) return 'Carnegie Hall and other prestigious venues';
-                return 'notable regional and national venues';
-            }
-
-            function extractSkills(context) {
-                return 'versatility and musical sensitivity';
-            }
-
-            function extractCommunityWork(context) {
-                if (context.toLowerCase().includes('outreach')) return 'community outreach and education';
-                if (context.toLowerCase().includes('teaching')) return 'music education and mentorship';
-                return 'community engagement';
-            }
-
-            function extractCurrentWork(context) {
-                return 'developing innovative programming and expanding their performance repertoire';
-            }
-
-            // Additional helper functions would be implemented for other extraction needs
-            function extractProject(context) { return 'chamber music project'; }
-            function extractField(context) { return 'contemporary classical music'; }
-            function extractPersonnelNeeds(request) { return 'Consider 60-70% for musician fees'; }
-            function extractMaterialNeeds(request) { return 'Score preparation, recording equipment'; }
-            function extractPresentationNeeds(request) { return 'Venue rental, marketing materials'; }
-            function extractPreviousGrants(context) { return 'previous funding experience'; }
-            function extractBackground(context) { return context.split(',')[0] || 'music'; }
-            function getPerformanceAdvice(context) { return 'Focus on building repertoire and seeking performance opportunities'; }
-            function getTeachingAdvice(context) { return 'Develop pedagogical skills through mentorship and workshops'; }
-            function getHybridAdvice(context) { return 'Combine performance and teaching for sustainable career'; }
-            function getNetworkingTargets(context) { return 'local music organizations and festivals'; }
-            function getSkillDevelopment(context) { return 'business skills and digital marketing'; }
-            function getPortfolioNeeds(context) { return 'professional recordings and updated bio'; }
-            function getLongTermStrategy(context, request) { return 'Build regional reputation while expanding nationally'; }
-            function getSpecializedTraining(context) { return 'arts administration or music therapy'; }
-
-            // More helper functions for other categories...
-            function extractFestivalGoals(request) { return 'major summer festivals'; }
-            function extractRepertoire(context) { return 'diverse classical repertoire'; }
-            function getBioFocus(context, type) { return 'your performance experience and artistic vision'; }
-            function getRepertoireStrategy(context) { return 'your strongest pieces that showcase technical and musical abilities'; }
-            function getMediaStrategy(context) { return 'high-quality recordings that demonstrate your artistry'; }
-            function getUniqueSellingPoints(context) { return 'your combination of technical skill and interpretive maturity'; }
-
-            function extractAcademicInterest(request) { return request.split('in ')[1]?.split('.')[0] || 'your field'; }
-            function extractEducationPath(context) { return 'your musical training and development'; }
-            function extractResearchArea(request) { return 'interdisciplinary music studies'; }
-            function extractCareerGoals(request) { return 'your academic and artistic aspirations'; }
-            function getPublicationTargets(context) { return 'relevant music journals'; }
-            function getConferenceTargets(context) { return 'national music conferences'; }
-            function getAdditionalSkills(context) { return 'research methodology and academic writing'; }
-
-            function extractGeneralBackground(context) { return context.split(',')[0] || 'music'; }
-            function identifyStrengths(context) { return 'Your dedication and training provide a strong foundation'; }
-            function identifyGrowthAreas(context, request) { return 'Focus on areas mentioned in your specific request'; }
-            function getImmediateSteps(request) { return 'Begin addressing your primary concern'; }
-            function getShortTermGoals(request) { return 'Develop intermediate milestones'; }
-            function getLongTermGoals(request) { return 'Establish sustainable career trajectory'; }
-            function getProfessionalResources(context) { return 'Industry publications and online courses'; }
-            function getNetworkingOpportunities(context) { return 'Local and national music organizations'; }
-            function getSkillBuilding(context, request) { return 'Areas specific to your goals'; }
-
-            const baseResponse = responses[type] || responses.general;
-            
-            // Truncate response based on plan limits
-            if (plan === 'free' && baseResponse.length > maxTokens * 4) {
-                return baseResponse.substring(0, maxTokens * 4) + '\n\n--- Upgrade to Pro for complete responses and advanced guidance ---';
+            } catch (error) {
+                responseContent.textContent = "I apologize, but there was an error processing your request. Please try again.";
             }
             
-            return baseResponse;
+            // Reset button
+            submitBtn.disabled = false;
+            submitBtn.innerHTML = 'Generate AI Response';
         }
 
-        // Initialize with default placeholders
-        updatePlaceholders();
-    </script>
-</body>
-</html>
-        document.querySelectorAll('.request-option').forEach(option => {
-            option.addEventListener('click', function() {
-                document.querySelectorAll('.request-option').forEach(opt => opt.classList.remove('selected'));
-                this.classList.add('selected');
-                selectedRequestType = this.dataset.type;
-                updatePlaceholders();
-            });
-        });
-
-        function updatePlaceholders() {
-            const contextInput = document.getElementById('context');
-            const requestInput = document.getElementById('request');
+        // Update usage display
+        function updateUsageDisplay() {
+            const usageText = document.getElementById('usageText');
+            const usageProgress = document.getElementById('usageProgress');
             
-            const placeholders = {
-                bio: {
-                    context: "e.g., I'm a classical pianist with 10 years of experience, trained at [School], performed at [venues], currently working on [project]...",
-                    request: "I need a professional bio for festival applications. It should be 150-200 words and highlight my classical training and community outreach work..."
-                },
-                grant: {
-                    context: "e.g., I'm a composer working on [project], my background includes [training/experience], I've previously [achievements]...",
-                    request: "I'm applying for a [specific grant] to fund [project]. I need help with the artistic statement and project description..."
-                },
-                career: {
-                    context: "e.g., I'm at [career stage], trained in [area], interested in [career path], facing challenges with [specific issue]...",
-                    request: "I need guidance on [specific career question] - should I focus on performance, teaching, or composition? How do I..."
-                },
-                festival: {
-                    context: "e.g., I'm a [instrument/voice] performer, my repertoire includes [styles], I've performed at [venues]...",
-                    request: "I want to apply to [festival type] festivals. Help me craft a compelling application that highlights..."
-                },
-                academic: {
-                    context: "e.g., I'm interested in [degree level] in [field], my background is [training], I want to focus on [specialization]...",
-                    request: "I'm applying to graduate programs in [field]. Help me with my personal statement and explain why I'm interested in..."
-                },
-                general: {
-                    context: "Tell me about your musical background, current situation, and what you're working on...",
-                    request: "What specific music-related question or challenge can I help you with?"
+            if (currentPlan === 'elite') {
+                document.getElementById('usageTracker').style.display = 'none';
+            } else {
+                const limit = currentPlan === 'starter' ? 25 : currentPlan === 'professional' ? 100 : 5;
+                usageText.textContent = `${monthlyUsage}/${limit} requests used`;
+                const percentage = (monthlyUsage / limit) * 100;
+                usageProgress.style.width = `${percentage}%`;
+            }
+        }
+
+        // Initialize app when page loads
+        window.addEventListener('load', function() {
+            // Set up upgrade button
+            document.getElementById('upgradeBtn').onclick = showModal;
+            
+            // Set up submit button
+            document.getElementById('submitBtn').onclick = submitRequest;
+            
+            // Set up request type buttons
+            document.querySelectorAll('.request-option').forEach(option => {
+                option.onclick = function() {
+                    selectRequestType(this.dataset.type);
+                };
+            });
+            
+            // Set up modal close
+            document.getElementById('pricingModal').onclick = function(e) {
+                if (e.target === this) {
+                    closeModal();
                 }
             };
-
-            const placeholderSet = placeholders[selectedRequestType] || placeholders.general;
-            contextInput.placeholder = placeholderSet.context;
-            requestInput.placeholder = placeholderSet.request;
-        }
-
-        // Submit button functionality
-        document.getElementById('submitBtn').addEventListener('click', async function() {
-            const context = document.getElementById('context').value.trim();
-            const request = document.getElementById('request').value.trim();
             
-            if (!context || !request) {
-                alert('Please fill in both fields before submitting.');
-                return;
-            }
-
-            const submitBtn = document.getElementById('submitBtn');
-            const responseSection = document.getElementById('responseSection');
-            const responseContent = document.getElementById('responseContent');
-            
-            // Show loading state
-            submitBtn.disabled = true;
-            submitBtn.innerHTML = '<div class="loading"><div class="loading-spinner"></div> Generating Response...</div>';
-            responseSection.classList.add('show');
-            responseContent.innerHTML = '<div class="loading"><div class="loading-spinner"></div> AI is analyzing your request...</div>';
-
-            // Simulate AI response (in real implementation, this would call your AI service)
-            setTimeout(() => {
-                const response = generateAIResponse(selectedRequestType, context, request);
-                responseContent.textContent = response;
-                
-                // Reset button
-                submitBtn.disabled = false;
-                submitBtn.innerHTML = 'Get AI Assistance';
-            }, 2000);
-        });
-
-        function generateAIResponse(type, context, request) {
-            // This is a mock response - in real implementation, this would call your AI service
-            const responses = {
-                bio: `Based on your background, here's a professional artist bio tailored for your needs:
-
-[Your Name] is a distinguished [instrument/voice] performer whose artistry bridges classical tradition with contemporary innovation. Trained at [Institution], [Your Name] has developed a reputation for [specific strengths]. 
-
-Notable performances include [venue highlights], where [specific achievement]. [Your Name]'s commitment to [community/outreach work] is evident through [specific examples].
-
-Currently, [Your Name] is [current projects/goals], continuing to [artistic mission]. This bio positions you as both technically accomplished and community-minded, perfect for festival applications.
-
-Suggested edits: [specific recommendations based on your context]`,
-
-                grant: `Here's a strategic approach to your grant application:
-
-**Project Overview:** Frame your project as addressing [specific need/opportunity] in the music community.
-
-**Artistic Statement:** Position your work as [unique angle], building on your background in [relevant experience].
-
-**Budget Justification:** Emphasize how funding will enable [specific outcomes], particularly [impact on community/field].
-
-**Timeline:** Structure your project in [recommended phases].
-
-Key strengths to highlight: [specific to your background]
-Areas to develop further: [suggestions for strengthening application]`,
-
-                career: `Based on your background and goals, here's my career guidance:
-
-**Immediate Next Steps:**
-1. [Specific action item based on your situation]
-2. [Another recommendation]
-3. [Third priority]
-
-**Long-term Strategy:**
-Given your strengths in [area], consider focusing on [career path]. Your background in [specific area] positions you well for [opportunities].
-
-**Networking Suggestions:**
-- [Specific recommendations based on your field]
-- [Organizations to join]
-- [Events to attend]
-
-**Skill Development:**
-Consider developing [specific skills] to strengthen your position in [target area].`,
-
-                festival: `Here's how to craft compelling festival applications:
-
-**Application Strategy:**
-Target festivals that align with your repertoire in [your style]. Your background in [specific area] makes you a strong candidate for [festival types].
-
-**Repertoire Selection:**
-Lead with [suggested pieces] that showcase [your strengths]. Include [diversity recommendations].
-
-**Bio Focus:**
-Emphasize [specific aspects of your background] that align with festival values.
-
-**Video/Audio Submissions:**
-Record [specific suggestions] that demonstrate [key qualities].
-
-**Application Timeline:**
-Start with [recommended festivals] and build toward [stretch goals].`,
-
-                academic: `Here's guidance for your academic applications:
-
-**Personal Statement Framework:**
-1. Opening: Connect your passion for [field] to [specific experience]
-2. Body: Demonstrate growth through [your background]
-3. Goals: Articulate how [program] advances [specific career objectives]
-
-**Research Interests:**
-Based on your background, consider focusing on [relevant areas]. Your experience with [specific area] could lead to interesting research in [suggested topics].
-
-**Faculty Connections:**
-Research professors working in [relevant areas] and mention specific faculty whose work aligns with your interests.
-
-**Strengthening Your Application:**
-- [Specific recommendations based on your background]
-- [Suggested experiences or skills to develop]`,
-
-                general: `Thank you for sharing your musical background. Here's my analysis and recommendations:
-
-**Your Current Situation:**
-Based on what you've shared, you're [assessment of their position].
-
-**Opportunities to Explore:**
-1. [Specific suggestion based on their context]
-2. [Another recommendation]
-3. [Third opportunity]
-
-**Next Steps:**
-I recommend focusing on [priority area] because [reasoning based on their background].
-
-**Resources:**
-- [Specific resources for their situation]
-- [Professional development suggestions]
-- [Networking opportunities]
-
-Would you like me to dive deeper into any of these areas?`
+            // Dev mode activation - triple click the logo
+            let logoClickCount = 0;
+            document.querySelector('.logo').onclick = function() {
+                logoClickCount++;
+                if (logoClickCount === 3) {
+                    activateDevMode();
+                    logoClickCount = 0;
+                }
+                setTimeout(() => { logoClickCount = 0; }, 2000);
             };
-
-            return responses[type] || responses.general;
-        }
-
-        // Initialize with default placeholders
-        updatePlaceholders();
+            
+            // Keyboard shortcut for dev mode (Ctrl+Shift+D)
+            document.addEventListener('keydown', function(e) {
+                if (e.ctrlKey && e.shiftKey && e.key === 'D') {
+                    e.preventDefault();
+                    activateDevMode();
+                }
+            });
+            
+            // Initialize displays
+            updatePlanDisplay();
+            updateUsageDisplay();
+            updatePlaceholders();
+        });
     </script>
 </body>
 </html>
