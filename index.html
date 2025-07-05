@@ -807,14 +807,31 @@
         @media (max-width: 768px) {
             .nav-container {
                 padding: 0 1rem;
+                flex-wrap: wrap;
             }
 
             .nav-menu {
                 display: none;
+                width: 100%;
+                flex-direction: column;
+                background: var(--card-bg);
+                border-radius: 12px;
+                margin-top: 1rem;
+                padding: 1rem;
+                gap: 1rem;
+            }
+
+            .nav-menu.active {
+                display: flex;
             }
 
             .mobile-menu-btn {
                 display: block;
+            }
+
+            .user-info {
+                flex-wrap: wrap;
+                gap: 0.5rem;
             }
 
             .container {
@@ -823,6 +840,7 @@
 
             .stats-grid {
                 grid-template-columns: repeat(2, 1fr);
+                gap: 1rem;
             }
 
             .pricing-grid {
@@ -844,11 +862,29 @@
             .auth-container {
                 margin: 2rem auto;
                 padding: 2rem;
+                max-width: 100%;
             }
 
             .modal-content {
                 margin: 1rem;
                 width: calc(100% - 2rem);
+            }
+
+            /* Fix mobile form inputs */
+            .form-input, .text-area {
+                font-size: 16px; /* Prevents zoom on iOS */
+                -webkit-appearance: none;
+                border-radius: 12px;
+            }
+
+            /* Mobile auth improvements */
+            .auth-form {
+                gap: 1rem;
+            }
+
+            .auth-form button {
+                padding: 1rem;
+                font-size: 16px;
             }
         }
     </style>
@@ -907,6 +943,72 @@
                 </div>
             </div>
         </div>
+
+        <!-- Forgot Password Modal -->
+        <div id="forgotPasswordModal" class="modal-overlay hidden">
+            <div class="modal-content">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+                    <h2>Reset Password</h2>
+                    <button class="close-btn" onclick="hideForgotPassword()">&times;</button>
+                </div>
+                
+                <form onsubmit="sendPasswordReset(event)">
+                    <div class="form-group">
+                        <label for="resetEmail">Email Address</label>
+                        <input type="email" id="resetEmail" class="form-input" required 
+                               placeholder="Enter your email address">
+                    </div>
+                    
+                    <button type="submit" class="btn btn-primary" style="width: 100%; margin-bottom: 1rem;" id="resetBtn">
+                        Send Reset Instructions
+                    </button>
+                    
+                    <div style="text-align: center;">
+                        <a onclick="hideForgotPassword(); showPage('login')" style="color: var(--accent); cursor: pointer; font-size: 14px;">Back to Sign In</a>
+                    </div>
+                    
+                    <div id="resetMessage"></div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Email Verification Modal -->
+        <div id="emailVerificationModal" class="modal-overlay hidden">
+            <div class="modal-content">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+                    <h2>Verify Your Email</h2>
+                    <button class="close-btn" onclick="hideEmailVerification()">&times;</button>
+                </div>
+                
+                <div style="text-align: center; margin-bottom: 2rem;">
+                    <div style="font-size: 48px; margin-bottom: 1rem;">📧</div>
+                    <p style="color: var(--text-secondary); margin-bottom: 1rem;">
+                        We've sent a verification code to:<br>
+                        <strong id="verificationEmail" style="color: var(--text-primary);"></strong>
+                    </p>
+                </div>
+                
+                <form onsubmit="verifyEmail(event)">
+                    <div class="form-group">
+                        <label for="verificationCode">Verification Code</label>
+                        <input type="text" id="verificationCode" class="form-input" required 
+                               placeholder="Enter 6-digit code" maxlength="6" style="text-align: center; font-size: 24px; letter-spacing: 0.5rem;">
+                    </div>
+                    
+                    <button type="submit" class="btn btn-primary" style="width: 100%; margin-bottom: 1rem;" id="verifyBtn">
+                        Verify Email
+                    </button>
+                    
+                    <div style="text-align: center;">
+                        <a onclick="resendVerification()" style="color: var(--accent); cursor: pointer; font-size: 14px;">Resend code</a>
+                        <span style="color: var(--text-muted); margin: 0 0.5rem;">•</span>
+                        <a onclick="hideEmailVerification()" style="color: var(--accent); cursor: pointer; font-size: 14px;">Change email</a>
+                    </div>
+                    
+                    <div id="verificationMessage"></div>
+                </form>
+            </div>
+        </div>
     </header>
 
     <div class="container">
@@ -955,6 +1057,10 @@
                         <input type="password" id="loginPassword" class="form-input" required>
                     </div>
                     <button type="submit" class="btn btn-primary" style="width: 100%;">Sign In</button>
+                    
+                    <div style="text-align: center; margin-top: 1rem;">
+                        <a onclick="showForgotPassword()" style="color: var(--accent); cursor: pointer; font-size: 14px; text-decoration: underline;">Forgot your password?</a>
+                    </div>
                 </form>
                 <div class="auth-switch">
                     Don't have an account? <a onclick="showPage('register')">Create one here</a>
@@ -1349,7 +1455,154 @@
 
         function toggleMobileMenu() {
             const navMenu = document.querySelector('.nav-menu');
-            navMenu.style.display = navMenu.style.display === 'flex' ? 'none' : 'flex';
+            navMenu.classList.toggle('active');
+        }
+
+        // Email validation function
+        function isValidEmail(email) {
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            return emailRegex.test(email);
+        }
+
+        // Generate verification code
+        function generateVerificationCode() {
+            return Math.floor(100000 + Math.random() * 900000).toString();
+        }
+
+        // Simulate sending email (in production, this would be a real email service)
+        function simulateEmailSend(email, type, code = null) {
+            console.log(`📧 Simulating ${type} email to: ${email}`);
+            if (code) console.log(`Verification code: ${code}`);
+            
+            // In production, you'd integrate with:
+            // - SendGrid, Mailgun, AWS SES, etc.
+            // - Send actual emails with verification codes
+            return true;
+        }
+
+        // Forgot Password Functions
+        function showForgotPassword() {
+            document.getElementById('forgotPasswordModal').classList.remove('hidden');
+        }
+
+        function hideForgotPassword() {
+            document.getElementById('forgotPasswordModal').classList.add('hidden');
+            document.getElementById('resetEmail').value = '';
+            document.getElementById('resetMessage').innerHTML = '';
+        }
+
+        function sendPasswordReset(event) {
+            event.preventDefault();
+            const email = document.getElementById('resetEmail').value.trim();
+            const resetBtn = document.getElementById('resetBtn');
+            
+            if (!isValidEmail(email)) {
+                showMessage('resetMessage', 'Please enter a valid email address', 'error');
+                return;
+            }
+
+            const user = users.find(u => u.email.toLowerCase() === email.toLowerCase());
+            if (!user) {
+                showMessage('resetMessage', 'No account found with this email address', 'error');
+                return;
+            }
+
+            resetBtn.disabled = true;
+            resetBtn.innerHTML = '<div class="loading"><div class="spinner"></div>Sending...</div>';
+
+            // Simulate sending reset email
+            setTimeout(() => {
+                const resetCode = generateVerificationCode();
+                
+                // Store reset code temporarily (in production, use secure backend)
+                const resetData = {
+                    email: email.toLowerCase(),
+                    code: resetCode,
+                    expires: Date.now() + 15 * 60 * 1000 // 15 minutes
+                };
+                localStorage.setItem('passwordReset', JSON.stringify(resetData));
+                
+                simulateEmailSend(email, 'password reset', resetCode);
+                
+                showMessage('resetMessage', 
+                    `Reset instructions sent to ${email}. For demo purposes, your reset code is: ${resetCode}`, 
+                    'success');
+                
+                resetBtn.disabled = false;
+                resetBtn.innerHTML = 'Send Reset Instructions';
+            }, 2000);
+        }
+
+        // Email Verification Functions
+        function showEmailVerification(email) {
+            document.getElementById('verificationEmail').textContent = email;
+            document.getElementById('emailVerificationModal').classList.remove('hidden');
+        }
+
+        function hideEmailVerification() {
+            document.getElementById('emailVerificationModal').classList.add('hidden');
+            document.getElementById('verificationCode').value = '';
+            document.getElementById('verificationMessage').innerHTML = '';
+        }
+
+        function verifyEmail(event) {
+            event.preventDefault();
+            const code = document.getElementById('verificationCode').value.trim();
+            const verifyBtn = document.getElementById('verifyBtn');
+            
+            if (code.length !== 6) {
+                showMessage('verificationMessage', 'Please enter a valid 6-digit code', 'error');
+                return;
+            }
+
+            verifyBtn.disabled = true;
+            verifyBtn.innerHTML = '<div class="loading"><div class="spinner"></div>Verifying...</div>';
+
+            setTimeout(() => {
+                const storedData = localStorage.getItem('emailVerification');
+                if (storedData) {
+                    const verificationData = JSON.parse(storedData);
+                    
+                    if (verificationData.code === code && Date.now() < verificationData.expires) {
+                        // Mark user as verified
+                        const user = users.find(u => u.email === verificationData.email);
+                        if (user) {
+                            user.emailVerified = true;
+                            localStorage.setItem('cadenzaUsers', JSON.stringify(users));
+                        }
+                        
+                        showMessage('verificationMessage', 'Email verified successfully!', 'success');
+                        
+                        setTimeout(() => {
+                            hideEmailVerification();
+                            showPage('login');
+                            localStorage.removeItem('emailVerification');
+                        }, 1500);
+                    } else {
+                        showMessage('verificationMessage', 'Invalid or expired verification code', 'error');
+                    }
+                } else {
+                    showMessage('verificationMessage', 'Verification session expired', 'error');
+                }
+                
+                verifyBtn.disabled = false;
+                verifyBtn.innerHTML = 'Verify Email';
+            }, 1500);
+        }
+
+        function resendVerification() {
+            const email = document.getElementById('verificationEmail').textContent;
+            const newCode = generateVerificationCode();
+            
+            const verificationData = {
+                email: email,
+                code: newCode,
+                expires: Date.now() + 10 * 60 * 1000 // 10 minutes
+            };
+            localStorage.setItem('emailVerification', JSON.stringify(verificationData));
+            
+            simulateEmailSend(email, 'verification', newCode);
+            showMessage('verificationMessage', `New code sent! Demo code: ${newCode}`, 'success');
         }
 
         // Auth Functions
@@ -1364,8 +1617,18 @@
                 return;
             }
 
+            if (!isValidEmail(email)) {
+                showMessage('registerMessage', 'Please enter a valid email address', 'error');
+                return;
+            }
+
             if (password.length < 6) {
                 showMessage('registerMessage', 'Password must be at least 6 characters', 'error');
+                return;
+            }
+
+            if (username.length < 3) {
+                showMessage('registerMessage', 'Username must be at least 3 characters', 'error');
                 return;
             }
 
@@ -1375,20 +1638,44 @@
                 return;
             }
 
+            const existingUsername = users.find(u => u.username.toLowerCase() === username.toLowerCase());
+            if (existingUsername) {
+                showMessage('registerMessage', 'Username already taken', 'error');
+                return;
+            }
+
+            // Create verification code
+            const verificationCode = generateVerificationCode();
+            const verificationData = {
+                email: email.toLowerCase(),
+                code: verificationCode,
+                expires: Date.now() + 10 * 60 * 1000 // 10 minutes
+            };
+            localStorage.setItem('emailVerification', JSON.stringify(verificationData));
+
             const newUser = {
                 id: Date.now(),
                 username,
                 email: email.toLowerCase(),
                 password,
                 tier: 'free',
+                emailVerified: false,
                 createdAt: new Date().toISOString()
             };
 
             users.push(newUser);
             localStorage.setItem('cadenzaUsers', JSON.stringify(users));
 
-            showMessage('registerMessage', 'Account created successfully! Please sign in.', 'success');
-            setTimeout(() => showPage('login'), 1500);
+            // Simulate sending verification email
+            simulateEmailSend(email, 'verification', verificationCode);
+
+            showMessage('registerMessage', 
+                `Account created! Please verify your email. Demo code: ${verificationCode}`, 
+                'success');
+            
+            setTimeout(() => {
+                showEmailVerification(email);
+            }, 1500);
         }
 
         function login(event) {
@@ -1401,10 +1688,24 @@
                 return;
             }
 
+            if (!isValidEmail(email)) {
+                showMessage('loginMessage', 'Please enter a valid email address', 'error');
+                return;
+            }
+
             const user = users.find(u => u.email.toLowerCase() === email.toLowerCase() && u.password === password);
             if (!user) {
                 showMessage('loginMessage', 'Invalid email or password', 'error');
                 return;
+            }
+
+            // Check email verification (optional - can be enforced)
+            if (user.emailVerified === false) {
+                showMessage('loginMessage', 'Please verify your email first. Check your inbox for the verification code.', 'error');
+                
+                // Optionally allow unverified login but show warning
+                const allowLogin = confirm('Your email is not verified. Continue anyway? (Recommended to verify first)');
+                if (!allowLogin) return;
             }
 
             currentUser = user;
@@ -1412,6 +1713,10 @@
             updateAuthUI();
             showPage('home');
             showMessage('loginMessage', 'Welcome back!', 'success');
+            
+            // Close mobile menu if open
+            const navMenu = document.querySelector('.nav-menu');
+            navMenu.classList.remove('active');
         }
 
         function logout() {
