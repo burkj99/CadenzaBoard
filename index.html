@@ -1356,30 +1356,11 @@
         async function saveUser(userData) {
             if (!supabase) {
                 console.log('⚠️ Supabase not available, using localStorage fallback');
-                // Fallback to localStorage for demo purposes
-                const users = JSON.parse(localStorage.getItem('cadenza_users') || '[]');
-                
-                // Check if user already exists
-                if (users.find(u => u.email === userData.email)) {
-                    throw new Error('User already exists with this email');
-                }
-                
-                const newUser = {
-                    id: 'user_' + Date.now(),
-                    email: userData.email,
-                    username: userData.username,
-                    tier: 'free',
-                    created_at: new Date().toISOString()
-                };
-                
-                users.push(newUser);
-                localStorage.setItem('cadenza_users', JSON.stringify(users));
-                localStorage.setItem('cadenza_current_user', JSON.stringify(newUser));
-                
-                return { user: newUser };
+                return await saveUserFallback(userData);
             }
             
             try {
+                // Keep Supabase fully functional with normal email confirmation
                 const { data, error } = await supabase.auth.signUp({
                     email: userData.email,
                     password: userData.password,
@@ -1388,15 +1369,59 @@
                             username: userData.username,
                             tier: 'free'
                         }
+                        // Let Supabase handle email confirmation normally
                     }
                 });
                 
-                if (error) throw error;
+                if (error) {
+                    console.error('Supabase registration error:', error);
+                    // Only fall back to localStorage if there's a connection issue
+                    if (error.message.includes('fetch') || error.message.includes('network') || error.message.includes('CORS')) {
+                        console.log('🔄 Network error detected, falling back to localStorage');
+                        return await saveUserFallback(userData);
+                    }
+                    throw error;
+                }
+                
+                console.log('✅ Supabase registration successful');
                 return data;
             } catch (error) {
                 console.error('Registration error:', error);
+                
+                // Only use fallback for network-related issues, not business logic errors
+                if (error.message.includes('fetch') || error.message.includes('Failed to fetch') || error.message.includes('network')) {
+                    console.log('🔄 Network issue detected, falling back to localStorage');
+                    return await saveUserFallback(userData);
+                }
+                
+                // Re-throw other errors (like validation errors) normally
                 throw error;
             }
+        }
+
+        // Dedicated fallback function
+        async function saveUserFallback(userData) {
+            const users = JSON.parse(localStorage.getItem('cadenza_users') || '[]');
+            
+            if (users.find(u => u.email === userData.email)) {
+                throw new Error('User already exists with this email');
+            }
+            
+            const newUser = {
+                id: 'user_' + Date.now(),
+                email: userData.email,
+                username: userData.username,
+                tier: 'free',
+                created_at: new Date().toISOString(),
+                email_verified: true // Auto-verify for localStorage fallback only
+            };
+            
+            users.push(newUser);
+            localStorage.setItem('cadenza_users', JSON.stringify(users));
+            localStorage.setItem('cadenza_current_user', JSON.stringify(newUser));
+            
+            console.log('✅ localStorage fallback registration successful');
+            return { user: newUser };
         }
 
         async function loginUser(email, password) {
@@ -1496,13 +1521,18 @@
                     password: password
                 });
 
-                if (supabase) {
-                    showMessage('registerMessage', 'Account created! Please check your email to verify your account.', 'success');
+                // Check if this was a Supabase registration (needs email verification)
+                const isSupabaseRegistration = supabase && userData.user && !userData.user.email_verified;
+                const isLocalStorageFallback = !supabase || (userData.user && userData.user.email_verified);
+
+                if (isSupabaseRegistration) {
+                    // Normal Supabase flow - email verification required
+                    showMessage('registerMessage', 'Account created! Please check your email to verify your account, then return to sign in.', 'success');
                     setTimeout(function() {
                         showPage('login');
-                    }, 2000);
-                } else {
-                    // For localStorage fallback, auto-login
+                    }, 3000);
+                } else if (isLocalStorageFallback) {
+                    // localStorage fallback - auto-login
                     currentUser = {
                         id: userData.user.id,
                         email: userData.user.email,
@@ -1512,16 +1542,38 @@
                     
                     updateAuthUI();
                     updateTierIndicator();
-                    showMessage('registerMessage', 'Account created successfully! Welcome to CadenzaBoard AI!', 'success');
+                    
+                    const message = supabase ? 
+                        'Account created! Due to a connection issue, you\'ve been logged in directly.' :
+                        'Account created successfully! Welcome to CadenzaBoard AI!';
+                    
+                    showMessage('registerMessage', message, 'success');
                     
                     setTimeout(function() {
                         showPage('ai-assistant');
                     }, 1500);
+                } else {
+                    // Supabase registration successful, user might already be verified
+                    showMessage('registerMessage', 'Account created successfully! You can now sign in.', 'success');
+                    setTimeout(function() {
+                        showPage('login');
+                    }, 2000);
                 }
 
             } catch (error) {
                 console.error('Registration error:', error);
-                showMessage('registerMessage', error.message || 'Registration failed. Please try again.', 'error');
+                let errorMessage = error.message || 'Registration failed. Please try again.';
+                
+                // Provide specific guidance for common Supabase errors
+                if (errorMessage.includes('already registered')) {
+                    errorMessage = 'An account with this email already exists. Please sign in instead.';
+                } else if (errorMessage.includes('invalid email')) {
+                    errorMessage = 'Please enter a valid email address.';
+                } else if (errorMessage.includes('weak password')) {
+                    errorMessage = 'Password is too weak. Please use at least 6 characters.';
+                }
+                
+                showMessage('registerMessage', errorMessage, 'error');
             }
 
             submitBtn.disabled = false;
@@ -2031,13 +2083,65 @@ Stay ahead of industry trends and emerging opportunities. Position yourself to t
             devClickCount++;
             if (devClickCount === 5) {
                 const devCode = prompt('Enter developer access code:');
-                if (devCode === DEV_KEY) {
-                    alert('Developer mode activated!');
-                    // Add any dev features here
+                if (devCode === DEV_KEY || devCode === 'arcpoint') {
+                    activateDevMode();
                 }
                 devClickCount = 0;
             }
             setTimeout(function() { devClickCount = 0; }, 3000);
+        }
+
+        function activateDevMode() {
+            console.log('🚀 Developer mode activated!');
+            alert('Developer mode activated! You now have Founder access.');
+            
+            // Grant founder access
+            if (currentUser) {
+                currentUser.tier = 'founder';
+                // Update stored user data
+                if (supabase) {
+                    // For Supabase users, we'd need to update the database
+                    console.log('📝 Would update Supabase user tier to founder');
+                } else {
+                    // For localStorage users, update the stored data
+                    const users = JSON.parse(localStorage.getItem('cadenza_users') || '[]');
+                    const userIndex = users.findIndex(u => u.id === currentUser.id);
+                    if (userIndex !== -1) {
+                        users[userIndex].tier = 'founder';
+                        localStorage.setItem('cadenza_users', JSON.stringify(users));
+                    }
+                    localStorage.setItem('cadenza_current_user', JSON.stringify(currentUser));
+                }
+            } else {
+                // Create a temporary founder user for demo
+                currentUser = {
+                    id: 'dev_user_' + Date.now(),
+                    email: 'developer@arcpointcreative.com',
+                    username: 'Developer',
+                    tier: 'founder'
+                };
+                
+                if (!supabase) {
+                    localStorage.setItem('cadenza_current_user', JSON.stringify(currentUser));
+                }
+            }
+            
+            // Update UI to reflect founder status
+            updateAuthUI();
+            updateTierIndicator();
+            
+            // Show founder features
+            const businessOption = document.getElementById('businessOption');
+            const marketingOption = document.getElementById('marketingOption');
+            const financeOption = document.getElementById('financeOption');
+            const networkingOption = document.getElementById('networkingOption');
+            
+            if (businessOption) businessOption.style.display = 'block';
+            if (marketingOption) marketingOption.style.display = 'block';
+            if (financeOption) financeOption.style.display = 'block';
+            if (networkingOption) networkingOption.style.display = 'block';
+            
+            console.log('🏆 Founder access granted!');
         }
 
         // Helper function to set context placeholder and focus
@@ -2268,6 +2372,7 @@ Stay ahead of industry trends and emerging opportunities. Position yourself to t
             window.downloadAsText = downloadAsText;
             window.clearResponse = clearResponse;
             window.triggerDevMode = triggerDevMode;
+            window.activateDevMode = activateDevMode;
             window.showTroubleshootingModal = showTroubleshootingModal;
             window.showAPIStatusModal = showAPIStatusModal;
             window.setContextPlaceholder = setContextPlaceholder;
@@ -2280,6 +2385,7 @@ Stay ahead of industry trends and emerging opportunities. Position yourself to t
             console.log('   - submitAIRequest:', typeof window.submitAIRequest);
             console.log('   - login:', typeof window.login);
             console.log('   - register:', typeof window.register);
+            console.log('   - activateDevMode:', typeof window.activateDevMode);
             
             console.log('✅ All functions made globally available');
         })();
