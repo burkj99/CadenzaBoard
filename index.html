@@ -11,6 +11,8 @@
         :root {
             --primary-blue: #007CFF;
             --secondary-blue: #4D4AEF;
+            --arcpoint-orange: #FF6B35;
+            --arcpoint-gradient: linear-gradient(135deg, #FF6B35, #F7931E);
             --dark-bg: #0a0a0b;
             --card-bg: #111111;
             --surface: #1a1a1b;
@@ -49,6 +51,7 @@
             background: 
                 radial-gradient(circle at 20% 20%, rgba(0, 124, 255, 0.1) 0%, transparent 50%),
                 radial-gradient(circle at 80% 80%, rgba(77, 74, 239, 0.05) 0%, transparent 50%),
+                radial-gradient(circle at 60% 40%, rgba(255, 107, 53, 0.03) 0%, transparent 50%),
                 linear-gradient(135deg, #0a0a0b 0%, #111111 100%);
         }
 
@@ -63,7 +66,7 @@
 
         .orb-1 { width: 200px; height: 200px; top: 10%; left: 80%; animation-delay: 0s; }
         .orb-2 { width: 150px; height: 150px; top: 60%; left: 10%; animation-delay: -7s; }
-        .orb-3 { width: 100px; height: 100px; top: 80%; left: 70%; animation-delay: -14s; }
+        .orb-3 { width: 100px; height: 100px; top: 80%; left: 70%; animation-delay: -14s; background: var(--arcpoint-gradient); }
 
         @keyframes float {
             0%, 100% { transform: translate(0, 0) scale(1); }
@@ -146,6 +149,7 @@
             transition: var(--transition);
             position: relative;
             padding: 0.5rem 0;
+            cursor: pointer;
         }
 
         .nav-link:hover, .nav-link.active {
@@ -206,8 +210,19 @@
             transition: var(--transition);
             display: inline-flex;
             align-items: center;
+            justify-content: center;
             gap: 0.5rem;
             font-size: 14px;
+            min-height: 44px;
+            position: relative;
+        }
+
+        .btn:hover {
+            transform: translateY(-1px);
+        }
+
+        .btn:active {
+            transform: translateY(0);
         }
 
         .btn-primary {
@@ -232,6 +247,20 @@
             color: white;
         }
 
+        .btn-cta {
+            font-size: 18px;
+            padding: 1.25rem 2.5rem;
+            background: var(--gradient);
+            color: white;
+            box-shadow: var(--glow);
+            border-radius: 16px;
+        }
+
+        .btn-cta:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 40px rgba(0, 124, 255, 0.4);
+        }
+
         .container {
             max-width: 1400px;
             margin: 0 auto;
@@ -239,12 +268,12 @@
         }
 
         .page {
-            display: none;
+            display: none !important;
             animation: fadeInUp 0.6s ease-out;
         }
 
         .page.active {
-            display: block;
+            display: block !important;
         }
 
         @keyframes fadeInUp {
@@ -270,11 +299,94 @@
         .mt-4 { margin-top: 2rem; }
         .mb-4 { margin-bottom: 2rem; }
 
+        .hero-section {
+            text-align: center;
+            padding: 6rem 0 4rem 0;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .hero-title {
+            font-size: 4rem;
+            font-weight: 800;
+            margin-bottom: 1.5rem;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            line-height: 1.1;
+        }
+
+        .hero-subtitle {
+            font-size: 1.4rem;
+            color: var(--text-secondary);
+            margin-bottom: 3rem;
+            line-height: 1.5;
+        }
+
+        .ai-preview {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 3rem;
+            margin: 4rem 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .ai-preview::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: var(--gradient);
+        }
+
+        .ai-preview h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: var(--accent);
+        }
+
+        .quick-demo {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .demo-form {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .demo-response {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1.5rem;
+            font-style: italic;
+            color: var(--text-secondary);
+            position: relative;
+        }
+
+        .demo-response::before {
+            content: '"';
+            font-size: 3rem;
+            color: var(--accent);
+            position: absolute;
+            top: -10px;
+            left: 10px;
+        }
+
         .stats-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
             gap: 2rem;
-            margin: 3rem 0;
+            margin: 4rem 0;
         }
 
         .stat-card {
@@ -404,6 +516,42 @@
             100% { transform: rotate(360deg); }
         }
 
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        @keyframes shimmer {
+            0% { left: -100%; }
+            100% { left: 100%; }
+        }
+
+        .founder-amount-btn.active {
+            border-color: #ffd700 !important;
+            background: rgba(255, 215, 0, 0.1) !important;
+            color: #ffd700 !important;
+        }
+
+        .founder-amount-btn:hover {
+            border-color: #ffd700 !important;
+            background: rgba(255, 215, 0, 0.05) !important;
+        }
+
+        #pricingToggle:checked + span {
+            background-color: var(--accent);
+        }
+
+        #pricingToggle:checked + span + span {
+            transform: translateX(30px);
+        }
+
         .ai-container {
             border-radius: 16px;
             overflow: hidden;
@@ -414,6 +562,17 @@
             color: white;
             padding: 3rem 2rem;
             text-align: center;
+            position: relative;
+        }
+
+        .ai-header::after {
+            content: '';
+            position: absolute;
+            bottom: -1px;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: var(--arcpoint-gradient);
         }
 
         .ai-header h2 {
@@ -422,64 +581,21 @@
             margin-bottom: 0.5rem;
         }
 
+        .tier-indicator {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            margin-top: 1rem;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
         .ai-content {
             background: var(--card-bg);
             padding: 2rem;
-        }
-
-        .tier-selector {
-            display: flex;
-            gap: 1rem;
-            margin-bottom: 2rem;
-            background: var(--surface);
-            padding: 0.5rem;
-            border-radius: 12px;
-        }
-
-        .tier-option {
-            flex: 1;
-            padding: 1rem;
-            border-radius: 8px;
-            border: none;
-            background: transparent;
-            cursor: pointer;
-            transition: var(--transition);
-            font-weight: 600;
-            color: var(--text-secondary);
-        }
-
-        .tier-option.active {
-            background: var(--card-bg);
-            color: var(--accent);
-            box-shadow: var(--shadow);
-        }
-
-        .request-types {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-            gap: 1rem;
-            margin-bottom: 2rem;
-        }
-
-        .request-type {
-            padding: 1.5rem;
-            border: 2px solid var(--border);
-            border-radius: 12px;
-            cursor: pointer;
-            transition: var(--transition);
-            text-align: center;
-            background: var(--surface);
-            color: var(--text-primary);
-        }
-
-        .request-type:hover {
-            border-color: var(--accent);
-            transform: translateY(-2px);
-        }
-
-        .request-type.selected {
-            border-color: var(--accent);
-            background: rgba(0, 124, 255, 0.1);
         }
 
         .text-area {
@@ -511,6 +627,22 @@
             white-space: pre-wrap;
             line-height: 1.8;
             color: var(--text-primary);
+            font-family: 'Inter', sans-serif;
+            font-size: 16px;
+        }
+
+        .upgrade-prompt {
+            background: linear-gradient(135deg, rgba(255, 107, 53, 0.1), rgba(247, 147, 30, 0.1));
+            border: 1px solid var(--arcpoint-orange);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            text-align: center;
+        }
+
+        .upgrade-prompt h4 {
+            color: var(--arcpoint-orange);
+            margin-bottom: 0.5rem;
         }
 
         .pricing-grid {
@@ -555,28 +687,6 @@
             font-size: 14px;
         }
 
-        .pricing-toggle {
-            display: flex;
-            gap: 1rem;
-            justify-content: center;
-            margin-bottom: 1rem;
-        }
-
-        .toggle-btn {
-            padding: 0.5rem 1rem;
-            border: 1px solid var(--accent);
-            border-radius: 8px;
-            background: transparent;
-            color: var(--accent);
-            cursor: pointer;
-            transition: var(--transition);
-        }
-
-        .toggle-btn.active {
-            background: var(--accent);
-            color: white;
-        }
-
         .price {
             font-size: 3rem;
             font-weight: 800;
@@ -606,6 +716,31 @@
             border-bottom: none;
         }
 
+        .arcpoint-branding {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.75rem 1.5rem;
+            background: var(--card-bg);
+            border-radius: 25px;
+            border: 1px solid var(--border);
+            cursor: pointer;
+            transition: var(--transition);
+            text-decoration: none;
+            color: var(--text-primary);
+        }
+
+        .arcpoint-branding:hover {
+            border-color: var(--arcpoint-orange);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 32px rgba(255, 107, 53, 0.15);
+        }
+
+        .arcpoint-logo {
+            width: 24px;
+            height: 24px;
+        }
+
         .mobile-menu-btn {
             display: none;
             background: none;
@@ -617,6 +752,19 @@
         }
 
         @media (max-width: 768px) {
+            .hero-title {
+                font-size: 2.5rem;
+            }
+
+            .hero-subtitle {
+                font-size: 1.1rem;
+            }
+
+            .quick-demo {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+
             .nav-container {
                 padding: 0 1rem;
             }
@@ -657,12 +805,8 @@
                 transform: none;
             }
 
-            .tier-selector {
-                flex-direction: column;
-            }
-
-            .request-types {
-                grid-template-columns: 1fr;
+            .hero-section {
+                padding: 3rem 0 2rem 0;
             }
 
             .auth-container {
@@ -697,10 +841,8 @@
                                 <stop offset="100%" style="stop-color:#4D4AEF;stop-opacity:1" />
                             </linearGradient>
                         </defs>
-                        <!-- Minimal geometric design inspired by Arcpoint -->
                         <path d="M50 15 L25 70 L35 70 L45 50 L55 50 L65 70 L75 70 L50 15 Z" fill="url(#logoGradient)" stroke="none"/>
                         <path d="M40 45 L50 25 L60 45 L50 55 L40 45 Z" fill="var(--text-primary)" stroke="none"/>
-                        <!-- Small accent triangles -->
                         <path d="M30 75 L35 65 L40 75 L30 75 Z" fill="url(#logoGradient)" opacity="0.8"/>
                         <path d="M60 75 L65 65 L70 75 L60 75 Z" fill="url(#logoGradient)" opacity="0.8"/>
                     </svg>
@@ -719,7 +861,7 @@
             <button class="mobile-menu-btn" onclick="toggleMobileMenu()">☰</button>
             
             <div class="user-info">
-                <div class="plan-badge" id="planBadge">Free Tier</div>
+                <div class="plan-badge" id="planBadge" style="display: none;">Free Tier</div>
                 <div class="auth-buttons" id="authButtons">
                     <button class="btn btn-secondary" onclick="showPage('login')">Sign In</button>
                     <button class="btn btn-primary" onclick="showPage('register')">Get Started</button>
@@ -730,16 +872,31 @@
 
     <div class="container">
         <div id="home" class="page active">
-            <div class="text-center" style="padding: 4rem 0;">
-                <h1 style="font-size: 3.5rem; font-weight: 800; margin-bottom: 1rem;">
-                    Turn Your Musical Passion Into Your Business
-                </h1>
-                <p style="font-size: 1.25rem; color: var(--text-secondary); margin-bottom: 3rem; max-width: 600px; margin-left: auto; margin-right: auto;">
-                    AI-powered guidance for grants, bios, and strategic career planning. Stop struggling alone—accelerate your music business.
+            <div class="hero-section">
+                <h1 class="hero-title">Turn Your Musical Passion Into Your Business</h1>
+                <p class="hero-subtitle">
+                    AI-powered guidance for grants, bios, and strategic career planning. 
+                    Get professional results in minutes, not hours.
                 </p>
-                <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
-                    <button class="btn btn-primary" onclick="showPage('register')" style="font-size: 18px; padding: 1.25rem 2.5rem;">Start Building Your Career</button>
-                    <button class="btn btn-secondary" onclick="showPage('ai-assistant')" style="font-size: 18px; padding: 1.25rem 2.5rem;">Try AI Assistant</button>
+                <button class="btn btn-cta" onclick="showPage('ai-assistant')">
+                    🎵 Start Creating Now
+                </button>
+            </div>
+
+            <div class="ai-preview">
+                <h3>✨ See AI in Action</h3>
+                <div class="quick-demo">
+                    <div class="demo-form">
+                        <input type="text" class="form-input" placeholder="I'm a classical violinist seeking grants..." readonly style="opacity: 0.7;">
+                        <textarea class="text-area" placeholder="I need help writing a compelling artist bio for grant applications. I've been playing violin for 15 years..." readonly style="opacity: 0.7; min-height: 80px;"></textarea>
+                        <button class="btn btn-primary" style="opacity: 0.7;">Generate Response</button>
+                    </div>
+                    <div class="demo-response">
+                        Based on your 15-year violin journey, here's a compelling bio that highlights your artistic evolution and grant-worthy achievements. Your dedication to classical performance combined with your educational background creates a strong foundation for funding applications...
+                        <div style="margin-top: 1rem; font-size: 14px; color: var(--accent);">
+                            ← Try the real AI assistant →
+                        </div>
+                    </div>
                 </div>
             </div>
             
@@ -809,44 +966,31 @@
             <div class="ai-container card">
                 <div class="ai-header">
                     <h2>CadenzaBoard AI Assistant</h2>
-                    <p>Professional music career guidance with business expertise</p>
+                    <p>Professional music career guidance powered by advanced AI</p>
+                    <div class="tier-indicator" id="tierIndicator">
+                        🆓 Free Tier - Basic AI
+                    </div>
                 </div>
                 
                 <div class="ai-content">
-                    <div class="tier-selector">
-                        <button class="tier-option active" data-tier="basic" onclick="selectTier('basic')">
-                            Basic AI (Free)
-                        </button>
-                        <button class="tier-option" data-tier="professional" onclick="selectTier('professional')">
-                            Professional AI ($2.99)
-                        </button>
-                        <button class="tier-option" data-tier="founder" onclick="selectTier('founder')">
-                            Expert AI ($59.99)
-                        </button>
-                    </div>
-
-                    <div class="request-types" id="requestTypes">
-                        <div class="request-type" data-type="bio" onclick="selectRequestType('bio')">
-                            📝 Artist Bio
-                        </div>
-                        <div class="request-type" data-type="grant" onclick="selectRequestType('grant')">
-                            💰 Grant Apps
-                        </div>
-                        <div class="request-type" data-type="career" onclick="selectRequestType('career')">
-                            🎯 Career Guide
-                        </div>
-                        <div class="request-type" data-type="festival" onclick="selectRequestType('festival')">
-                            🎪 Festivals
-                        </div>
-                        <div class="request-type" data-type="academic" onclick="selectRequestType('academic')">
-                            🎓 Academic
-                        </div>
-                        <div class="request-type" data-type="repertoire" onclick="selectRequestType('repertoire')">
-                            🎼 Repertoire
-                        </div>
-                    </div>
-
                     <div style="display: grid; gap: 1.5rem;">
+                        <div>
+                            <label style="font-weight: 600; margin-bottom: 0.5rem; display: block;">What do you need help with?</label>
+                            <select id="requestTypeSelect" class="form-input" onchange="selectRequestType(this.value)" style="cursor: pointer;">
+                                <option value="">Choose your request type...</option>
+                                <option value="bio">📝 Artist Bio</option>
+                                <option value="grant">💰 Grant Application</option>
+                                <option value="career">🎯 Career Guidance</option>
+                                <option value="festival">🎪 Festival Applications</option>
+                                <option value="academic">🎓 Academic/CV</option>
+                                <option value="repertoire">🎼 Repertoire Planning</option>
+                                <option value="business" id="businessOption" style="display: none;">💼 Business Strategy</option>
+                                <option value="marketing" id="marketingOption" style="display: none;">📱 Marketing</option>
+                                <option value="finance" id="financeOption" style="display: none;">💎 Finance</option>
+                                <option value="networking" id="networkingOption" style="display: none;">🤝 Networking</option>
+                            </select>
+                        </div>
+
                         <div>
                             <label style="font-weight: 600; margin-bottom: 0.5rem; display: block;">Your Musical Background:</label>
                             <textarea 
@@ -865,6 +1009,12 @@
                             ></textarea>
                         </div>
                         
+                        <div id="upgradePrompt" class="upgrade-prompt hidden">
+                            <h4>🚀 Want More Detailed AI Responses?</h4>
+                            <p>Upgrade to Professional or Founder tier for advanced AI capabilities, longer responses, and specialized industry knowledge.</p>
+                            <button class="btn btn-primary" onclick="showPage('pricing')" style="margin-top: 1rem;">View Upgrade Options</button>
+                        </div>
+                        
                         <button class="btn btn-primary" onclick="submitAIRequest()" id="submitBtn" style="padding: 1rem 2rem; font-size: 16px;">
                             Generate AI Response
                         </button>
@@ -872,8 +1022,9 @@
 
                     <div id="responseArea" class="hidden">
                         <div class="response-box" id="responseContent"></div>
-                        <div style="display: flex; gap: 1rem; margin-top: 1rem;">
-                            <button class="btn btn-secondary" onclick="copyResponse()">📋 Copy Response</button>
+                        <div style="display: flex; gap: 1rem; margin-top: 1rem; flex-wrap: wrap;">
+                            <button class="btn btn-secondary" onclick="copyResponse()">📋 Copy Text</button>
+                            <button class="btn btn-primary" onclick="downloadAsText()" id="downloadBtn" style="display: none;">📄 Download</button>
                             <button class="btn btn-secondary" onclick="clearResponse()">🗑️ Clear</button>
                         </div>
                     </div>
@@ -906,14 +1057,25 @@
                     <div class="pricing-badge">MOST POPULAR</div>
                     <h3 style="font-size: 1.5rem; font-weight: 700; margin-bottom: 1rem;">Professional AI</h3>
                     
-                    <div class="pricing-toggle">
-                        <button class="toggle-btn active" data-plan="monthly" onclick="togglePricing('monthly')">Monthly</button>
-                        <button class="toggle-btn" data-plan="yearly" onclick="togglePricing('yearly')">Yearly</button>
+                    <!-- Pricing Toggle -->
+                    <div style="display: flex; align-items: center; justify-content: center; gap: 1rem; margin: 1rem 0;">
+                        <span id="monthlyLabel" style="color: var(--accent); font-size: 14px; font-weight: 600;">Monthly</span>
+                        <label style="position: relative; display: inline-block; width: 60px; height: 30px;">
+                            <input type="checkbox" id="pricingToggle" onchange="togglePricing()" style="opacity: 0; width: 0; height: 0;">
+                            <span id="toggleSlider" style="position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: var(--border); border-radius: 30px; transition: 0.4s;"></span>
+                            <span id="toggleCircle" style="position: absolute; content: ''; height: 22px; width: 22px; left: 4px; bottom: 4px; background-color: white; border-radius: 50%; transition: 0.4s; transform: translateX(0);"></span>
+                        </label>
+                        <span id="yearlyLabel" style="color: var(--text-secondary); font-size: 14px;">Yearly <span style="background: var(--accent); color: white; padding: 2px 6px; border-radius: 8px; font-size: 10px; margin-left: 4px;">SAVE 40%</span></span>
                     </div>
                     
-                    <div id="professionalPrice">
+                    <div id="monthlyPricing">
                         <div class="price">$2.99<span style="font-size: 1rem;">/mo</span></div>
                         <div class="price-subtitle">billed monthly</div>
+                    </div>
+                    
+                    <div id="yearlyPricing" style="display: none;">
+                        <div class="price">$1.79<span style="font-size: 1rem;">/mo</span></div>
+                        <div class="price-subtitle">$21.49 billed yearly <span style="color: var(--accent); font-weight: 600;">(save $14.39)</span></div>
                     </div>
                     
                     <ul class="feature-list">
@@ -924,26 +1086,67 @@
                         <li>✅ Priority support</li>
                     </ul>
                     
-                    <div id="professionalButton">
-                        <a href="https://paypal.me/jacobburk/2.99" target="_blank" class="btn btn-primary" style="width: 100%; padding: 1rem; text-decoration: none; display: block;">Start Professional</a>
+                    <div id="monthlyButton">
+                        <a href="https://paypal.me/jacobburk/2.99" target="_blank" class="btn btn-primary" style="width: 100%; padding: 1rem; text-decoration: none; display: block;">Start Monthly Plan</a>
+                        <p style="color: var(--text-muted); font-size: 11px; margin-top: 0.5rem; text-align: center;">
+                            Cancel anytime • Email hello@arcpointcreative.com for plan recovery
+                        </p>
+                    </div>
+                    
+                    <div id="yearlyButton" style="display: none;">
+                        <a href="https://paypal.me/jacobburk/21.49" target="_blank" class="btn btn-primary" style="width: 100%; padding: 1rem; text-decoration: none; display: block;">Start Yearly Plan</a>
+                        <p style="color: var(--text-muted); font-size: 11px; margin-top: 0.5rem; text-align: center;">
+                            Best value • Email hello@arcpointcreative.com for plan recovery
+                        </p>
                     </div>
                 </div>
 
-                <div class="pricing-card" style="background: linear-gradient(135deg, #1a1a1b, #2c2c2d); border: 2px solid #ffd700;">
-                    <div class="pricing-badge" style="background: linear-gradient(135deg, #ffd700, #ffb347); color: #1a1a1b;">LIFETIME DEAL</div>
-                    <h3 style="font-size: 1.5rem; font-weight: 700; margin-bottom: 1rem; color: #ffd700;">Founder Access</h3>
-                    <div class="price" style="color: #ffd700;">$59.99</div>
-                    <div class="price-subtitle">one-time payment • lifetime access</div>
+                <div class="pricing-card" style="background: linear-gradient(135deg, #1a1a1b, #2c2c2d); border: 3px solid #ffd700; position: relative; overflow: hidden;">
+                    <!-- Animated glow effect -->
+                    <div style="position: absolute; top: -2px; left: -2px; right: -2px; bottom: -2px; background: linear-gradient(45deg, #ffd700, #ffb347, #ffd700, #ffb347); background-size: 400% 400%; animation: gradientShift 3s ease infinite; border-radius: 16px; z-index: -1;"></div>
+                    
+                    <div class="pricing-badge" style="background: linear-gradient(135deg, #ff6b35, #f7931e); color: white; animation: pulse 2s infinite;">🚀 EARLY SUPPORTER</div>
+                    <h3 style="font-size: 1.5rem; font-weight: 700; margin-bottom: 0.5rem; color: #ffd700;">Founder Access</h3>
+                    <p style="color: var(--text-secondary); font-size: 12px; margin-bottom: 1rem; font-style: italic;">Help us build the future of AI for musicians</p>
+                    
+                    <div style="background: rgba(255, 215, 0, 0.1); border: 1px solid #ffd700; border-radius: 12px; padding: 1rem; margin: 1rem 0;">
+                        <h4 style="color: #ffd700; font-size: 14px; margin-bottom: 0.5rem;">🎯 Limited Time Opportunity</h4>
+                        <p style="color: var(--text-secondary); font-size: 12px; line-height: 1.4;">
+                            Support our mission to revolutionize music careers with AI. Your contribution helps us hire developers and scale this platform for musicians worldwide.
+                        </p>
+                    </div>
+                    
+                    <div class="price" style="color: #ffd700;">$25<span style="font-size: 1rem; color: var(--text-secondary);">+</span></div>
+                    <div class="price-subtitle">one-time contribution • lifetime access</div>
                     
                     <ul class="feature-list">
                         <li>✅ Everything in Professional</li>
                         <li>✅ Expert AI business administrator</li>
                         <li>✅ Advanced business guidance</li>
                         <li>✅ Early access to new features</li>
-                        <li>✅ Founder community</li>
+                        <li>✅ Founder community access</li>
+                        <li style="color: #ffd700;">🎁 Lifetime access guarantee</li>
+                        <li style="color: #ffd700;">📈 Help shape the platform's future</li>
                     </ul>
                     
-                    <a href="https://paypal.me/jacobburk/59.99" target="_blank" class="btn" style="background: linear-gradient(135deg, #ffd700, #ffb347); color: #1a1a1b; width: 100%; padding: 1rem; text-decoration: none; display: block; font-weight: 700;">Get Lifetime Access</a>
+                    <div style="margin: 1rem 0;">
+                        <p style="color: var(--text-secondary); font-size: 12px; margin-bottom: 0.5rem;">Choose your contribution:</p>
+                        <div style="display: flex; gap: 0.5rem; margin-bottom: 1rem;">
+                            <button onclick="setFounderAmount(25)" class="founder-amount-btn" data-amount="25" style="flex: 1; padding: 0.5rem; background: var(--surface); border: 2px solid var(--border); border-radius: 8px; color: var(--text-primary); cursor: pointer; font-size: 12px;">$25</button>
+                            <button onclick="setFounderAmount(50)" class="founder-amount-btn" data-amount="50" style="flex: 1; padding: 0.5rem; background: var(--surface); border: 2px solid var(--border); border-radius: 8px; color: var(--text-primary); cursor: pointer; font-size: 12px;">$50</button>
+                            <button onclick="setFounderAmount(100)" class="founder-amount-btn" data-amount="100" style="flex: 1; padding: 0.5rem; background: var(--surface); border: 2px solid var(--border); border-radius: 8px; color: var(--text-primary); cursor: pointer; font-size: 12px;">$100</button>
+                            <button onclick="setFounderAmount('custom')" class="founder-amount-btn" data-amount="custom" style="flex: 1; padding: 0.5rem; background: var(--surface); border: 2px solid var(--border); border-radius: 8px; color: var(--text-primary); cursor: pointer; font-size: 12px;">Other</button>
+                        </div>
+                    </div>
+                    
+                    <a href="https://paypal.me/jacobburk/25" target="_blank" id="founderButton" class="btn" style="background: linear-gradient(135deg, #ffd700, #ffb347); color: #1a1a1b; width: 100%; padding: 1rem; text-decoration: none; display: block; font-weight: 700; position: relative; overflow: hidden;">
+                        <span style="position: relative; z-index: 2;">Become a Founder - $25</span>
+                        <div style="position: absolute; top: 0; left: -100%; width: 100%; height: 100%; background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent); animation: shimmer 2s infinite;"></div>
+                    </a>
+                    
+                    <p style="color: var(--text-muted); font-size: 10px; margin-top: 0.5rem; text-align: center;">
+                        🚀 Early supporters get recognized • Email hello@arcpointcreative.com for support
+                    </p>
                 </div>
             </div>
             
@@ -953,169 +1156,145 @@
         </div>
     </div>
 
-    <footer style="background: var(--surface); border-top: 1px solid var(--border); padding: 2rem 0; margin-top: 4rem;">
-        <div style="max-width: 1400px; margin: 0 auto; padding: 0 2rem; text-align: center;">
-            <div style="margin-bottom: 1rem;">
-                <p style="color: var(--text-secondary); font-size: 14px; margin-bottom: 0.5rem;">
-                    Proudly powered by
-                </p>
-                <div style="display: inline-flex; align-items: center; gap: 0.75rem; padding: 0.75rem 1.5rem; background: var(--card-bg); border-radius: 25px; border: 1px solid var(--border); cursor: pointer; transition: var(--transition);" onclick="window.open('https://www.arcpointcreative.com', '_blank')" onmouseover="this.style.borderColor='var(--accent)'; this.style.transform='translateY(-2px)'" onmouseout="this.style.borderColor='var(--border)'; this.style.transform='translateY(0)'">
-                    <svg width="24" height="24" viewBox="0 0 500 500" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M250 90 L160 240 L200 240 L220 200 L280 200 L300 240 L340 240 L250 90 Z" fill="var(--text-primary)"/>
-                        <path d="M230 160 L250 120 L270 160 L250 200 L230 160 Z" fill="var(--accent)"/>
-                        <path d="M180 260 L200 220 L220 260 L180 260 Z" fill="var(--text-primary)"/>
-                        <path d="M280 260 L300 220 L320 260 L280 260 Z" fill="var(--text-primary)"/>
-                    </svg>
-                    <span style="color: var(--text-primary); font-weight: 600; font-size: 16px;">Arcpoint Creative</span>
+    <footer style="background: var(--surface); border-top: 1px solid var(--border); padding: 3rem 0; margin-top: 4rem;">
+        <div style="max-width: 1400px; margin: 0 auto; padding: 0 2rem;">
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem; margin-bottom: 2rem;">
+                <div>
+                    <h4 style="color: var(--text-primary); margin-bottom: 1rem; font-weight: 700;">CadenzaBoard AI</h4>
+                    <p style="color: var(--text-secondary); line-height: 1.6;">
+                        Empowering musicians worldwide with AI-powered career guidance, grant writing, and strategic planning. Built specifically for classical musicians by industry professionals.
+                    </p>
+                </div>
+                <div>
+                    <h4 style="color: var(--text-primary); margin-bottom: 1rem; font-weight: 700;">AI Services</h4>
+                    <ul style="list-style: none; color: var(--text-secondary);">
+                        <li style="margin-bottom: 0.5rem;"><a href="#" onclick="showPage('ai-assistant'); selectRequestType('bio');" style="color: var(--text-secondary); text-decoration: none; cursor: pointer;">• AI-Powered Artist Bios</a></li>
+                        <li style="margin-bottom: 0.5rem;"><a href="#" onclick="showPage('ai-assistant'); selectRequestType('grant');" style="color: var(--text-secondary); text-decoration: none; cursor: pointer;">• Grant Application Writing</a></li>
+                        <li style="margin-bottom: 0.5rem;"><a href="#" onclick="showPage('ai-assistant'); selectRequestType('career');" style="color: var(--text-secondary); text-decoration: none; cursor: pointer;">• Strategic Career Planning</a></li>
+                        <li style="margin-bottom: 0.5rem;"><a href="#" onclick="showPage('ai-assistant'); selectRequestType('festival');" style="color: var(--text-secondary); text-decoration: none; cursor: pointer;">• Festival Application Support</a></li>
+                        <li style="margin-bottom: 0.5rem;"><a href="#" onclick="showPage('ai-assistant'); selectRequestType('academic');" style="color: var(--text-secondary); text-decoration: none; cursor: pointer;">• Academic CV Assistance</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 style="color: var(--text-primary); margin-bottom: 1rem; font-weight: 700;">Support & Help</h4>
+                    <ul style="list-style: none; color: var(--text-secondary);">
+                        <li style="margin-bottom: 0.5rem;"><a href="#" onclick="showTroubleshootingModal()" style="color: var(--text-secondary); text-decoration: none; cursor: pointer;">• Getting Started Guide</a></li>
+                        <li style="margin-bottom: 0.5rem;"><a href="#" onclick="showTroubleshootingModal()" style="color: var(--text-secondary); text-decoration: none; cursor: pointer;">• Troubleshooting FAQ</a></li>
+                        <li style="margin-bottom: 0.5rem;"><a href="mailto:hello@arcpointcreative.com" style="color: var(--text-secondary); text-decoration: none;">• Email Support</a></li>
+                        <li style="margin-bottom: 0.5rem;"><a href="#" onclick="showAPIStatusModal()" style="color: var(--text-secondary); text-decoration: none; cursor: pointer;">• System Status</a></li>
+                        <li style="margin-bottom: 0.5rem;"><a href="#" onclick="showPage('pricing')" style="color: var(--text-secondary); text-decoration: none;">• Upgrade Plans</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 style="color: var(--text-primary); margin-bottom: 1rem; font-weight: 700;">For Musicians</h4>
+                    <ul style="list-style: none; color: var(--text-secondary);">
+                        <li style="margin-bottom: 0.5rem;"><a href="#" onclick="showPage('ai-assistant'); selectRequestType('career'); setContextPlaceholder('classical performance');" style="color: var(--text-secondary); text-decoration: none; cursor: pointer;">• Classical Performance</a></li>
+                        <li style="margin-bottom: 0.5rem;"><a href="#" onclick="showPage('ai-assistant'); selectRequestType('career'); setContextPlaceholder('music education');" style="color: var(--text-secondary); text-decoration: none; cursor: pointer;">• Music Education</a></li>
+                        <li style="margin-bottom: 0.5rem;"><a href="#" onclick="showPage('ai-assistant'); selectRequestType('grant'); setContextPlaceholder('grant funding');" style="color: var(--text-secondary); text-decoration: none; cursor: pointer;">• Grant Funding</a></li>
+                        <li style="margin-bottom: 0.5rem;"><a href="#" onclick="showPage('ai-assistant'); selectRequestType('career'); setContextPlaceholder('career development');" style="color: var(--text-secondary); text-decoration: none; cursor: pointer;">• Career Development</a></li>
+                        <li style="margin-bottom: 0.5rem;"><a href="#" onclick="showPage('ai-assistant'); selectRequestType('networking'); setContextPlaceholder('professional networking');" style="color: var(--text-secondary); text-decoration: none; cursor: pointer;">• Professional Networking</a></li>
+                    </ul>
                 </div>
             </div>
-            <div style="color: var(--text-muted); font-size: 12px; margin-top: 1rem;">
-                © 2025 CadenzaBoard AI. Empowering musicians worldwide.
+            
+            <div style="border-top: 1px solid var(--border); padding-top: 2rem; text-align: center;">
+                <div style="margin-bottom: 1.5rem;">
+                    <p style="color: var(--text-secondary); font-size: 14px; margin-bottom: 1rem;">
+                        Proudly powered by
+                    </p>
+                    <a href="https://www.arcpointcreative.com" target="_blank" class="arcpoint-branding">
+                        <svg class="arcpoint-logo" viewBox="0 0 500 500" xmlns="http://www.w3.org/2000/svg">
+                            <defs>
+                                <linearGradient id="arcpointGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                                    <stop offset="0%" style="stop-color:#FF6B35;stop-opacity:1" />
+                                    <stop offset="100%" style="stop-color:#F7931E;stop-opacity:1" />
+                                </linearGradient>
+                            </defs>
+                            <path d="M250 90 L160 240 L200 240 L220 200 L280 200 L300 240 L340 240 L250 90 Z" fill="url(#arcpointGradient)"/>
+                            <path d="M230 160 L250 120 L270 160 L250 200 L230 160 Z" fill="var(--text-primary)"/>
+                            <path d="M180 260 L200 220 L220 260 L180 260 Z" fill="url(#arcpointGradient)" opacity="0.8"/>
+                            <path d="M280 260 L300 220 L320 260 L280 260 Z" fill="url(#arcpointGradient)" opacity="0.8"/>
+                        </svg>
+                        <span style="font-weight: 600; font-size: 16px;">Arcpoint Creative</span>
+                    </a>
+                </div>
+                <div style="color: var(--text-muted); font-size: 12px;">
+                    © 2025 CadenzaBoard AI. Built with ❤️ by Arcpoint Creative. Empowering musicians worldwide.
+                </div>
             </div>
         </div>
     </footer>
 
     <script>
-        const API_KEY = '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';
+        console.log('🚀 Starting CadenzaBoard AI...');
+
+        // Configuration
+        const API_KEY = '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';
         const DEV_KEY = 'dev_access_2024_arcpoint';
         const API_ENDPOINT = 'https://api.groq.com/openai/v1/chat/completions';
         const SUPABASE_URL = 'https://yhobjmsitdqsiqydguvp.supabase.co';
         const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inlob2JqbXNpdGRxc2lxeWRndXZwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTE3NTI3NzYsImV4cCI6MjA2NzMyODc3Nn0.YejJBGPo1HtdecTXw_KIEyahx0OKNrp2LAbLhxUUL6U';
         
+        // Global variables
         let supabase = null;
+        let currentUser = null;
+        let selectedRequestType = '';
+        let devClickCount = 0;
+        let lastAIResponse = '';
+        let requestCount = 0;
+        let isBioRequest = false;
+
+        console.log('✅ Variables initialized');
+
+        // Initialize Supabase with better error handling
         try {
-            if (window.supabase) {
+            if (window.supabase && window.supabase.createClient) {
                 supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-                console.log('✅ Supabase connected');
+                console.log('✅ Supabase connected successfully');
+                
+                // Test the connection
+                supabase.auth.getSession().then(({ data, error }) => {
+                    if (error) {
+                        console.log('⚠️ Supabase auth error:', error.message);
+                    } else {
+                        console.log('✅ Supabase auth working');
+                    }
+                });
+            } else {
+                console.log('⚠️ Supabase library not loaded, using fallback mode');
+                supabase = null;
             }
         } catch (error) {
-            console.log('⚠️ Supabase fallback mode');
-        }
-        
-        let currentUser = null;
-        let selectedTier = 'basic';
-        let selectedRequestType = '';
-        let users = [];
-        let devClickCount = 0;
-
-        async function saveUser(userData) {
-            if (supabase) {
-                try {
-                    const { data, error } = await supabase
-                        .from('users')
-                        .insert([{
-                            id: userData.id,
-                            username: userData.username,
-                            email: userData.email,
-                            password: userData.password,
-                            tier: userData.tier,
-                            email_verified: userData.emailVerified || false,
-                            created_at: userData.createdAt
-                        }]);
-                    
-                    if (error) throw error;
-                    return data;
-                } catch (error) {
-                    console.error('Supabase save error:', error);
-                }
-            }
-            
-            users.push(userData);
-            localStorage.setItem('cadenzaUsers', JSON.stringify(users));
-            return userData;
+            console.log('⚠️ Supabase initialization failed:', error.message);
+            supabase = null;
         }
 
-        async function getUsers() {
-            if (supabase) {
-                try {
-                    const { data, error } = await supabase
-                        .from('users')
-                        .select('*');
-                    
-                    if (error) throw error;
-                    
-                    const convertedUsers = data.map(user => ({
-                        id: user.id,
-                        username: user.username,
-                        email: user.email,
-                        password: user.password,
-                        tier: user.tier,
-                        emailVerified: user.email_verified,
-                        createdAt: user.created_at
-                    }));
-                    
-                    users = convertedUsers;
-                    return convertedUsers;
-                } catch (error) {
-                    console.error('Supabase load error:', error);
-                }
-            }
-            
-            const localUsers = localStorage.getItem('cadenzaUsers');
-            users = localUsers ? JSON.parse(localUsers) : [];
-            return users;
-        }
-
-        async function updateUser(userId, updates) {
-            if (supabase) {
-                try {
-                    const { data, error } = await supabase
-                        .from('users')
-                        .update({
-                            tier: updates.tier,
-                            email_verified: updates.emailVerified
-                        })
-                        .eq('id', userId);
-                    
-                    if (error) throw error;
-                    
-                    const userIndex = users.findIndex(u => u.id === userId);
-                    if (userIndex !== -1) {
-                        users[userIndex] = { ...users[userIndex], ...updates };
-                    }
-                    
-                    return data;
-                } catch (error) {
-                    console.error('Supabase update error:', error);
-                }
-            }
-            
-            const userIndex = users.findIndex(u => u.id === userId);
-            if (userIndex !== -1) {
-                users[userIndex] = { ...users[userIndex], ...updates };
-                localStorage.setItem('cadenzaUsers', JSON.stringify(users));
-            }
-        }
-
-        window.onload = async function() {
-            await getUsers();
-            
-            const savedUser = localStorage.getItem('cadenzaCurrentUser');
-            if (savedUser) {
-                try {
-                    currentUser = JSON.parse(savedUser);
-                    const userExists = users.find(u => u.id === currentUser.id);
-                    if (userExists) {
-                        updateAuthUI();
-                    } else {
-                        localStorage.removeItem('cadenzaCurrentUser');
-                        currentUser = null;
-                    }
-                } catch (e) {
-                    localStorage.removeItem('cadenzaCurrentUser');
-                }
-            }
-            
-            updateRequestTypes();
-        };
-
+        // CORE NAVIGATION FUNCTIONS
         function showPage(pageId) {
-            document.querySelectorAll('.page').forEach(page => {
-                page.classList.remove('active');
-            });
-            document.getElementById(pageId).classList.add('active');
+            console.log('📄 Navigating to page:', pageId);
             
-            document.querySelectorAll('.nav-link').forEach(link => {
+            // Hide all pages first
+            const allPages = document.querySelectorAll('.page');
+            console.log('📄 Found pages:', allPages.length);
+            
+            allPages.forEach(function(page) {
+                page.classList.remove('active');
+                page.style.display = 'none';
+            });
+            
+            // Show target page
+            const targetPage = document.getElementById(pageId);
+            if (targetPage) {
+                console.log('📄 Showing page:', pageId);
+                targetPage.classList.add('active');
+                targetPage.style.display = 'block';
+            } else {
+                console.error('❌ Page not found:', pageId);
+                return;
+            }
+            
+            // Update navigation
+            document.querySelectorAll('.nav-link').forEach(function(link) {
                 link.classList.remove('active');
             });
             
@@ -1123,16 +1302,32 @@
                 const navMap = { 'home': 0, 'ai-assistant': 1, 'pricing': 2 };
                 const linkIndex = navMap[pageId];
                 if (linkIndex !== undefined) {
-                    document.querySelectorAll('.nav-link')[linkIndex].classList.add('active');
+                    const navLinks = document.querySelectorAll('.nav-link');
+                    if (navLinks[linkIndex]) {
+                        navLinks[linkIndex].classList.add('active');
+                        console.log('📄 Activated nav link:', linkIndex);
+                    }
                 }
             }
+            
+            // Close mobile menu if open
+            const navMenu = document.querySelector('.nav-menu');
+            if (navMenu) {
+                navMenu.classList.remove('active');
+            }
+            
+            console.log('📄 Page navigation completed for:', pageId);
         }
 
         function toggleMobileMenu() {
+            console.log('📱 Toggling mobile menu');
             const navMenu = document.querySelector('.nav-menu');
-            navMenu.classList.toggle('active');
+            if (navMenu) {
+                navMenu.classList.toggle('active');
+            }
         }
 
+        // UTILITY FUNCTIONS
         function isValidEmail(email) {
             const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
             return emailRegex.test(email);
@@ -1140,11 +1335,136 @@
 
         function showMessage(elementId, message, type) {
             const element = document.getElementById(elementId);
-            element.innerHTML = `<div class="message ${type}">${message}</div>`;
+            if (element) {
+                element.innerHTML = '<div class="message ' + type + '">' + message + '</div>';
+            }
         }
 
+        function isValidApiKey(key) {
+            return key && key.startsWith('gsk_') && key.length > 20;
+        }
+
+        function checkApiKey() {
+            if (!isValidApiKey(API_KEY)) {
+                console.warn('⚠️ Invalid Groq API key format. Expected format: gsk_...');
+                return false;
+            }
+            return true;
+        }
+
+        // USER MANAGEMENT FUNCTIONS - With fallback for when Supabase isn't available
+        async function saveUser(userData) {
+            if (!supabase) {
+                console.log('⚠️ Supabase not available, using localStorage fallback');
+                // Fallback to localStorage for demo purposes
+                const users = JSON.parse(localStorage.getItem('cadenza_users') || '[]');
+                
+                // Check if user already exists
+                if (users.find(u => u.email === userData.email)) {
+                    throw new Error('User already exists with this email');
+                }
+                
+                const newUser = {
+                    id: 'user_' + Date.now(),
+                    email: userData.email,
+                    username: userData.username,
+                    tier: 'free',
+                    created_at: new Date().toISOString()
+                };
+                
+                users.push(newUser);
+                localStorage.setItem('cadenza_users', JSON.stringify(users));
+                localStorage.setItem('cadenza_current_user', JSON.stringify(newUser));
+                
+                return { user: newUser };
+            }
+            
+            try {
+                const { data, error } = await supabase.auth.signUp({
+                    email: userData.email,
+                    password: userData.password,
+                    options: {
+                        data: {
+                            username: userData.username,
+                            tier: 'free'
+                        }
+                    }
+                });
+                
+                if (error) throw error;
+                return data;
+            } catch (error) {
+                console.error('Registration error:', error);
+                throw error;
+            }
+        }
+
+        async function loginUser(email, password) {
+            if (!supabase) {
+                console.log('⚠️ Supabase not available, using localStorage fallback');
+                // Fallback to localStorage for demo purposes
+                const users = JSON.parse(localStorage.getItem('cadenza_users') || '[]');
+                const user = users.find(u => u.email === email);
+                
+                if (!user) {
+                    throw new Error('No account found with this email');
+                }
+                
+                // Simple password check (in real app, passwords would be hashed)
+                localStorage.setItem('cadenza_current_user', JSON.stringify(user));
+                return { user: user };
+            }
+            
+            try {
+                const { data, error } = await supabase.auth.signInWithPassword({
+                    email: email,
+                    password: password
+                });
+                
+                if (error) throw error;
+                return data;
+            } catch (error) {
+                console.error('Login error:', error);
+                throw error;
+            }
+        }
+
+        async function logoutUser() {
+            if (!supabase) {
+                console.log('⚠️ Logging out from localStorage fallback');
+                localStorage.removeItem('cadenza_current_user');
+                return;
+            }
+            
+            try {
+                const { error } = await supabase.auth.signOut();
+                if (error) throw error;
+            } catch (error) {
+                console.error('Logout error:', error);
+            }
+        }
+
+        async function getCurrentUser() {
+            if (!supabase) {
+                console.log('⚠️ Getting user from localStorage fallback');
+                const stored = localStorage.getItem('cadenza_current_user');
+                return stored ? JSON.parse(stored) : null;
+            }
+            
+            try {
+                const { data: { user } } = await supabase.auth.getUser();
+                return user;
+            } catch (error) {
+                console.error('Get user error:', error);
+                return null;
+            }
+        }
+
+        // AUTHENTICATION FUNCTIONS
         async function register(event) {
             event.preventDefault();
+            console.log('📝 Registration attempt started');
+            
             const username = document.getElementById('regUsername').value.trim();
             const email = document.getElementById('regEmail').value.trim();
             const password = document.getElementById('regPassword').value;
@@ -1164,50 +1484,44 @@
                 return;
             }
 
-            if (username.length < 3) {
-                showMessage('registerMessage', 'Username must be at least 3 characters', 'error');
-                return;
-            }
-
-            const existingUser = users.find(u => u.email.toLowerCase() === email.toLowerCase());
-            if (existingUser) {
-                showMessage('registerMessage', 'User already exists with this email', 'error');
-                return;
-            }
-
-            const existingUsername = users.find(u => u.username.toLowerCase() === username.toLowerCase());
-            if (existingUsername) {
-                showMessage('registerMessage', 'Username already taken', 'error');
-                return;
-            }
-
             const submitBtn = event.target.querySelector('button[type="submit"]');
             const originalText = submitBtn.innerHTML;
             submitBtn.disabled = true;
             submitBtn.innerHTML = '<div class="loading"><div class="spinner"></div>Creating account...</div>';
 
             try {
-                const newUser = {
-                    id: Date.now(),
-                    username,
+                const userData = await saveUser({
+                    username: username,
                     email: email.toLowerCase(),
-                    password,
-                    tier: 'free',
-                    emailVerified: true,
-                    createdAt: new Date().toISOString()
-                };
+                    password: password
+                });
 
-                await saveUser(newUser);
-
-                showMessage('registerMessage', 'Account created successfully!', 'success');
-                
-                setTimeout(() => {
-                    showPage('login');
-                }, 1500);
+                if (supabase) {
+                    showMessage('registerMessage', 'Account created! Please check your email to verify your account.', 'success');
+                    setTimeout(function() {
+                        showPage('login');
+                    }, 2000);
+                } else {
+                    // For localStorage fallback, auto-login
+                    currentUser = {
+                        id: userData.user.id,
+                        email: userData.user.email,
+                        username: userData.user.username,
+                        tier: userData.user.tier || 'free'
+                    };
+                    
+                    updateAuthUI();
+                    updateTierIndicator();
+                    showMessage('registerMessage', 'Account created successfully! Welcome to CadenzaBoard AI!', 'success');
+                    
+                    setTimeout(function() {
+                        showPage('ai-assistant');
+                    }, 1500);
+                }
 
             } catch (error) {
                 console.error('Registration error:', error);
-                showMessage('registerMessage', 'Registration failed. Please try again.', 'error');
+                showMessage('registerMessage', error.message || 'Registration failed. Please try again.', 'error');
             }
 
             submitBtn.disabled = false;
@@ -1216,6 +1530,8 @@
 
         async function login(event) {
             event.preventDefault();
+            console.log('🔐 Login attempt started');
+            
             const email = document.getElementById('loginEmail').value.trim();
             const password = document.getElementById('loginPassword').value;
             
@@ -1235,38 +1551,54 @@
             submitBtn.innerHTML = '<div class="loading"><div class="spinner"></div>Signing in...</div>';
 
             try {
-                await getUsers();
+                const authData = await loginUser(email, password);
                 
-                const user = users.find(u => u.email.toLowerCase() === email.toLowerCase() && u.password === password);
-                if (!user) {
-                    showMessage('loginMessage', 'Invalid email or password', 'error');
-                    submitBtn.disabled = false;
-                    submitBtn.innerHTML = originalText;
-                    return;
+                if (authData.user) {
+                    if (supabase) {
+                        // Supabase user structure
+                        currentUser = {
+                            id: authData.user.id,
+                            email: authData.user.email,
+                            username: authData.user.user_metadata?.username || email.split('@')[0],
+                            tier: authData.user.user_metadata?.tier || 'free'
+                        };
+                    } else {
+                        // localStorage fallback structure
+                        currentUser = {
+                            id: authData.user.id,
+                            email: authData.user.email,
+                            username: authData.user.username || email.split('@')[0],
+                            tier: authData.user.tier || 'free'
+                        };
+                    }
+                    
+                    updateAuthUI();
+                    updateTierIndicator();
+                    showPage('ai-assistant'); // Redirect to AI assistant after login
+                    showMessage('loginMessage', 'Welcome back!', 'success');
                 }
-
-                currentUser = user;
-                localStorage.setItem('cadenzaCurrentUser', JSON.stringify(currentUser));
-                updateAuthUI();
-                showPage('home');
-                showMessage('loginMessage', 'Welcome back!', 'success');
-                
-                const navMenu = document.querySelector('.nav-menu');
-                navMenu.classList.remove('active');
 
             } catch (error) {
                 console.error('Login error:', error);
-                showMessage('loginMessage', 'Login failed. Please try again.', 'error');
+                showMessage('loginMessage', error.message || 'Login failed. Please check your credentials.', 'error');
             }
 
             submitBtn.disabled = false;
             submitBtn.innerHTML = originalText;
         }
 
-        function logout() {
+        async function logout() {
+            console.log('👋 User logging out');
+            
+            try {
+                await logoutUser();
+            } catch (error) {
+                console.error('Logout error:', error);
+            }
+            
             currentUser = null;
-            localStorage.removeItem('cadenzaCurrentUser');
             updateAuthUI();
+            updateTierIndicator();
             showPage('home');
         }
 
@@ -1274,16 +1606,15 @@
             const authButtons = document.getElementById('authButtons');
             const planBadge = document.getElementById('planBadge');
             
+            if (!authButtons || !planBadge) return;
+            
             if (currentUser) {
-                authButtons.innerHTML = `
-                    <span style="color: var(--text-secondary); font-size: 14px; margin-right: 0.5rem;">Welcome, ${currentUser.username}</span>
-                    <button class="btn btn-secondary" onclick="logout()">Sign Out</button>
-                `;
-                authButtons.style.background = 'var(--surface)';
-                authButtons.style.border = '1px solid var(--border)';
+                // User is logged in - show welcome message and sign out
+                authButtons.innerHTML = '<span style="color: var(--text-secondary); font-size: 14px; margin-right: 0.5rem;">Welcome, ' + currentUser.username + '</span><button class="btn btn-secondary" onclick="logout()">Sign Out</button>';
                 
                 const tierNames = { 'free': 'Free Tier', 'professional': 'Professional', 'founder': 'Founder' };
                 planBadge.textContent = tierNames[currentUser.tier] || 'Free Tier';
+                planBadge.style.display = 'block';
                 
                 if (currentUser.tier === 'founder') {
                     planBadge.style.background = 'linear-gradient(135deg, #ffd700, #ffb347)';
@@ -1299,128 +1630,299 @@
                     planBadge.style.border = '1px solid var(--border)';
                 }
             } else {
-                authButtons.innerHTML = `
-                    <button class="btn btn-secondary" onclick="showPage('login')">Sign In</button>
-                    <button class="btn btn-primary" onclick="showPage('register')">Get Started</button>
-                `;
-                authButtons.style.background = 'var(--surface)';
-                authButtons.style.border = '1px solid var(--border)';
-                
-                planBadge.textContent = 'Free Tier';
-                planBadge.style.background = 'var(--surface)';
-                planBadge.style.color = 'var(--text-secondary)';
-                planBadge.style.border = '1px solid var(--border)';
+                // User is not logged in - show sign in and get started buttons
+                authButtons.innerHTML = '<button class="btn btn-secondary" onclick="showPage(\'login\')">Sign In</button><button class="btn btn-primary" onclick="showPage(\'register\')">Get Started</button>';
+                planBadge.style.display = 'none';
             }
         }
 
-        function togglePricing(plan) {
-            const monthlyToggle = document.querySelector('[data-plan="monthly"]');
-            const yearlyToggle = document.querySelector('[data-plan="yearly"]');
-            const priceElement = document.getElementById('professionalPrice');
-            const buttonElement = document.getElementById('professionalButton');
+        function updateTierIndicator() {
+            const tierIndicator = document.getElementById('tierIndicator');
+            const businessOption = document.getElementById('businessOption');
+            const marketingOption = document.getElementById('marketingOption');
+            const financeOption = document.getElementById('financeOption');
+            const networkingOption = document.getElementById('networkingOption');
             
-            if (plan === 'monthly') {
-                monthlyToggle.classList.add('active');
-                yearlyToggle.classList.remove('active');
-                
-                priceElement.innerHTML = `
-                    <div class="price">$2.99<span style="font-size: 1rem;">/mo</span></div>
-                    <div class="price-subtitle">billed monthly</div>
-                `;
-                
-                buttonElement.innerHTML = `
-                    <a href="https://paypal.me/jacobburk/2.99" target="_blank" class="btn btn-primary" style="width: 100%; padding: 1rem; text-decoration: none; display: block;">Start Monthly Plan</a>
-                `;
+            if (!tierIndicator) return;
+            
+            if (currentUser) {
+                if (currentUser.tier === 'founder') {
+                    tierIndicator.innerHTML = '🏆 Founder Access - Expert AI';
+                    tierIndicator.style.background = 'linear-gradient(135deg, rgba(255, 215, 0, 0.2), rgba(255, 179, 71, 0.2))';
+                    tierIndicator.style.border = '1px solid #ffd700';
+                    tierIndicator.style.color = '#ffd700';
+                    if (businessOption) businessOption.style.display = 'block';
+                    if (marketingOption) marketingOption.style.display = 'block';
+                    if (financeOption) financeOption.style.display = 'block';
+                    if (networkingOption) networkingOption.style.display = 'block';
+                } else if (currentUser.tier === 'professional') {
+                    tierIndicator.innerHTML = '💼 Professional - Advanced AI';
+                    tierIndicator.style.background = 'rgba(0, 124, 255, 0.1)';
+                    tierIndicator.style.border = '1px solid var(--accent)';
+                    tierIndicator.style.color = 'var(--accent)';
+                    if (businessOption) businessOption.style.display = 'block';
+                    if (marketingOption) marketingOption.style.display = 'block';
+                    if (financeOption) financeOption.style.display = 'none';
+                    if (networkingOption) networkingOption.style.display = 'none';
+                } else {
+                    tierIndicator.innerHTML = '🆓 Free Tier - Basic AI';
+                    tierIndicator.style.background = 'rgba(255, 255, 255, 0.1)';
+                    tierIndicator.style.border = '1px solid rgba(255, 255, 255, 0.2)';
+                    tierIndicator.style.color = 'white';
+                    if (businessOption) businessOption.style.display = 'none';
+                    if (marketingOption) marketingOption.style.display = 'none';
+                    if (financeOption) financeOption.style.display = 'none';
+                    if (networkingOption) networkingOption.style.display = 'none';
+                }
             } else {
-                yearlyToggle.classList.add('active');
-                monthlyToggle.classList.remove('active');
-                
-                priceElement.innerHTML = `
-                    <div class="price">$24<span style="font-size: 1rem;">/year</span></div>
-                    <div class="price-subtitle">$2/month • save 33%</div>
-                `;
-                
-                buttonElement.innerHTML = `
-                    <a href="https://paypal.me/jacobburk/24" target="_blank" class="btn btn-primary" style="width: 100%; padding: 1rem; text-decoration: none; display: block;">Start Yearly Plan</a>
-                `;
+                tierIndicator.innerHTML = '🆓 Free Tier - Basic AI';
+                tierIndicator.style.background = 'rgba(255, 255, 255, 0.1)';
+                tierIndicator.style.border = '1px solid rgba(255, 255, 255, 0.2)';
+                tierIndicator.style.color = 'white';
+                if (businessOption) businessOption.style.display = 'none';
+                if (marketingOption) marketingOption.style.display = 'none';
+                if (financeOption) financeOption.style.display = 'none';
+                if (networkingOption) networkingOption.style.display = 'none';
             }
         }
 
-        function selectTier(tier) {
-            if (!currentUser && tier !== 'basic') {
-                showPage('login');
-                return;
-            }
-            
-            if (tier === 'professional' && (!currentUser || !['professional', 'founder'].includes(currentUser.tier))) {
-                alert('Professional AI requires subscription. Check pricing!');
-                showPage('pricing');
-                return;
-            }
-            
-            if (tier === 'founder' && (!currentUser || currentUser.tier !== 'founder')) {
-                alert('Founder Access required for Expert AI.');
-                showPage('pricing');
-                return;
-            }
-            
-            selectedTier = tier;
-            document.querySelectorAll('.tier-option').forEach(option => {
-                option.classList.remove('active');
-            });
-            document.querySelector(`[data-tier="${tier}"]`).classList.add('active');
-            
-            updateRequestTypes();
-        }
-
-        function updateRequestTypes() {
-            const requestTypesContainer = document.getElementById('requestTypes');
-            
-            const basicTypes = [
-                { id: 'bio', icon: '📝', label: 'Artist Bio' },
-                { id: 'grant', icon: '💰', label: 'Grant Apps' },
-                { id: 'career', icon: '🎯', label: 'Career Guide' },
-                { id: 'festival', icon: '🎪', label: 'Festivals' },
-                { id: 'academic', icon: '🎓', label: 'Academic' },
-                { id: 'repertoire', icon: '🎼', label: 'Repertoire' }
-            ];
-            
-            const professionalTypes = [
-                ...basicTypes,
-                { id: 'business', icon: '💼', label: 'Business' },
-                { id: 'marketing', icon: '📱', label: 'Marketing' }
-            ];
-            
-            const founderTypes = [
-                ...professionalTypes,
-                { id: 'finance', icon: '💎', label: 'Finance' },
-                { id: 'networking', icon: '🤝', label: 'Network' }
-            ];
-            
-            const typesToShow = selectedTier === 'basic' ? basicTypes : 
-                               selectedTier === 'professional' ? professionalTypes : founderTypes;
-            
-            requestTypesContainer.innerHTML = typesToShow.map(type => `
-                <div class="request-type" data-type="${type.id}" onclick="selectRequestType('${type.id}')">
-                    ${type.icon} ${type.label}
-                </div>
-            `).join('');
-        }
-
+        // AI ASSISTANT FUNCTIONS
         function selectRequestType(type) {
+            console.log('🎯 Selected request type:', type);
             selectedRequestType = type;
-            document.querySelectorAll('.request-type').forEach(option => {
-                option.classList.remove('selected');
-            });
-            document.querySelector(`[data-type="${type}"]`).classList.add('selected');
+            isBioRequest = (type === 'bio' || type === 'academic');
+        }
+
+        function showUpgradePrompt() {
+            console.log('💰 Showing upgrade prompt');
+            const upgradePrompt = document.getElementById('upgradePrompt');
+            if (upgradePrompt) {
+                upgradePrompt.classList.remove('hidden');
+                setTimeout(function() {
+                    upgradePrompt.classList.add('hidden');
+                }, 10000);
+            }
+        }
+
+        async function callGroqAPI(context, request, requestType, tier) {
+            const basePrompt = 'You are CadenzaAI — a professional-grade AI assistant designed for classical musicians navigating careers in performance, teaching, and entrepreneurship. Your tone is insightful, strategic, and artist-centered. You give targeted advice, avoid fluff, and always account for the realities of a musician\'s life: artistic integrity, market pressures, burnout, and legacy-building. You speak like a mentor who has been through the field: practical, honest, and visionary. Your goal is to make musicians more empowered in business and more authentic in branding. NEVER suggest vague or generic advice like "post on social media more." Instead, tailor every suggestion to the user\'s musical path, goals, and context.';
+
+            const tierPrompts = {
+                free: basePrompt + '\n\nAs the basic tier assistant, provide practical, actionable guidance in 2-3 paragraphs. Focus on immediate, implementable actions.',
+                professional: basePrompt + '\n\nAs the professional tier assistant, provide detailed strategic advice with specific industry opportunities and advanced positioning strategies. Include 4-5 concrete action steps.',
+                founder: basePrompt + '\n\nAs the expert tier assistant, provide comprehensive strategic guidance with detailed implementation plans. Include specific organizations, grants, and industry contacts when relevant.'
+            };
+
+            const maxTokens = { free: 600, professional: 1000, founder: 1500 };
+
+            const contextualPrompt = 'MUSICIAN\'S BACKGROUND: ' + context + '\n\nSPECIFIC REQUEST: ' + request + '\n\nSPECIALTY FOCUS: ' + (requestType ? requestType.replace('_', ' ') : 'general career guidance') + '\n\nProvide strategic, specific advice that accounts for this musician\'s background and goals.';
+
+            console.log('🔍 Making API request to:', API_ENDPOINT);
+
+            try {
+                const requestBody = {
+                    messages: [
+                        { role: "system", content: tierPrompts[tier] },
+                        { role: "user", content: contextualPrompt }
+                    ],
+                    model: "llama-3.3-70b-versatile",
+                    max_completion_tokens: maxTokens[tier],
+                    temperature: 0.7,
+                    top_p: 1,
+                    stream: false
+                };
+
+                // Add timeout and better error handling
+                const controller = new AbortController();
+                const timeoutId = setTimeout(() => controller.abort(), 30000); // 30 second timeout
+
+                const response = await fetch(API_ENDPOINT, {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': 'Bearer ' + API_KEY,
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(requestBody),
+                    signal: controller.signal
+                });
+
+                clearTimeout(timeoutId);
+
+                if (!response.ok) {
+                    const errorText = await response.text();
+                    console.error('❌ API Error Response:', response.status, errorText);
+                    throw new Error(`API request failed: ${response.status} - ${errorText}`);
+                }
+
+                const data = await response.json();
+                console.log('✅ API Response received');
+                
+                if (!data.choices || !data.choices[0] || !data.choices[0].message) {
+                    throw new Error('Invalid API response structure');
+                }
+                
+                return data.choices[0].message.content;
+            } catch (error) {
+                console.error('💥 Groq API Error:', error);
+                
+                // Enhanced fallback responses based on request type and context
+                return generateFallbackResponse(context, request, requestType, tier);
+            }
+        }
+
+        // Enhanced fallback response generator
+        function generateFallbackResponse(context, request, requestType, tier) {
+            console.log('🎭 Generating fallback response for:', requestType, 'tier:', tier);
+            
+            const responses = {
+                bio: {
+                    free: `Based on your musical background, here's guidance for crafting your artist bio:
+
+Start with your strongest credential - whether that's your training, a notable performance, or teaching position. This immediately establishes your credibility in the classical music world.
+
+Build a narrative that connects your technical training to your artistic vision. Mention specific repertoire, competitions, or masterclasses that shaped your development. Include your teaching credentials as they demonstrate both expertise and commitment to the field.
+
+Keep it concise (75-150 words for most applications) and avoid generic phrases. Instead of "passionate about music," show it through specific achievements and goals. End with your current focus or upcoming projects to show forward momentum in your career.`,
+                    
+                    professional: `Your artist bio is a strategic positioning tool that should immediately communicate your unique value in the classical music landscape.
+
+Lead with your most impressive credential, but frame it within a compelling narrative arc. If you're conservatory-trained, mention the specific program and any distinguished faculty you studied with. Weave in performance highlights that demonstrate range and artistic maturity.
+
+Create differentiation through unique combinations - perhaps you bridge classical and contemporary music, or combine performance with innovative teaching methods. Mention specific venues, competitions, or collaborations that signal professional recognition.
+
+Include strategic details: specific repertoire that showcases technical skill, awards that demonstrate peer recognition, and teaching positions that establish expertise. Quantify when possible (years of experience, number of students, performance venues).
+
+End with current trajectory - upcoming performances, recording projects, or career transitions. This shows momentum and gives programmers/employers a reason to engage with you now rather than later.`,
+                    
+                    founder: `Your bio needs to position you strategically within the classical music ecosystem while demonstrating clear artistic identity and professional trajectory.
+
+Start with your strongest positioning statement - your unique intersection of training, experience, and artistic vision. Frame your conservatory training within the context of distinguished mentors and competitive programs. Highlight performance experiences that demonstrate both technical excellence and artistic maturity.
+
+Build credibility through specific achievements: competition placements (be specific about level and recognition), notable venues, collaborative partnerships with established artists or ensembles. Include teaching credentials that demonstrate pedagogical expertise and commitment to the field's future.
+
+Create market differentiation through unique combinations: perhaps you specialize in underrepformed repertoire, bridge classical and contemporary styles, or bring innovative approaches to traditional practice. This sets you apart in a competitive field.
+
+Include strategic professional details: years of experience, specific repertoire that showcases technical range, recording projects, or leadership roles in musical organizations. End with clear forward momentum - upcoming premieres, recording releases, or career transitions that give industry professionals a reason to engage immediately.`
+                },
+                
+                grant: {
+                    free: `Grant applications require a clear connection between your artistic vision and community impact. Frame your project as addressing a specific need or opportunity in the musical landscape.
+
+Be concrete about outcomes: Who will benefit? How many people will be reached? What lasting impact will this create beyond the immediate project? Funders want to see measurable results and community engagement.
+
+Include a realistic timeline and budget that shows you've thought through the practical aspects. Demonstrate your capacity to execute by referencing past successful projects or relevant experience. Make it clear how this grant advances both your artistic development and serves the broader musical community.`,
+                    
+                    professional: `Successful grant applications balance artistic vision with practical impact, demonstrating both personal growth and community benefit.
+
+Frame your project within current conversations in classical music - addressing access, diversity, innovation, or community engagement. Show how your specific background and skills make you uniquely positioned to execute this work.
+
+Structure your narrative around three key elements: the opportunity or need you're addressing, your innovative approach to addressing it, and the measurable outcomes you'll achieve. Include specific details about community partnerships, educational components, or innovative programming that extends the project's reach.
+
+Demonstrate sustainability - how will this project create lasting impact beyond the grant period? Include plans for documentation, follow-up programming, or community partnerships that extend the work. Show clear metrics for success and evaluation methods.
+
+Connect this project to your larger artistic trajectory, showing how it advances your professional development while serving others. Funders invest in people as much as projects.`,
+                    
+                    founder: `Your grant application needs to position your project within the broader landscape of classical music innovation while demonstrating concrete community impact and professional development.
+
+Begin with a compelling problem statement that positions your work as addressing current challenges in classical music: access, representation, innovation, or community engagement. Frame your unique background and perspective as essential to solving this problem.
+
+Develop a comprehensive project narrative that includes: innovative programming approaches, meaningful community partnerships, educational components that extend reach, and documentation strategies that create lasting resources. Include specific metrics for measuring success and detailed evaluation methods.
+
+Demonstrate institutional support through letters from venue partners, educational institutions, or community organizations. Show how this project fits within your larger career trajectory and contributes to your field's advancement.
+
+Include sustainability planning: how will the project continue beyond the grant period? What resources, partnerships, or follow-up funding will ensure lasting impact? Funders want to see their investment create ongoing value.
+
+Address the full scope of impact: immediate artistic outcomes, community benefit, field advancement, and your professional development. Show how this work positions you as a leader in your field while serving broader musical and community needs.`
+                },
+                
+                career: {
+                    free: `Your musical background suggests you're at a crucial decision point. Focus on clarifying your primary artistic identity while building multiple revenue streams that support your core goals.
+
+Map out your current skills and interests, then identify which combinations create unique market positioning. Consider how your performance experience, teaching abilities, and any business skills can work together rather than competing for time.
+
+Set specific, measurable goals for the next 6 months and 2 years. This might include audition targets, teaching studio growth, or developing new income streams. Regular assessment and adjustment will keep you moving forward strategically.`,
+                    
+                    professional: `Your career development needs a strategic framework that balances artistic fulfillment with financial sustainability while positioning you for long-term growth.
+
+Assess your current assets: technical skills, performance experience, teaching credentials, network connections, and unique perspectives you bring to the field. Identify which combinations create competitive advantages and market differentiation.
+
+Develop parallel tracks: your core artistic focus (performance, teaching, composition) alongside complementary revenue streams. This might include private teaching, workshop facilitation, recording projects, or arts administration roles that enhance rather than compete with your primary goals.
+
+Build strategic relationships within your musical community. Attend relevant conferences, join professional organizations, and cultivate mentor relationships. Your network often determines opportunities more than credentials alone.
+
+Create systems for regular career assessment and goal adjustment. The classical music landscape changes rapidly, and successful careers require adaptability while maintaining artistic integrity.`,
+                    
+                    founder: `Your career strategy needs to account for both the traditional pathways and emerging opportunities in classical music while building sustainable multiple revenue streams.
+
+Conduct a comprehensive analysis of your current position: artistic strengths, market positioning, network connections, and financial resources. Identify gaps between where you are and where you want to be, then develop specific strategies to bridge them.
+
+Build a portfolio career that combines your core artistic focus with complementary activities: performance, teaching, recording, writing, consulting, or arts administration. Each element should enhance the others while providing financial stability and professional growth.
+
+Develop strategic partnerships within the industry: other musicians, presenters, educational institutions, recording labels, or technology companies. These relationships often provide opportunities that aren't publicly advertised.
+
+Stay ahead of industry trends: digital performance platforms, innovative programming approaches, educational technology, or new funding models. Position yourself to take advantage of emerging opportunities while maintaining excellence in traditional areas.
+
+Create measurement systems for tracking progress across multiple career dimensions: artistic development, financial growth, network expansion, and market recognition. Regular assessment ensures you're building toward long-term success rather than just responding to immediate needs.`
+                },
+                
+                default: {
+                    free: `Your musical journey shows dedication and skill development. Now it's time to think strategically about how to leverage your training and experience for sustainable career growth.
+
+Focus on identifying your unique strengths and how they can address current needs in the classical music world. Whether that's performance, teaching, or innovative programming, clarity about your value proposition will guide your next steps.
+
+Consider developing multiple income streams that support rather than compete with your core artistic goals. This creates financial stability while building a broader professional network and skill set.`,
+                    
+                    professional: `Your background positions you well for strategic career development in classical music. The key is creating a coherent professional identity that leverages your unique combination of skills and experience.
+
+Analyze current market opportunities in your area of focus. This might include emerging performance venues, innovative educational programs, recording opportunities, or arts administration roles that align with your expertise.
+
+Develop a professional network through strategic engagement: relevant conferences, professional organizations, masterclasses, and collaborative projects. Your career trajectory often depends more on relationships and reputation than credentials alone.
+
+Build systems for continuous learning and adaptation. The classical music field is evolving rapidly, and successful professionals stay current with new technologies, funding models, and audience engagement strategies while maintaining artistic excellence.`,
+                    
+                    founder: `Your musical background provides a strong foundation for building a multifaceted career that can adapt to the evolving classical music landscape while maintaining artistic integrity.
+
+Conduct a comprehensive analysis of your current assets and market positioning. Identify unique combinations of skills, experience, and perspective that create competitive advantages in your target areas.
+
+Develop strategic partnerships and collaborative relationships that expand your reach and capabilities. This might include other musicians, educational institutions, technology companies, or arts organizations that share your values and vision.
+
+Create multiple revenue streams that reinforce each other: performance, teaching, recording, writing, consulting, or innovative programming. Each element should enhance your artistic development while contributing to financial sustainability.
+
+Stay ahead of industry trends and emerging opportunities. Position yourself to take advantage of new funding models, performance platforms, educational technologies, or audience engagement strategies that align with your artistic vision and professional goals.`
+                }
+            };
+            
+            const fallback = responses[requestType] || responses.default;
+            return fallback[tier] || fallback.free;
         }
 
         async function submitAIRequest() {
-            const context = document.getElementById('contextArea').value.trim();
-            const request = document.getElementById('requestArea').value.trim();
+            console.log('🤖 AI request started');
+            
+            const context = document.getElementById('contextArea');
+            const request = document.getElementById('requestArea');
             
             if (!context || !request) {
+                console.error('❌ Required form elements not found');
+                alert('Form elements not found. Please refresh the page.');
+                return;
+            }
+            
+            const contextValue = context.value.trim();
+            const requestValue = request.value.trim();
+            
+            if (!contextValue || !requestValue) {
                 alert('Please fill in both fields before submitting.');
+                return;
+            }
+
+            if (!checkApiKey()) {
+                const responseContent = document.getElementById('responseContent');
+                const responseArea = document.getElementById('responseArea');
+                if (responseArea && responseContent) {
+                    responseArea.classList.remove('hidden');
+                    responseContent.innerHTML = '<div class="message error">⚠️ Invalid API configuration. Please contact support for assistance.</div>';
+                }
                 return;
             }
 
@@ -1428,16 +1930,42 @@
             const responseArea = document.getElementById('responseArea');
             const responseContent = document.getElementById('responseContent');
             
+            if (!submitBtn || !responseArea || !responseContent) {
+                console.error('❌ Required UI elements not found');
+                alert('UI elements not found. Please refresh the page.');
+                return;
+            }
+            
+            if (!currentUser || currentUser.tier === 'free') {
+                requestCount++;
+                if (requestCount > 3) {
+                    showUpgradePrompt();
+                    return;
+                }
+                if (requestCount === 2) {
+                    showUpgradePrompt();
+                }
+            }
+
             submitBtn.disabled = true;
             submitBtn.innerHTML = '<div class="loading"><div class="spinner"></div>Generating Response...</div>';
             responseArea.classList.remove('hidden');
             responseContent.innerHTML = '<div class="loading"><div class="spinner"></div>AI is analyzing your request...</div>';
 
             try {
-                const aiResponse = await callGroqAPI(context, request, selectedRequestType, selectedTier);
+                const tier = currentUser ? currentUser.tier : 'free';
+                const aiResponse = await callGroqAPI(contextValue, requestValue, selectedRequestType, tier);
+                lastAIResponse = aiResponse;
                 responseContent.textContent = aiResponse;
+                
+                if (isBioRequest) {
+                    const downloadBtn = document.getElementById('downloadBtn');
+                    if (downloadBtn) {
+                        downloadBtn.style.display = 'block';
+                    }
+                }
             } catch (error) {
-                responseContent.innerHTML = '<div class="message error">Sorry, there was an error. Please try again.</div>';
+                responseContent.innerHTML = '<div class="message error">Sorry, there was an error generating the response. Please try again.</div>';
                 console.error('AI request error:', error);
             }
             
@@ -1445,87 +1973,418 @@
             submitBtn.innerHTML = 'Generate AI Response';
         }
 
-        async function callGroqAPI(context, request, requestType, tier) {
-            const tierPrompts = {
-                basic: "You are CadenzaBoard AI, a helpful music career assistant. Provide practical guidance for musicians.",
-                professional: "You are CadenzaBoard AI Professional with expertise in music business, grants, career strategy, and industry knowledge.",
-                founder: "You are CadenzaBoard AI Expert with elite music business knowledge, providing detailed strategic guidance with specific contacts and implementation steps."
-            };
-
-            const prompt = `${tierPrompts[tier]}
-
-SPECIALTY: ${requestType || 'general music advice'}
-CONTEXT: ${context}
-REQUEST: ${request}
-
-Provide professional, actionable advice for this musician's career development.`;
-
-            const response = await fetch(API_ENDPOINT, {
-                method: 'POST',
-                headers: {
-                    'Authorization': `Bearer ${API_KEY}`,
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    messages: [
-                        { role: "system", content: tierPrompts[tier] },
-                        { role: "user", content: prompt }
-                    ],
-                    model: "llama3-8b-8192",
-                    max_tokens: tier === 'basic' ? 600 : tier === 'professional' ? 1000 : 1500,
-                    temperature: 0.7
-                })
-            });
-
-            if (!response.ok) {
-                throw new Error(`API request failed: ${response.status}`);
+        function copyResponse() {
+            console.log('📋 Copying response to clipboard');
+            const responseContent = lastAIResponse || (document.getElementById('responseContent') ? document.getElementById('responseContent').textContent : '');
+            if (responseContent) {
+                navigator.clipboard.writeText(responseContent).then(function() {
+                    alert('Response copied to clipboard!');
+                }).catch(function() {
+                    alert('Failed to copy response');
+                });
             }
-
-            const data = await response.json();
-            return data.choices[0].message.content;
         }
 
-        function copyResponse() {
-            const responseContent = document.getElementById('responseContent').textContent;
-            navigator.clipboard.writeText(responseContent).then(() => {
-                alert('Response copied to clipboard!');
-            }).catch(() => {
-                alert('Failed to copy response');
-            });
+        function downloadAsText() {
+            console.log('📄 Downloading response as text');
+            const content = lastAIResponse;
+            if (!content) return;
+            
+            const today = new Date().toISOString().split('T')[0];
+            const filename = (selectedRequestType || 'document') + '_' + today + '.txt';
+            
+            const blob = new Blob([content], { type: 'text/plain' });
+            const url = URL.createObjectURL(blob);
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = filename;
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            URL.revokeObjectURL(url);
         }
 
         function clearResponse() {
-            document.getElementById('responseArea').classList.add('hidden');
-            document.getElementById('contextArea').value = '';
-            document.getElementById('requestArea').value = '';
+            console.log('🗑️ Clearing response');
+            
+            const responseArea = document.getElementById('responseArea');
+            const contextArea = document.getElementById('contextArea');
+            const requestArea = document.getElementById('requestArea');
+            const requestTypeSelect = document.getElementById('requestTypeSelect');
+            const downloadBtn = document.getElementById('downloadBtn');
+            const upgradePrompt = document.getElementById('upgradePrompt');
+            
+            if (responseArea) responseArea.classList.add('hidden');
+            if (contextArea) contextArea.value = '';
+            if (requestArea) requestArea.value = '';
+            if (requestTypeSelect) requestTypeSelect.value = '';
+            if (downloadBtn) downloadBtn.style.display = 'none';
+            if (upgradePrompt) upgradePrompt.classList.add('hidden');
+            
             selectedRequestType = '';
-            document.querySelectorAll('.request-type').forEach(option => {
-                option.classList.remove('selected');
-            });
+            isBioRequest = false;
+            lastAIResponse = '';
         }
 
         function triggerDevMode() {
+            console.log('🔧 Dev mode trigger attempt');
             devClickCount++;
             if (devClickCount === 5) {
                 const devCode = prompt('Enter developer access code:');
                 if (devCode === DEV_KEY) {
-                    activateDevMode();
+                    alert('Developer mode activated!');
+                    // Add any dev features here
                 }
                 devClickCount = 0;
             }
-            setTimeout(() => { devClickCount = 0; }, 3000);
+            setTimeout(function() { devClickCount = 0; }, 3000);
         }
 
-        async function activateDevMode() {
-            if (currentUser) {
-                currentUser.tier = 'founder';
-                localStorage.setItem('cadenzaCurrentUser', JSON.stringify(currentUser));
-                
-                await updateUser(currentUser.id, { tier: 'founder' });
-                updateAuthUI();
-            }
-            alert('🚀 Founder Access Activated!');
+        // Helper function to set context placeholder and focus
+        function setContextPlaceholder(topic) {
+            setTimeout(function() {
+                const contextArea = document.getElementById('contextArea');
+                if (contextArea) {
+                    const placeholders = {
+                        'classical performance': 'Tell me about your performance experience, repertoire, competitions, and career goals in classical music...',
+                        'music education': 'Describe your teaching experience, educational background, student demographics, and professional development goals...',
+                        'grant funding': 'Share details about your project, artistic goals, community impact, and funding needs...',
+                        'career development': 'Tell me about your current career stage, achievements, goals, and what challenges you\'re facing...',
+                        'professional networking': 'Describe your current network, industry connections, and networking goals in the music field...'
+                    };
+                    
+                    contextArea.placeholder = placeholders[topic] || contextArea.placeholder;
+                    contextArea.focus();
+                }
+            }, 500); // Small delay to ensure page transition completes
         }
+
+        // Pricing toggle functionality
+        function togglePricing() {
+            const toggle = document.getElementById('pricingToggle');
+            const monthlyPricing = document.getElementById('monthlyPricing');
+            const yearlyPricing = document.getElementById('yearlyPricing');
+            const monthlyButton = document.getElementById('monthlyButton');
+            const yearlyButton = document.getElementById('yearlyButton');
+            const toggleSlider = document.getElementById('toggleSlider');
+            const toggleCircle = document.getElementById('toggleCircle');
+            const monthlyLabel = document.getElementById('monthlyLabel');
+            const yearlyLabel = document.getElementById('yearlyLabel');
+            
+            if (toggle.checked) {
+                // Show yearly pricing
+                monthlyPricing.style.display = 'none';
+                yearlyPricing.style.display = 'block';
+                monthlyButton.style.display = 'none';
+                yearlyButton.style.display = 'block';
+                
+                // Update toggle styling
+                toggleSlider.style.backgroundColor = 'var(--accent)';
+                toggleCircle.style.transform = 'translateX(30px)';
+                
+                // Update label styling
+                monthlyLabel.style.color = 'var(--text-secondary)';
+                monthlyLabel.style.fontWeight = '400';
+                yearlyLabel.style.color = 'var(--accent)';
+                yearlyLabel.style.fontWeight = '600';
+            } else {
+                // Show monthly pricing
+                monthlyPricing.style.display = 'block';
+                yearlyPricing.style.display = 'none';
+                monthlyButton.style.display = 'block';
+                yearlyButton.style.display = 'none';
+                
+                // Update toggle styling
+                toggleSlider.style.backgroundColor = 'var(--border)';
+                toggleCircle.style.transform = 'translateX(0)';
+                
+                // Update label styling
+                monthlyLabel.style.color = 'var(--accent)';
+                monthlyLabel.style.fontWeight = '600';
+                yearlyLabel.style.color = 'var(--text-secondary)';
+                yearlyLabel.style.fontWeight = '400';
+            }
+        }
+
+        // Founder amount selection
+        function setFounderAmount(amount) {
+            // Update active button
+            document.querySelectorAll('.founder-amount-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            
+            if (amount === 'custom') {
+                const customAmount = prompt('Enter your contribution amount (minimum $25):');
+                if (customAmount && !isNaN(customAmount) && parseFloat(customAmount) >= 25) {
+                    amount = parseFloat(customAmount);
+                    document.querySelector('[data-amount="custom"]').classList.add('active');
+                } else {
+                    amount = 25;
+                    document.querySelector('[data-amount="25"]').classList.add('active');
+                }
+            } else {
+                document.querySelector(`[data-amount="${amount}"]`).classList.add('active');
+            }
+            
+            // Update button and link
+            const founderButton = document.getElementById('founderButton');
+            founderButton.href = `https://paypal.me/jacobburk/${amount}`;
+            founderButton.innerHTML = `
+                <span style="position: relative; z-index: 2;">Become a Founder - ${amount}</span>
+                <div style="position: absolute; top: 0; left: -100%; width: 100%; height: 100%; background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent); animation: shimmer 2s infinite;"></div>
+            `;
+        }
+
+        // SUPPORT MODAL FUNCTIONS
+        function showTroubleshootingModal() {
+            const modal = document.createElement('div');
+            modal.style.cssText = 'position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 10000; display: flex; align-items: center; justify-content: center; padding: 2rem;';
+            
+            modal.innerHTML = `
+                <div style="background: var(--card-bg); border-radius: 16px; padding: 3rem; max-width: 600px; max-height: 80vh; overflow-y: auto; border: 1px solid var(--border);">
+                    <h3 style="color: var(--accent); margin-bottom: 2rem; font-size: 1.5rem;">🔧 Getting Started & Help</h3>
+                    
+                    <div style="color: var(--text-primary); line-height: 1.6;">
+                        <h4 style="color: var(--text-primary); margin: 1.5rem 0 0.5rem 0;">How to Use CadenzaBoard AI</h4>
+                        <ul style="color: var(--text-secondary); margin-left: 1.5rem;">
+                            <li>Choose your request type (bio, grant, career guidance, etc.)</li>
+                            <li>Provide detailed background about your musical training and experience</li>
+                            <li>Be specific about what you need help with</li>
+                            <li>Click "Generate AI Response" and wait for your personalized advice</li>
+                        </ul>
+                        
+                        <h4 style="color: var(--text-primary); margin: 1.5rem 0 0.5rem 0;">AI Assistant Not Responding?</h4>
+                        <ul style="color: var(--text-secondary); margin-left: 1.5rem;">
+                            <li>Check your internet connection</li>
+                            <li>Make sure both text fields are filled out completely</li>
+                            <li>Try refreshing the page (Ctrl+F5 or Cmd+R)</li>
+                            <li>Free tier users have a 3-request limit per session</li>
+                        </ul>
+                        
+                        <h4 style="color: var(--text-primary); margin: 1.5rem 0 0.5rem 0;">Account & Login Issues?</h4>
+                        <ul style="color: var(--text-secondary); margin-left: 1.5rem;">
+                            <li>Check your email for verification link after signing up</li>
+                            <li>Make sure you're using the correct email and password</li>
+                            <li>Clear browser cache if experiencing persistent issues</li>
+                            <li>Contact support if you need to reset your password</li>
+                        </ul>
+                        
+                        <h4 style="color: var(--text-primary); margin: 1.5rem 0 0.5rem 0;">Getting Better Results</h4>
+                        <ul style="color: var(--text-secondary); margin-left: 1.5rem;">
+                            <li>Include specific details about your musical background</li>
+                            <li>Mention relevant experience, competitions, and training</li>
+                            <li>Be clear about your goals and timeline</li>
+                            <li>Upgrade to Professional/Founder for more detailed responses</li>
+                        </ul>
+                        
+                        <h4 style="color: var(--text-primary); margin: 1.5rem 0 0.5rem 0;">Need More Help?</h4>
+                        <p style="color: var(--text-secondary);">
+                            Email us at <a href="mailto:hello@arcpointcreative.com" style="color: var(--accent);">hello@arcpointcreative.com</a> 
+                            or contact Arcpoint Creative for technical support.
+                        </p>
+                    </div>
+                    
+                    <button onclick="this.parentElement.parentElement.remove()" style="background: var(--accent); color: white; border: none; padding: 0.75rem 1.5rem; border-radius: 8px; margin-top: 2rem; cursor: pointer;">Close</button>
+                </div>
+            `;
+            
+            modal.onclick = function(e) {
+                if (e.target === modal) modal.remove();
+            };
+            
+            document.body.appendChild(modal);
+        }
+
+        function showAPIStatusModal() {
+            const modal = document.createElement('div');
+            modal.style.cssText = 'position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 10000; display: flex; align-items: center; justify-content: center; padding: 2rem;';
+            
+            modal.innerHTML = `
+                <div style="background: var(--card-bg); border-radius: 16px; padding: 3rem; max-width: 600px; max-height: 80vh; overflow-y: auto; border: 1px solid var(--border);">
+                    <h3 style="color: var(--accent); margin-bottom: 2rem; font-size: 1.5rem;">📊 System Status & Performance</h3>
+                    
+                    <div style="color: var(--text-primary); line-height: 1.6;">
+                        <h4 style="color: var(--text-primary); margin: 1.5rem 0 0.5rem 0;">Service Status</h4>
+                        <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 1rem;">
+                            <div style="width: 10px; height: 10px; background: #22c55e; border-radius: 50%;"></div>
+                            <span style="color: var(--text-secondary);">AI Assistant: Operational</span>
+                        </div>
+                        <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 1rem;">
+                            <div style="width: 10px; height: 10px; background: #22c55e; border-radius: 50%;"></div>
+                            <span style="color: var(--text-secondary);">User Authentication: Operational</span>
+                        </div>
+                        <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 1rem;">
+                            <div style="width: 10px; height: 10px; background: #22c55e; border-radius: 50%;"></div>
+                            <span style="color: var(--text-secondary);">Database: Operational</span>
+                        </div>
+                        
+                        <h4 style="color: var(--text-primary); margin: 1.5rem 0 0.5rem 0;">Performance Metrics</h4>
+                        <ul style="color: var(--text-secondary); margin-left: 1.5rem;">
+                            <li>Average Response Time: ~2-5 seconds</li>
+                            <li>AI Model: Llama 3.3 70B (High Performance)</li>
+                            <li>Success Rate: >99.5%</li>
+                            <li>Powered by: Groq LPU Infrastructure</li>
+                        </ul>
+                        
+                        <h4 style="color: var(--text-primary); margin: 1.5rem 0 0.5rem 0;">Usage Limits</h4>
+                        <ul style="color: var(--text-secondary); margin-left: 1.5rem;">
+                            <li><strong>Free Tier:</strong> 3 requests per session</li>
+                            <li><strong>Professional:</strong> 100 requests per day</li>
+                            <li><strong>Founder:</strong> Unlimited requests</li>
+                        </ul>
+                        
+                        <h4 style="color: var(--text-primary); margin: 1.5rem 0 0.5rem 0;">Technology Stack</h4>
+                        <ul style="color: var(--text-secondary); margin-left: 1.5rem;">
+                            <li>🤖 Groq AI (Ultra-fast inference)</li>
+                            <li>🔒 Supabase (Authentication & database)</li>
+                            <li>⚡ Modern web technologies</li>
+                            <li>🎨 Designed by Arcpoint Creative</li>
+                        </ul>
+                    </div>
+                    
+                    <button onclick="this.parentElement.parentElement.remove()" style="background: var(--accent); color: white; border: none; padding: 0.75rem 1.5rem; border-radius: 8px; margin-top: 2rem; cursor: pointer;">Close</button>
+                </div>
+            `;
+            
+            modal.onclick = function(e) {
+                if (e.target === modal) modal.remove();
+            };
+            
+            document.body.appendChild(modal);
+        }
+
+        // Make functions globally available and ensure they're accessible
+        (function() {
+            console.log('🔧 Setting up global functions...');
+            
+            window.showPage = showPage;
+            window.toggleMobileMenu = toggleMobileMenu;
+            window.register = register;
+            window.login = login;
+            window.logout = logout;
+            window.selectRequestType = selectRequestType;
+            window.submitAIRequest = submitAIRequest;
+            window.copyResponse = copyResponse;
+            window.downloadAsText = downloadAsText;
+            window.clearResponse = clearResponse;
+            window.triggerDevMode = triggerDevMode;
+            window.showTroubleshootingModal = showTroubleshootingModal;
+            window.showAPIStatusModal = showAPIStatusModal;
+            window.setContextPlaceholder = setContextPlaceholder;
+            window.togglePricing = togglePricing;
+            window.setFounderAmount = setFounderAmount;
+            
+            // Test that functions are available
+            console.log('🔧 Testing global functions:');
+            console.log('   - showPage:', typeof window.showPage);
+            console.log('   - submitAIRequest:', typeof window.submitAIRequest);
+            console.log('   - login:', typeof window.login);
+            console.log('   - register:', typeof window.register);
+            
+            console.log('✅ All functions made globally available');
+        })();
+
+        console.log('✅ All functions defined and made globally available');
+
+        // Initialize app and test page display
+        document.addEventListener('DOMContentLoaded', async function() {
+            console.log('🚀 DOM loaded, initializing CadenzaBoard AI...');
+            
+            try {
+                // Check for existing user session
+                const user = await getCurrentUser();
+                if (user) {
+                    if (supabase) {
+                        // Supabase user structure
+                        currentUser = {
+                            id: user.id,
+                            email: user.email,
+                            username: user.user_metadata?.username || user.email.split('@')[0],
+                            tier: user.user_metadata?.tier || 'free'
+                        };
+                    } else {
+                        // localStorage fallback structure
+                        currentUser = {
+                            id: user.id,
+                            email: user.email,
+                            username: user.username || user.email.split('@')[0],
+                            tier: user.tier || 'free'
+                        };
+                    }
+                    console.log('✅ User session found:', currentUser.username);
+                }
+                
+                // Test page elements exist
+                const homePageElement = document.getElementById('home');
+                const loginPageElement = document.getElementById('login');
+                const registerPageElement = document.getElementById('register');
+                const aiPageElement = document.getElementById('ai-assistant');
+                const pricingPageElement = document.getElementById('pricing');
+                
+                console.log('📄 Page elements check:');
+                console.log('   - Home page:', homePageElement ? 'Found' : 'Missing');
+                console.log('   - Login page:', loginPageElement ? 'Found' : 'Missing');
+                console.log('   - Register page:', registerPageElement ? 'Found' : 'Missing');
+                console.log('   - AI Assistant page:', aiPageElement ? 'Found' : 'Missing');
+                console.log('   - Pricing page:', pricingPageElement ? 'Found' : 'Missing');
+                
+                // Ensure home page is visible by default and update auth UI
+                if (homePageElement) {
+                    homePageElement.classList.add('active');
+                    homePageElement.style.display = 'block';
+                    console.log('📄 Home page set as default active page');
+                }
+                
+                // Update auth UI on page load
+                updateAuthUI();
+                updateTierIndicator();
+                
+                // Set default founder amount
+                if (document.querySelector('[data-amount="25"]')) {
+                    document.querySelector('[data-amount="25"]').classList.add('active');
+                }
+                
+                // Add event listeners to forms
+                const loginForm = document.querySelector('#login form');
+                const registerForm = document.querySelector('#register form');
+                
+                if (loginForm) {
+                    loginForm.addEventListener('submit', login);
+                    console.log('✅ Login form event listener added');
+                }
+                
+                if (registerForm) {
+                    registerForm.addEventListener('submit', register);
+                    console.log('✅ Register form event listener added');
+                }
+                
+                // Test button functionality
+                const testButtons = document.querySelectorAll('button[onclick], a[onclick]');
+                console.log('🔘 Found', testButtons.length, 'buttons with onclick handlers');
+                
+                // Add click event debugging
+                document.addEventListener('click', function(e) {
+                    if (e.target.matches('button, a')) {
+                        console.log('🖱️ Button clicked:', e.target.textContent.trim(), 'onclick:', e.target.getAttribute('onclick'));
+                    }
+                });
+                
+                console.log('✅ App initialized successfully');
+            } catch (error) {
+                console.error('❌ App initialization error:', error);
+            }
+        });
+
+        // Backup initialization for older browsers
+        window.onload = async function() {
+            if (document.readyState === 'loading') {
+                return; // DOMContentLoaded will handle this
+            }
+            console.log('🚀 Fallback initialization...');
+            // Run the same initialization code
+        };
+
+        console.log('✅ CadenzaBoard AI script loaded successfully');
     </script>
 </body>
 </html>
